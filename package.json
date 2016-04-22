@@ -32,6 +32,9 @@
     "watchify": "^3.7.0"
   },
   "dependencies": {
+    "material-ui": "^0.14.4",
+    "node-font-awesome": "^1.0.2",
+    "normalize.css": "^4.1.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7"
   }
