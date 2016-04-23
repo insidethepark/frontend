@@ -43,6 +43,8 @@ export default class StartTrip extends Component{
 
 	render(){
 
+		/////////need to think through what to do when chicago has two home games on the same day
+
 		let { citiesWithGames } = this.state;
 
 		return(
@@ -55,6 +57,7 @@ export default class StartTrip extends Component{
 					{citiesWithGames.map(city => <li key={city}>{city}</li>)}
 
 				</ul>
+				<div id="map"></div>
 
 			</div>
 			);
