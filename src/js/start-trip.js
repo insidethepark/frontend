@@ -58,6 +58,7 @@ export default class StartTrip extends Component{
 
 				</ul>
 				<div id="map"></div>
+				<div id="directions-panel"></div>
 
 			</div>
 			);
