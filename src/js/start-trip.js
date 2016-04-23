@@ -15,7 +15,8 @@ export default class StartTrip extends Component{
 
 		this.state = {
 
-			citiesWithGames: []
+			citiesWithGames: [],
+			mapProps: {}
 
 		}
 
@@ -40,6 +41,95 @@ export default class StartTrip extends Component{
 
 	}
 
+	// componentDidMount(){
+
+
+	// 		console.log("google in comp did mount", google);
+
+	// 		var directionsService = new google.maps.DirectionsService;
+	// 	    var directionsDisplay = new google.maps.DirectionsRenderer;
+	// 	    var mapDiv = document.getElementById('map2');
+	// 	    var map = new google.maps.Map(mapDiv, {
+	// 	      center: {lat: 44.540, lng: -78.546},
+	// 	      zoom: 8
+	// 	    });
+	// 		console.log("the ajax call ran");
+
+	// 	}
+
+	///////////////map seems to be a bit buggy when incorporating state. May not matter if only displayed on the
+	// next view but if it's on this page, may need to look into react google maps
+
+	drawMap(){
+
+
+			console.log("google in comp did mount", google);
+
+		    var mapDiv = document.getElementById('map2');
+		    // var map = new google.maps.Map(mapDiv, {
+		    //   center: {lat: 44.540, lng: -78.546},
+		    //   zoom: 8
+		    // });
+
+		    this.setState({
+
+		    	mapProps: {
+			      center: {lat: 44.540, lng: -78.546},
+			      zoom: 8
+			    }
+			})
+
+		    var map = new google.maps.Map(mapDiv, this.state.mapProps);
+		    console.log("map in component", map);
+			console.log("the ajax call ran");
+
+	}
+
+	updateLocation(){
+
+		this.setState({
+
+		    	mapProps: {
+			      center: {lat: 50.540, lng: -50.546},
+			      zoom: 8
+			    }
+			})
+		var mapDiv = document.getElementById('map2');
+		var map = new google.maps.Map(mapDiv, this.state.mapProps);
+
+	}
+
+	// componentDidMount(){
+
+
+	// 	setTimeout(::this.drawMap, 5000);
+	// }
+
+	// componentDidMount(){
+
+	// 	  var mapDiv = document.getElementById('map2');
+	// 	    // var map = new google.maps.Map(mapDiv, {
+	// 	    //   center: {lat: 44.540, lng: -78.546},
+	// 	    //   zoom: 8
+	// 	    // });
+
+	// 	    this.setState({
+
+	// 	    	mapProps: {
+	// 		      center: {lat: 44.540, lng: -78.546},
+	// 		      zoom: 8
+	// 		    }
+	// 		})
+
+	// 	    var map = new google.maps.Map(mapDiv, this.state.mapProps);
+	// 	    console.log("map in component", map);
+	// 		console.log("the ajax call ran");
+
+
+	// }
+
+
+
 
 	render(){
 
@@ -58,7 +148,11 @@ export default class StartTrip extends Component{
 
 				</ul>
 				<div id="map"></div>
+				
 				<div id="directions-panel"></div>
+				<div id="map2"></div>
+				<button onClick={::this.drawMap}>Generate map</button>
+				<button onClick={::this.updateLocation}>update location</button>
 
 			</div>
 			);
