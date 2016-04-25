@@ -140,14 +140,18 @@ export default class StartTrip extends Component{
 		return(
 
 			<div>
-				<ReactDatePicker onChange={::this.dateChangeHandler}/>
 
-				<ul>
+				<div>
+					<ReactDatePicker onChange={::this.dateChangeHandler}/>
 
-					{citiesWithGames.map(city => <li key={city}>{city}</li>)}
-
-				</ul>
-
+				<div>
+					<select name="options"  onChange={::this.dateChangeHandler}>
+					<option value="" disabled>Select a Date to see the cities</option>
+						{citiesWithGames.map(city => <option value={city} key={city}>{city}</option>)}
+					</select>
+				</div>
+				</div>
+		
 
 				<h2>Messing with map stuff below...</h2>
 				<div id="map"></div>
@@ -162,3 +166,12 @@ export default class StartTrip extends Component{
 
 	}
 }
+
+
+//city => <li key={city}>{city}</li>)}
+
+					//<ul>
+						//{citiesWithGames.map(city => <li key={city}>{city}</li>)}
+
+
+					//</ul>
