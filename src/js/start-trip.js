@@ -143,7 +143,7 @@ export default class StartTrip extends Component{
 
 		////step 2: we display all games on that date
 
-		////step 3: they select one
+		////step 3: they select one (idea: might could use radio buttons to ensure they can only pick one game)
 
 		////step 4: they click "add another game to roadtrip"
 
