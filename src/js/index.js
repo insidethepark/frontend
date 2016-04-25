@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 import StartTrip from './start-trip';
+import Itenerary from './itenerary';
 
 
 ///google maps
@@ -21,6 +22,7 @@ render((
 
 	<Router history={hashHistory}>
 		<Route path="/" component={StartTrip}></Route>
+		<Route path="/itenerary" component={Itenerary}></Route>
 	</Router>
 
 	), document.querySelector('.app')); 

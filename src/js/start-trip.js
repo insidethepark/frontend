@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory, Link } from 'react-router';
 import { ajax } from 'jquery';
 
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
@@ -147,6 +147,9 @@ export default class StartTrip extends Component{
 					{citiesWithGames.map(city => <li key={city}>{city}</li>)}
 
 				</ul>
+
+
+				<h2>Messing with map stuff below...</h2>
 				<div id="map"></div>
 				
 				<div id="directions-panel"></div>
