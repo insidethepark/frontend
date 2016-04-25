@@ -24,7 +24,7 @@ export default class Login extends Component{
 			console.log("login successful");
 
 			ajax({
-		      url: 'https://safe-ridge-87798.herokuapp.com/login',
+		      url: 'https://shielded-hollows-39012.herokuapp.com/login',
 		      type: 'POST',
 		      data: data,
 		      cache: false,
@@ -57,7 +57,7 @@ export default class Login extends Component{
 
 				}
 	}
-	
+
 	signupHandler(userData){
 
 		if (userData.email && userData.password && userData.firstname && userData.lastname){
@@ -69,15 +69,40 @@ export default class Login extends Component{
 		data.append('email', userData.email);
 		data.append('password', userData.password);
 
-		console.log("signup successful");
 
-		// ajax().then();
+		ajax({
+		      url: 'https://shielded-hollows-39012.herokuapp.com/signup',
+		      type: 'POST',
+		      data: data,
+		      cache: false,
+		      dataType: 'json',
+		      processData: false,
+		      contentType: false
+		    }).then( (response, statusText, { status } ) => {
+				
+		    	if (status == 200){
 
-		}else{
+		    		console.log("response.user =>",response.user);
+		    		console.log("response.user.id =>",response.user.id);
 
-			alert("All fields need a value before moving on");
+					Cookies.set('user_email', response.user.email);
+					Cookies.set('auth_token', response.user.auth_token);
+					Cookies.set('id', response.user.id);
+					loggedInUser = Cookies.get();
+					// loggedInUser = Cookies.get('auth_token');
+					
+					console.log("loggedInUser",loggedInUser);
 
 		}
+
+		
+
+		})}
+		else{
+
+					alert("You need to enter both an email and a password to login");
+
+				}
 
 
 	}
@@ -91,8 +116,8 @@ export default class Login extends Component{
 				<SSF onData={::this.loginHandler}>
 					<h2>Login</h2>
 
-					<input type="email" name="email" placeholder="Email"></input>
-					<input type="password" name="password" placeholder="Password"></input>
+					<div><input type="email" name="email" placeholder="Email"></input></div>
+					<div><input type="password" name="password" placeholder="Password"></input></div>
 					<button>Login</button>
 
 				</SSF>
@@ -100,10 +125,10 @@ export default class Login extends Component{
 				<SSF onData={::this.signupHandler}>
 					<h2>Sign up</h2>
 
-					<input type="text" name="firstname" placeholder="First name"></input>
-					<input type="text" name="lastname" placeholder="Last name"></input>
-					<input type="email" name="email" placeholder="Email"></input>
-					<input type="password" name="password" placeholder="Password"></input>
+					<div><input type="text" name="firstname" placeholder="First name"></input></div>
+					<div><input type="text" name="lastname" placeholder="Last name"></input></div>
+					<div><input type="email" name="email" placeholder="Email"></input></div>
+					<div><input type="password" name="password" placeholder="Password"></input></div>
 					<button>Sign up</button>
 
 				</SSF>

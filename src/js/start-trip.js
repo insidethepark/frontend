@@ -16,7 +16,8 @@ export default class StartTrip extends Component{
 		this.state = {
 
 			citiesWithGames: [],
-			mapProps: {}
+			mapProps: {},
+			currentTrip: []
 
 		}
 
@@ -137,6 +138,29 @@ export default class StartTrip extends Component{
 
 		let { citiesWithGames } = this.state;
 
+
+		////step 1: user selects first date
+
+		////step 2: we display all games on that date
+
+		////step 3: they select one
+
+		////step 4: they click "add another game to roadtrip"
+
+		////step 4.5: we add the selected game to a trip list
+
+		////step 5: post request and recieve games for next day within certain range in response
+
+		////step 6: display games
+
+		////step 7: select one -- it's added to the trip list
+
+		////step 8: if "add another game is clicked", repeat steps 5-7
+
+		//// step final: user clicks "Get Trip Itenerary" and final screen is revealed, 
+		////allowing them to see details about each game and even purchase tickets
+
+
 		return(
 
 			<div>
@@ -144,12 +168,13 @@ export default class StartTrip extends Component{
 				<div>
 					<ReactDatePicker onChange={::this.dateChangeHandler}/>
 
-				<div>
-					<select name="options"  onChange={::this.dateChangeHandler}>
-					<option value="" disabled>Select a Date to see the cities</option>
-						{citiesWithGames.map(city => <option value={city} key={city}>{city}</option>)}
-					</select>
-				</div>
+					<div>
+						<select name="options"  onChange={::this.dateChangeHandler}>
+							<option value="" disabled>Select a Date to see the cities</option>
+							{citiesWithGames.map(city => <option value={city} key={city}>{city}</option>)}
+						</select>
+					</div>
+					<div className="game-picker"></div>
 				</div>
 		
 
