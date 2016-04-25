@@ -5,6 +5,7 @@ import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 import StartTrip from './start-trip';
 import Itenerary from './itenerary';
+import Login from './login';
 
 
 ///google maps
@@ -21,8 +22,9 @@ window.initMap;
 render((
 
 	<Router history={hashHistory}>
-		<Route path="/" component={StartTrip}></Route>
-		<Route path="/itenerary" component={Itenerary}></Route>
-	</Router>
+		<Route path="/" component={Login}></Route>
+    <Route path="/StartTrip" component={StartTrip}></Route>
+  </Router>
 
-	), document.querySelector('.app')); 
+  ), document.querySelector('.app')); 
+		// <Route path="/itenerary" component={Itenerary}></Route>
