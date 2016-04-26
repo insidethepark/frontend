@@ -56,12 +56,6 @@ export default class Itinerary extends Component {
 			)
 		}
 }
-// may have to specify first object withint performers array (line 32)
-//<img src="{events.performers.image}"/>
-					//<div>{events.title}</div>
-					//<div>{events.url}</div>
-					//<div>${events.stats.average_price}</div>
-					//<div>{events.datetime_local}</div>
 
 
 
