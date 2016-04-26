@@ -15,7 +15,10 @@ export default class Itinerary extends Component {
 
 	componentWillMount() {
 		ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-04-26&datetime_local.lte=2016-04-27T00:00:01&type=mlb&per_page=25').then(events => {
+			console.log("i ran");
+			console.log("events", events);
 			this.setState({events});
+			console.log(this.state.events);
 		})
 
 	}
@@ -24,6 +27,13 @@ export default class Itinerary extends Component {
 
 
 	render () {
+
+		let { events } = this.state;
+
+		console.log("this.state.events", this.state.events);
+
+		console.log(events);
+
 		return (
 			<div class="itinerary-wrapper">
 				<h2>Your Roadtrip</h2>
