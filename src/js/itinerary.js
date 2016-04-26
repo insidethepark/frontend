@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, hashHistory, Link } from 'react-router';
 import { ajax } from 'jquery';
 
 
@@ -48,6 +48,7 @@ export default class Itinerary extends Component {
 					<div>
 					{events.map(::this.getEvent)}
 					</div>
+					<Link to="/StartTrip">Start Over</Link>
 				</div>
 			</div>
 
