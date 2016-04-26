@@ -156,7 +156,7 @@ export default class StartTrip extends Component{
 		let { citiesWithGames } = this.state;
 
 
-		////step 1: user selects first date
+		////stexp 1: user selects first date
 
 		////step 2: we display all games on that date
 
@@ -210,10 +210,4 @@ export default class StartTrip extends Component{
 }
 
 
-//city => <li key={city}>{city}</li>)}
 
-					//<ul>
-						//{citiesWithGames.map(city => <li key={city}>{city}</li>)}
-
-
-					//</ul>

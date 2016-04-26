@@ -2,10 +2,10 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-
 import StartTrip from './start-trip';
 import Itenerary from './itenerary';
 import Login from './login';
+import Itinerary from './itinerary';
 
 
 ///google maps
@@ -24,7 +24,7 @@ render((
 	<Router history={hashHistory}>
 		<Route path="/" component={Login}></Route>
     <Route path="/StartTrip" component={StartTrip}></Route>
+		 <Route path="/itinerary" component={Itinerary}></Route>
   </Router>
 
   ), document.querySelector('.app')); 
-		// <Route path="/itenerary" component={Itenerary}></Route>
