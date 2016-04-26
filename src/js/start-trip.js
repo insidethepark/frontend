@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory, Link } from 'react-router';
-import { ajax } from 'jquery';
+import $, { ajax } from 'jquery';
+window.$ = $;
 
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import ReactDatePicker from 'react-date-picker';
@@ -21,6 +22,8 @@ export default class StartTrip extends Component{
 			currentTrip: []
 
 		}
+
+		this.action = null;
 
 	}
 
@@ -132,6 +135,8 @@ export default class StartTrip extends Component{
 
 	addGameHandler(city){
 
+		console.log("More games, muthafucka!");
+
 		////post current city selection
 
 		////get request for next day's games
@@ -142,8 +147,14 @@ export default class StartTrip extends Component{
 
 	getIteneraryHandler(city){
 
+		console.log("Itenerary fuck yeah!");
 
+	}
 
+	dataHandler(data) {
+		console.log('action', this.action);
+		this.action = null;
+		console.log('data', data);
 	}
 
 
@@ -184,13 +195,18 @@ export default class StartTrip extends Component{
 
 				<div>
 					<ReactDatePicker onChange={::this.dateChangeHandler}/>
-					<SSF>
+					<SSF onData={::this.dataHandler}>
 						<div>
 							
 								{citiesWithGames.map(city => <div key={Math.random()}><label><input name="cities" type="radio" value={city} key={Math.random()}></input> {city}</label></div>)}
 							
 						</div>
-						<div><button onClick={::this.addGameHandler}>Add another game</button><button onClick={::this.getIteneraryHandler}>Get Itenerary</button></div>
+						<div>
+							 <button onClick={() => this.action = 'add'}>Add another game</button>
+							 <button onClick={() => this.action = 'get'}>Get Itenerary</button>
+							 {/*<input type="submit" value="Add Another Game" name="action"/>
+							 <input type="submit" value="Get Itenerary" name="action"/>*/}
+						</div>
 					</SSF>
 				</div>
 		
@@ -209,5 +225,7 @@ export default class StartTrip extends Component{
 	}
 }
 
-
+// Talk to JD about SSF
+// A hacky way to do it is to create a function that tells which function (addGameHandler or getIteneraryHandler)
+// to run and then reference THAT function in the onData
 
