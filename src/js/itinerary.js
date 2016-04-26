@@ -14,13 +14,24 @@ export default class Itinerary extends Component {
 	
 
 	componentWillMount() {
-		ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-04-26&datetime_local.lte=2016-04-27T00:00:01&type=mlb&per_page=25').then(events => {
-			console.log("i ran");
-			console.log("events", events);
-			this.setState({events});
-			console.log(this.state.events);
+
+		ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-04-26&datetime_local.lte=2016-04-27T00:00:01&type=mlb&per_page=25').then(data => {
+			console.log(data.events);
+		this.setState({events: data.events})
+			
 		})
 
+	}
+	 getEvent(event) {
+	 	return ( 
+	 			<div>
+	 				<img src={event.performers[0].image}/>
+	 				<div>{event.title}</div>
+	 				<div>{event.url}</div>
+	 				<div>${event.stats.average_price}</div>
+	 				<div>{event.datetime_local}</div>
+	 			</div>
+			)
 	}
 
 
@@ -29,20 +40,14 @@ export default class Itinerary extends Component {
 	render () {
 
 		let { events } = this.state;
-
-		console.log("this.state.events", this.state.events);
-
-		console.log(events);
-
+		console.log(events)
 		return (
-			<div class="itinerary-wrapper">
+			<div className="itinerary-wrapper">
 				<h2>Your Roadtrip</h2>
-				<div class="body">
-					<img src="{events.performers.image}"/>
-					<div>{events.title}</div>
-					<div>{events.url}</div>
-					<div>{events.stats.average_price}</div>
-					<div>{events.datetime_local}</div>
+				<div className="body">
+					<div>
+					{events.map(::this.getEvent)}
+					</div>
 				</div>
 			</div>
 
@@ -52,4 +57,14 @@ export default class Itinerary extends Component {
 		}
 }
 // may have to specify first object withint performers array (line 32)
+//<img src="{events.performers.image}"/>
+					//<div>{events.title}</div>
+					//<div>{events.url}</div>
+					//<div>${events.stats.average_price}</div>
+					//<div>{events.datetime_local}</div>
+
+
+
+
+
 
