@@ -18,11 +18,6 @@ export default class Login extends Component{
 			data.append('email', userData.email);
 			data.append('password', userData.password);
 
-
-			// ajax().then();
-
-			console.log("login successful");
-
 			ajax({
 		      url: 'https://shielded-hollows-39012.herokuapp.com/login',
 		      type: 'POST',
@@ -46,6 +41,8 @@ export default class Login extends Component{
 					
 					console.log("loggedInUser",loggedInUser);
 
+					hashHistory.push('/StartTrip');
+
 		}
 
 		
@@ -60,12 +57,12 @@ export default class Login extends Component{
 
 	signupHandler(userData){
 
-		if (userData.email && userData.password && userData.firstname && userData.lastname){
+		if (userData.email && userData.password && userData.first && userData.last){
 
 		let data = new FormData();
 
-		data.append('firstname', userData.firstname);
-		data.append('lastname', userData.lastname);
+		data.append('first', userData.first);
+		data.append('last', userData.last);
 		data.append('email', userData.email);
 		data.append('password', userData.password);
 
@@ -79,8 +76,10 @@ export default class Login extends Component{
 		      processData: false,
 		      contentType: false
 		    }).then( (response, statusText, { status } ) => {
+
+		    	console.log(status);
 				
-		    	if (status == 200){
+		    	if (status == 201){
 
 		    		console.log("response.user =>",response.user);
 		    		console.log("response.user.id =>",response.user.id);
@@ -92,6 +91,10 @@ export default class Login extends Component{
 					// loggedInUser = Cookies.get('auth_token');
 					
 					console.log("loggedInUser",loggedInUser);
+
+					hashHistory.push('/StartTrip');
+
+
 
 		}
 
@@ -125,8 +128,8 @@ export default class Login extends Component{
 				<SSF onData={::this.signupHandler}>
 					<h2>Sign up</h2>
 
-					<div><input type="text" name="firstname" placeholder="First name"></input></div>
-					<div><input type="text" name="lastname" placeholder="Last name"></input></div>
+					<div><input type="text" name="first" placeholder="First name"></input></div>
+					<div><input type="text" name="last" placeholder="Last name"></input></div>
 					<div><input type="email" name="email" placeholder="Email"></input></div>
 					<div><input type="password" name="password" placeholder="Password"></input></div>
 					<button>Sign up</button>

@@ -5,6 +5,7 @@ import { ajax } from 'jquery';
 
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import ReactDatePicker from 'react-date-picker';
+import SSF from 'react-simple-serial-form';
 // require('react-date-picker/base.css');
 
 
@@ -129,6 +130,22 @@ export default class StartTrip extends Component{
 
 	// }
 
+	addGameHandler(city){
+
+		////post current city selection
+
+		////get request for next day's games
+
+		////update cities array in state
+
+	}
+
+	getIteneraryHandler(city){
+
+
+
+	}
+
 
 
 
@@ -167,14 +184,14 @@ export default class StartTrip extends Component{
 
 				<div>
 					<ReactDatePicker onChange={::this.dateChangeHandler}/>
-
-					<div>
-						<select name="options"  onChange={::this.dateChangeHandler}>
-							<option value="" disabled>Select a Date to see the cities</option>
-							{citiesWithGames.map(city => <option value={city} key={city}>{city}</option>)}
-						</select>
-					</div>
-					<div className="game-picker"></div>
+					<SSF>
+						<div>
+							
+								{citiesWithGames.map(city => <div key={Math.random()}><label><input name="cities" type="radio" value={city} key={Math.random()}></input> {city}</label></div>)}
+							
+						</div>
+						<div><button onClick={::this.addGameHandler}>Add another game</button><button onClick={::this.getIteneraryHandler}>Get Itenerary</button></div>
+					</SSF>
 				</div>
 		
 
