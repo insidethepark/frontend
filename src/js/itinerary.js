@@ -24,11 +24,12 @@ export default class Itinerary extends Component {
 	}
 	 getEvent(event) {
 	 	return ( 
-	 			<div>
+	 			<div key={event.title}>
+	 				<h2>{event.datetime_local} in {event.venue.city}</h2>
 	 				<img src={event.performers[0].image}/>
 	 				<div>{event.title}</div>
 	 				<div>{event.url}</div>
-	 				<div>${event.stats.average_price}</div>
+	 				<div>Average price: ${event.stats.average_price}</div>
 	 				<div>{event.datetime_local}</div>
 	 			</div>
 			)

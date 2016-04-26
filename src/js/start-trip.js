@@ -189,6 +189,13 @@ export default class StartTrip extends Component{
 		////allowing them to see details about each game and even purchase tickets
 
 
+
+
+		///////// change event state to an object so that it can hold things like zipcode. 
+		///////// This allows us the ability to eliminate the Chicago key error and will enable us to attach and pass along any other data to the backend as needed
+
+
+
 		return(
 
 			<div>
@@ -198,7 +205,7 @@ export default class StartTrip extends Component{
 					<SSF onData={::this.dataHandler}>
 						<div>
 							
-								{citiesWithGames.map(city => <div key={Math.random()}><label><input name="cities" type="radio" value={city} key={Math.random()}></input> {city}</label></div>)}
+								{citiesWithGames.map(city => <div key={city}><label><input name="cities" type="radio" value={city} key={Math.random()}></input> {city}</label></div>)}
 							
 						</div>
 						<div>
