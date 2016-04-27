@@ -30,9 +30,14 @@ export default class StartTrip extends Component{
 		this.action = null;
 
 	}
-
-	dateChangeHandler(dateString){
-
+	componentWillMount() {
+		if (Cookies.get('user_email', 'auth_token', 'id')) {
+			return true;
+		} 	else {
+			hashHistory.replace('/');
+		}
+	}
+	dateChangeHandler(dateString) {
 		let URL = `https://api.seatgeek.com/2/events?datetime_local.gte=${dateString}&datetime_local.lte=${dateString}T23:59:01&type=mlb&per_page=15`;
 		let citiesWithGames = [];
 
@@ -46,7 +51,7 @@ export default class StartTrip extends Component{
 
 			this.setState({citiesWithGames});
 
-		});
+		})
 
 	}
 
