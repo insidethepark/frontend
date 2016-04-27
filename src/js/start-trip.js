@@ -6,6 +6,7 @@ window.$ = $;
 
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import ReactDatePicker from 'react-date-picker';
+import Cookies from 'js-cookie';
 import SSF from 'react-simple-serial-form';
 // require('react-date-picker/base.css');
 
@@ -269,7 +270,10 @@ export default class StartTrip extends Component{
 		console.log('data', data);
 	}
 
-
+	logOutHandler() {
+		Cookies.remove('user_email', 'auth_token', 'id');
+		hashHistory.push('/');
+	}
 
 
 	render(){
@@ -313,6 +317,7 @@ export default class StartTrip extends Component{
 			<div>
 
 				<div>
+					<button onClick={this.logOutHandler}>Log Out</button>
 					<ReactDatePicker onChange={::this.dateChangeHandler}/>
 					<SSF onData={::this.dataHandler}>
 						<div>
