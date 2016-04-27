@@ -23,7 +23,7 @@ render((
 
 	<Router history={hashHistory}>
 		<Route path="/" component={Login}></Route>
-    <Route path="/StartTrip" component={StartTrip}></Route>
+    <Route path="/start-trip" component={StartTrip}></Route>
 		<Route path="/itinerary" component={Itinerary}></Route>
   </Router>
 
