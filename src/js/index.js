@@ -41,13 +41,9 @@ render((
 
 	<Router history={hashHistory}>
 		<Route path="/" component={Login}></Route>
-<<<<<<< HEAD
     <Route path="/start-trip" component={StartTrip} onEnter={mustSignIn}></Route>
 		 <Route path="/itinerary" component={Itinerary} onEnter={mustSignIn}></Route>
-=======
-    <Route path="/StartTrip" component={StartTrip}></Route>
-		<Route path="/itinerary" component={Itinerary}></Route>
->>>>>>> 8a89e5c19f7664a2c47a146421bd3f3034e4188e
+
   </Router>
 
   ), document.querySelector('.app')); 
