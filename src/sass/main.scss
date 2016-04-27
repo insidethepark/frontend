@@ -5,17 +5,33 @@
 @import 'font-awesome/scss/font-awesome';
 @import 'react-date-picker/index';
 
+#map2{
 
-#map{
-
-	width: 500px;
-	height: 500px;
+	width: 100%;
+	height: 400px;
 
 }
 
-#map2{
+.dp-header{
 
-	width: 500px;
-	height: 500px;
+	font-size: 2em;
+
+}
+
+.dp-body{
+
+	font-size: 1.4em;
+	// .dp-day{
+
+	// 	padding-top: 20px;
+	// 	padding-bottom: 20px;
+
+	// }
+}
+
+.date-picker .dp-table .dp-cell{
+
+	padding-top: 20px;
+	padding-bottom: 20px;
 
 }

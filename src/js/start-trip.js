@@ -320,6 +320,7 @@ export default class StartTrip extends Component{
 				<div>
 					<button onClick={this.logOutHandler}>Log Out</button>
 					<ReactDatePicker onChange={::this.dateChangeHandler}/>
+					<div id='game-picker'></div>
 					<SSF onData={::this.dataHandler}>
 						<div>
 							
@@ -337,9 +338,6 @@ export default class StartTrip extends Component{
 				
 				
 				<div id="map2"></div>
-				<div id="directions-panel"></div>
-				<button onClick={::this.drawMap}>Generate map</button>
-				<button onClick={::this.updateLocation}>update location</button>
 
 			</div>
 			);
