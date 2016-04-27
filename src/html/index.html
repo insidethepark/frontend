@@ -7,58 +7,8 @@
 <body>
   <div class="app"></div>
   <script src="js/bundle.js"></script>
-  <script>
-  function initMap() {
-  	//console.log("google ?", google);
-  	var directionsService = new google.maps.DirectionsService;
-    var directionsDisplay = new google.maps.DirectionsRenderer;
-    var mapDiv = document.getElementById('map');
-    var map = new google.maps.Map(mapDiv, {
-      center: {lat: 44.540, lng: -78.546},
-      zoom: 8
-    });
-    console.log("map html", map);
-    directionsDisplay.setMap(map);
-
-    var waypts = [{
-              location: "Nashville",
-              stopover: true
-            }, {
-              location: "Kansas City",
-              stopover: true
-            }, {
-              location: "Denver",
-              stopover: true
-            }];
-
-    directionsService.route({
-          origin: "Atlanta",
-          destination: "Phoenix",
-          waypoints: waypts,
-          optimizeWaypoints: true,
-          travelMode: google.maps.TravelMode.DRIVING
-        }, function(response, status) {
-          if (status === google.maps.DirectionsStatus.OK) {
-            directionsDisplay.setDirections(response);
-            var route = response.routes[0];
-            var summaryPanel = document.getElementById('directions-panel');
-            summaryPanel.innerHTML = '';
-            // For each route, display summary information.
-            for (var i = 0; i < route.legs.length; i++) {
-              var routeSegment = i + 1;
-              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-                  '</b><br>';
-              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-            }
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
-        });
-  }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE8LKMkjeLfIDB3D-HxKDRETC-fGp6pts&callback=initMap"
+  
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDE8LKMkjeLfIDB3D-HxKDRETC-fGp6pts"
         async defer></script>
 </body>
 </html>

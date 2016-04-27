@@ -27,6 +27,7 @@ export default class Login extends Component{
 		      processData: false,
 		      contentType: false
 		    }).then( (response, statusText, { status } ) => {
+
 				
 		    	if (status == 200){
 
