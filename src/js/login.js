@@ -42,7 +42,7 @@ export default class Login extends Component{
 					
 					console.log("loggedInUser",loggedInUser);
 
-					hashHistory.push('/StartTrip');
+					hashHistory.push('/start-trip');
 
 		}
 
@@ -93,7 +93,7 @@ export default class Login extends Component{
 					
 					console.log("loggedInUser",loggedInUser);
 
-					hashHistory.push('/StartTrip');
+					hashHistory.push('/start-trip');
 
 
 
