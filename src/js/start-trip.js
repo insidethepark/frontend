@@ -20,7 +20,10 @@ export default class StartTrip extends Component{
 
 			citiesWithGames: [],
 			mapProps: {},
-			currentTrip: []
+			currentTrip: [],
+			waypts: [],
+			totalPitStops: 0,
+			start_address: []
 
 		}
 
@@ -70,7 +73,8 @@ export default class StartTrip extends Component{
 
 
 			console.log("google in comp did mount", google);
-
+			var directionsService = new google.maps.DirectionsService;
+    		var directionsDisplay = new google.maps.DirectionsRenderer;
 		    var mapDiv = document.getElementById('map2');
 		    // var map = new google.maps.Map(mapDiv, {
 		    //   center: {lat: 44.540, lng: -78.546},
@@ -88,6 +92,60 @@ export default class StartTrip extends Component{
 		    var map = new google.maps.Map(mapDiv, this.state.mapProps);
 		    console.log("map in component", map);
 			console.log("the ajax call ran");
+
+			directionsDisplay.setMap(map);
+
+		    // var waypts = [{
+		    //           location: "Nashville",
+		    //           stopover: true
+		    //         }, {
+		    //           location: "Kansas City",
+		    //           stopover: true
+		    //         }, {
+		    //           location: "Denver",
+		    //           stopover: true
+		    //         }];
+
+		    var waypts = this.state.waypts;
+		    let updatedWaypts;
+
+
+		  //   if(waypts.length > 2 ){
+
+				// let tempWaypts = waypts.splice(0,1);
+				// updatedWaypts = tempWaypts.splice(waypts.length-1,1);
+
+		  //   }
+		    
+		    // console.log("updatedWaypts",updatedWaypts);
+
+		    console.log("waypts in drawMap", waypts);
+
+		    directionsService.route({
+		          origin: this.start_address.location,
+		          destination: this.end_address.location,
+		          waypoints: updatedWaypts || waypts,
+		          optimizeWaypoints: true,
+		          travelMode: google.maps.TravelMode.DRIVING
+		        }, function(response, status) {
+		          if (status === google.maps.DirectionsStatus.OK) {
+		            directionsDisplay.setDirections(response);
+		            var route = response.routes[0];
+		            var summaryPanel = document.getElementById('directions-panel');
+		            summaryPanel.innerHTML = '';
+		            // For each route, display summary information.
+		            for (var i = 0; i < route.legs.length; i++) {
+		              var routeSegment = i + 1;
+		              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+		                  '</b><br>';
+		              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+		              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+		              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+		            }
+		          } else {
+		            window.alert('Directions request failed due to ' + status);
+		          }
+		        });
 
 	}
 
@@ -136,7 +194,40 @@ export default class StartTrip extends Component{
 
 	addGameHandler(city){
 
-		console.log("More games, muthafucka!");
+		let totalPitStops = this.state.totalPitStops + 1;
+		this.setState({totalPitStops});
+		console.log("updatedPitStopCount", totalPitStops);
+		let route = this.state.waypts;
+
+		if (totalPitStops === 1){
+
+			this.start_address = {location: city.city, stopover: true};
+
+		}
+
+		if (totalPitStops === 2){
+
+			this.end_address = {location: city.city, stopover: true}
+
+			this.drawMap();
+
+		}
+
+		if(totalPitStops >= 3){
+
+			route.push(this.end_address);
+			this.setState({waypts: route});
+			this.end_address = {location: city.city, stopover: true}
+
+			
+			
+
+			console.log("waypts=>",this.state.waypts);
+
+			this.drawMap();
+
+		}
+		
 
 		////post current city selection
 
@@ -150,10 +241,31 @@ export default class StartTrip extends Component{
 
 		console.log("Itenerary fuck yeah!");
 
+		console.log("city in getIteneraryHandler",city);
+
+		if (city.city){
+
+			let route = this.state.waypts;
+
+			route.push(city.city);
+
+			this.setState({waypts: route});
+
+		}else{
+
+			console.log("waypts=>",this.state.waypts);
+
+
+			////render itenerary
+
+		}
+
 	}
 
 	dataHandler(data) {
 		console.log('action', this.action);
+
+		this.action === 'add' ? this.addGameHandler(data): this.getIteneraryHandler(data);
 		this.action = null;
 		console.log('data', data);
 	}
@@ -211,7 +323,7 @@ export default class StartTrip extends Component{
 					<SSF onData={::this.dataHandler}>
 						<div>
 							
-								{citiesWithGames.map(city => <div key={city}><label><input name="cities" type="radio" value={city} key={Math.random()}></input> {city}</label></div>)}
+								{citiesWithGames.map(city => <div key={city}><label><input name="city" type="radio" value={city} key={Math.random()}></input> {city}</label></div>)}
 							
 						</div>
 						<div>
@@ -221,14 +333,11 @@ export default class StartTrip extends Component{
 							 <input type="submit" value="Get Itenerary" name="action"/>*/}
 						</div>
 					</SSF>
-				</div>
-		
-
-				<h2>Messing with map stuff below...</h2>
-				<div id="map"></div>
+				</div>				
 				
-				<div id="directions-panel"></div>
+				
 				<div id="map2"></div>
+				<div id="directions-panel"></div>
 				<button onClick={::this.drawMap}>Generate map</button>
 				<button onClick={::this.updateLocation}>update location</button>
 
@@ -237,7 +346,6 @@ export default class StartTrip extends Component{
 
 	}
 }
-
 // Talk to JD about SSF
 // A hacky way to do it is to create a function that tells which function (addGameHandler or getIteneraryHandler)
 // to run and then reference THAT function in the onData
