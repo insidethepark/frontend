@@ -160,6 +160,7 @@ export default class StartTrip extends Component{
 
 	logOutHandler() {
 		Cookies.remove('user_email', 'auth_token', 'id');
+		console.log('auth_token', Cookies.get('auth_token'));
 		hashHistory.push('/');
 	}
 

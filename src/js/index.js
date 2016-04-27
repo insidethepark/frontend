@@ -6,9 +6,27 @@ import StartTrip from './start-trip';
 import Itenerary from './itenerary';
 import Login from './login';
 import Itinerary from './itinerary';
+import Cookies from 'js-cookie';
 
 
 ///google maps
+  function isSignedIn() {
+    if (Cookies.get('user_email', 'auth_token', 'id')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function mustSignIn() {
+    if(!isSignedIn) {
+      hashHistory.replace('/');
+    }
+  }
+  function staySignedIn() {
+    if(isSignedIn) {
+      hashHistory.replace('/start-trip');
+    }
+  }
 
 function initMap() {
         var mapDiv = document.getElementById('map');
@@ -23,8 +41,10 @@ render((
 
 	<Router history={hashHistory}>
 		<Route path="/" component={Login}></Route>
-    <Route path="/StartTrip" component={StartTrip}></Route>
-		 <Route path="/itinerary" component={Itinerary}></Route>
+    <Route path="/start-trip" component={StartTrip} onEnter={mustSignIn}></Route>
+		 <Route path="/itinerary" component={Itinerary} onEnter={mustSignIn}></Route>
   </Router>
 
   ), document.querySelector('.app')); 
+
+
