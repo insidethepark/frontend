@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory, Link } from 'react-router';
 import { ajax } from 'jquery';
+import Cookies from 'js-cookie';
 
 
 
@@ -35,6 +36,11 @@ export default class Itinerary extends Component {
 			)
 	}
 
+	logOutHandler() {
+		Cookies.remove('user_email', 'auth_token', 'id');
+		hashHistory.push('/');
+	}
+
 
 
 
@@ -44,6 +50,7 @@ export default class Itinerary extends Component {
 		console.log(events)
 		return (
 			<div className="itinerary-wrapper">
+				<button onClick={this.logOutHandler}>Log Out</button>
 				<h2>Your Roadtrip</h2>
 				<div className="body">
 					<div>
