@@ -41,8 +41,7 @@ render((
 
 	<Router history={hashHistory}>
 		<Route path="/" component={Login}></Route>
-
-    <Route path="/start-trip" component={StartTrip} onEnter={mustSignIn}></Route>
+   <Route path="/start-trip" component={StartTrip} onEnter={mustSignIn}></Route>
 		<Route path="/itinerary" component={Itinerary} onEnter={mustSignIn}></Route>
 
   </Router>
