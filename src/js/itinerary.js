@@ -24,9 +24,12 @@ export default class Itinerary extends Component {
 			console.log(data.events);
 		this.setState({events: data.events});
 		this.drawMap();
+
 		})} else {
 			hashHistory.replace('/');
 		}
+
+
 
 	}
 
@@ -188,19 +191,34 @@ export default class Itinerary extends Component {
 			this.drawMap();
 
 		}
-	}	
+	}
 	 getEvent(event) {
 	 	let gametime = event.datetime_local;
 	 	let tickets = event.url;
+
+	 	// let venueImg = event.performers.filter( team => return team.home_team);
+	 	console.log("event performers",event.performers);
+
+	 	
+		let img;
+
+		if(event.performers[0].home_team === true){
+
+		 	img = event.performers[0].image;
+		}else{
+
+			img = event.performers[1].image;
+		}
+	 	
+
 	 	return ( 
 	 			<div key={event.title}>
 	 				<h2>{moment(gametime).format('dddd, MMMM Do YYYY')} in {event.venue.city}</h2>
-	 				<img src={event.performers[0].image}/>
+	 				<img src={img}/>
 	 				<div>{event.title}</div>
 					<div><a href={tickets}><button>Tickets!!</button></a></div>
 	 				<div>Average price: ${event.stats.average_price}</div>
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
-	 				<div id="map"></div>
 	 			</div>
 			)
 	}
@@ -228,6 +246,7 @@ export default class Itinerary extends Component {
 					<div>
 					{events.map(::this.getEvent)}
 					</div>
+					<div id="map"></div>
 					<Link to="/start-trip">Start Over</Link>
 				</div>
 			</div>
