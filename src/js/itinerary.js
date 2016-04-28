@@ -18,7 +18,7 @@ export default class Itinerary extends Component {
 
 		console.log('auth_token', Cookies.get('auth_token'));
 		if (Cookies.get('user_email', 'auth_token', 'id')) {
-		ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-04-26&datetime_local.lte=2016-04-27T00:00:01&type=mlb&per_page=25').then(data => {
+		ajax(`https://api.seatgeek.com/2/events?datetime_local.gte=${dateString}&datetime_local.lte=${dateString}T23:59:01&type=mlb&per_page=15`).then(data => {
 			console.log(data.events);
 		this.setState({events: data.events})
 		})} else {

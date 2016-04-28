@@ -241,6 +241,16 @@ export default class StartTrip extends Component{
 		////update cities array in state
 
 	}
+	testFunction() {
+		ajax({
+			url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
+			type: 'POST',
+			data: {'local_datetime': '2016-04-28'},
+			headers: {
+				'X-Auth-Token': Cookies.get('auth_token')
+			}
+		}).then(data => console.log(data));
+	}
 
 	getIteneraryHandler(city){
 
@@ -325,6 +335,8 @@ export default class StartTrip extends Component{
 				<div>
 					<button onClick={this.logOutHandler}>Log Out</button>
 					<ReactDatePicker onChange={::this.dateChangeHandler} />
+					<button onClick={this.testFunction}>Test Me</button>
+
 					<div id='game-picker'></div>
 					<SSF onData={::this.dataHandler}>
 						<div>
