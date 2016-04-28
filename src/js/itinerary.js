@@ -213,7 +213,7 @@ export default class Itinerary extends Component {
 	 	
 
 	 	return ( 
-	 			<div key={event.title}>
+	 			<div key={event.title} className="itinerary-event">
 	 				<h2>{moment(gametime).format('dddd, MMMM Do YYYY')} in {event.venue.city}</h2>
 	 				<img src={img}/>
 	 				<div>{event.title}</div>
