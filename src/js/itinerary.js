@@ -191,12 +191,13 @@ export default class Itinerary extends Component {
 	}	
 	 getEvent(event) {
 	 	let gametime = event.datetime_local;
+	 	let tickets = event.url;
 	 	return ( 
 	 			<div key={event.title}>
 	 				<h2>{moment(gametime).format('dddd, MMMM Do YYYY')} in {event.venue.city}</h2>
 	 				<img src={event.performers[0].image}/>
 	 				<div>{event.title}</div>
-	 				<div><button onclick="window.location=${event.url}">Tickets!!</button></div>
+					<div><a href={tickets}><button>Tickets!!</button></a></div>
 	 				<div>Average price: ${event.stats.average_price}</div>
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
 	 				<div id="map2"></div>
@@ -239,6 +240,8 @@ export default class Itinerary extends Component {
 
 
 
+					//<div><button onclick="window.location=${event.url}">Tickets!!</button></div>
+	  				//<a href={event.url}><button>Tickets!!</button></a>
 
 
 
