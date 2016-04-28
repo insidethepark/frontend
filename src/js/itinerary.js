@@ -245,6 +245,7 @@ export default class Itinerary extends Component {
 			<div className="itinerary-wrapper">
 				<button onClick={this.logOutHandler}>Log Out</button>
 				<h2>Your Roadtrip</h2>
+				<h4>{events.length} days, {events.length} parks, 1 damn good time</h4>
 				<div className="body">
 					<div>
 					{events.map(::this.getEvent)}
