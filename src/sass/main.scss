@@ -5,15 +5,43 @@
 @import 'font-awesome/scss/font-awesome';
 @import 'react-date-picker/index';
 
-.body #map2{
+*{
+
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+	font-family: 'Montserrat', sans-serif;
+
+}
+
+.body #map{
 
 	width: 50%;
 	height: 400px;
 
 }
-#map2 {
+#map {
 	width: 50%;
 	height: 400px;
+
+}
+
+button{
+
+	padding: 10px;
+	font-size: 1.1em;
+	border: 1px solid black;
+	border-radius: 5px;
+	background: black;
+	color: white;
+	margin: 5px;
+	&:hover{
+
+		background: white;
+		color: black;
+		
+
+	}
 
 }
 

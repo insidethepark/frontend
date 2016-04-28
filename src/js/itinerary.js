@@ -36,7 +36,7 @@ export default class Itinerary extends Component {
 			console.log("google in comp did mount", google);
 			var directionsService = new google.maps.DirectionsService;
     		var directionsDisplay = new google.maps.DirectionsRenderer;
-		    var mapDiv = document.getElementById('map2');
+		    var mapDiv = document.getElementById('map');
 		    // var map = new google.maps.Map(mapDiv, {
 		    //   center: {lat: 44.540, lng: -78.546},
 		    //   zoom: 8
@@ -119,7 +119,7 @@ export default class Itinerary extends Component {
 			      zoom: 8
 			    }
 			})
-		var mapDiv = document.getElementById('map2');
+		var mapDiv = document.getElementById('map');
 		var map = new google.maps.Map(mapDiv, this.state.mapProps);
 
 	}
@@ -199,7 +199,7 @@ export default class Itinerary extends Component {
 	 				<div><button onclick="window.location=${event.url}">Tickets!!</button></div>
 	 				<div>Average price: ${event.stats.average_price}</div>
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
-	 				<div id="map2"></div>
+	 				<div id="map"></div>
 	 			</div>
 			)
 	}
