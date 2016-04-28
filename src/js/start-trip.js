@@ -324,7 +324,7 @@ export default class StartTrip extends Component{
 
 				<div>
 					<button onClick={this.logOutHandler}>Log Out</button>
-					<ReactDatePicker onChange={::this.dateChangeHandler}/>
+					<ReactDatePicker onChange={::this.dateChangeHandler} />
 					<div id='game-picker'></div>
 					<SSF onData={::this.dataHandler}>
 						<div>
@@ -349,7 +349,5 @@ export default class StartTrip extends Component{
 
 	}
 }
-// Talk to JD about SSF
-// A hacky way to do it is to create a function that tells which function (addGameHandler or getIteneraryHandler)
-// to run and then reference THAT function in the onData
 
+// startDate={moment()}
