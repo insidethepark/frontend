@@ -188,7 +188,9 @@ export default class Itinerary extends Component {
 			this.drawMap();
 
 		}
-	}	
+	}
+
+
 	 getEvent(event) {
 	 	let gametime = event.datetime_local;
 	 	let tickets = event.url;
@@ -197,10 +199,11 @@ export default class Itinerary extends Component {
 	 				<h2>{moment(gametime).format('dddd, MMMM Do YYYY')} in {event.venue.city}</h2>
 	 				<img src={event.performers[0].image}/>
 	 				<div>{event.title}</div>
-					<div><a href={tickets}><button>Tickets!!</button></a></div>
+	 				<div>Price Range: ${event.stats.lowest_price} to ${event.stats.highest_price}</div>
 	 				<div>Average price: ${event.stats.average_price}</div>
+	 				<div>Tickets Remaing: {event.stats.listing_count}</div>
+					<div><a href={tickets}><button>Tickets!!</button></a></div>
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
-	 				<div id="map"></div>
 	 			</div>
 			)
 	}
@@ -228,6 +231,7 @@ export default class Itinerary extends Component {
 					<div>
 					{events.map(::this.getEvent)}
 					</div>
+					<div id="map"></div>
 					<Link to="/start-trip">Start Over</Link>
 				</div>
 			</div>
@@ -236,12 +240,11 @@ export default class Itinerary extends Component {
 
 			)
 		}
+
 }
 
 
 
-					//<div><button onclick="window.location=${event.url}">Tickets!!</button></div>
-	  				//<a href={event.url}><button>Tickets!!</button></a>
 
 
 
