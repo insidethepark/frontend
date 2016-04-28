@@ -5,9 +5,14 @@
 @import 'font-awesome/scss/font-awesome';
 @import 'react-date-picker/index';
 
-#map2{
+.body #map2{
 
-	width: 100%;
+	width: 50%;
+	height: 400px;
+
+}
+#map2 {
+	width: 50%;
 	height: 400px;
 
 }

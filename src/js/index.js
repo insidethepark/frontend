@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 import StartTrip from './start-trip';
-import Itenerary from './itenerary';
 import Login from './login';
 import Itinerary from './itinerary';
 import Cookies from 'js-cookie';
