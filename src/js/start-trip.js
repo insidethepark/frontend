@@ -104,7 +104,7 @@ export default class StartTrip extends Component{
 			console.log("google in comp did mount", google);
 			var directionsService = new google.maps.DirectionsService;
     		var directionsDisplay = new google.maps.DirectionsRenderer;
-		    var mapDiv = document.getElementById('map2');
+		    var mapDiv = document.getElementById('map');
 		    // var map = new google.maps.Map(mapDiv, {
 		    //   center: {lat: 44.540, lng: -78.546},
 		    //   zoom: 8
@@ -187,7 +187,7 @@ export default class StartTrip extends Component{
 			      zoom: 8
 			    }
 			})
-		var mapDiv = document.getElementById('map2');
+		var mapDiv = document.getElementById('map');
 		var map = new google.maps.Map(mapDiv, this.state.mapProps);
 
 	}
@@ -265,23 +265,23 @@ export default class StartTrip extends Component{
 		////update cities array in state
 
 	}
-	testFunction() {
-		ajax({
-			url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
-			type: 'POST',
-			data: {'local_datetime': '2016-04-28'},
-			headers: {
-				'X-Auth-Token': Cookies.get('auth_token')
-			}
-		}).then(data => {
+	// testFunction() {
+	// 	ajax({
+	// 		url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
+	// 		type: 'POST',
+	// 		data: {'local_datetime': '2016-04-28'},
+	// 		headers: {
+	// 			'X-Auth-Token': Cookies.get('auth_token')
+	// 		}
+	// 	}).then(data => {
 
-			console.log(data);
-			data.events.map(event => console.log(event.venue.city));
+	// 		console.log(data);
+	// 		data.events.map(event => console.log(event.venue.city));
 
-			this.setState({citiesWithGames: data.events});
+	// 		this.setState({citiesWithGames: data.events});
 
-		});
-	}
+	// 	});
+	// }
 
 	getIteneraryHandler(city){
 
@@ -326,6 +326,8 @@ export default class StartTrip extends Component{
 
 		let { citiesWithGames } = this.state;
 
+		let espn = 'espn';
+
 
 		return(
 
@@ -333,8 +335,8 @@ export default class StartTrip extends Component{
 
 				<div>
 					<button onClick={this.logOutHandler}>Log Out</button>
+					<h2>Select date below to see that day's games!</h2>
 					<ReactDatePicker onChange={::this.dateChangeHandler} hideFooter={true}/>
-					<button onClick={::this.testFunction}>Test Me</button>
 
 					<div id='game-picker'></div>
 					<SSF onData={::this.dataHandler}>
@@ -353,7 +355,7 @@ export default class StartTrip extends Component{
 				</div>				
 				
 				
-				<div id="map2"></div>
+				<div id="map"></div>
 
 			</div>
 			);
