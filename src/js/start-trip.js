@@ -326,6 +326,7 @@ export default class StartTrip extends Component{
 
 		let { citiesWithGames } = this.state;
 
+
 		return(
 
 			<div>
