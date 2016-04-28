@@ -24,9 +24,12 @@ export default class Itinerary extends Component {
 			console.log(data.events);
 		this.setState({events: data.events});
 		this.drawMap();
+
 		})} else {
 			hashHistory.replace('/');
 		}
+
+
 
 	}
 
@@ -189,15 +192,34 @@ export default class Itinerary extends Component {
 
 		}
 	}
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 1cf9e641c6ea723213a04aeefc4d14cf311c3f98
 	 getEvent(event) {
 	 	let gametime = event.datetime_local;
 	 	let tickets = event.url;
+
+	 	// let venueImg = event.performers.filter( team => return team.home_team);
+	 	console.log("event performers",event.performers);
+
+	 	
+		let img;
+
+		if(event.performers[0].home_team === true){
+
+		 	img = event.performers[0].image;
+		}else{
+
+			img = event.performers[1].image;
+		}
+	 	
+
 	 	return ( 
 	 			<div key={event.title}>
 	 				<h2>{moment(gametime).format('dddd, MMMM Do YYYY')} in {event.venue.city}</h2>
-	 				<img src={event.performers[0].image}/>
+	 				<img src={img}/>
 	 				<div>{event.title}</div>
 	 				<div>Price Range: ${event.stats.lowest_price} to ${event.stats.highest_price}</div>
 	 				<div>Average price: ${event.stats.average_price}</div>
