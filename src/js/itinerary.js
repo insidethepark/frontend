@@ -254,9 +254,6 @@ export default class Itinerary extends Component {
 					<Link to="/start-trip">Start Over</Link>
 				</div>
 			</div>
-
-
-
 			)
 		}
 

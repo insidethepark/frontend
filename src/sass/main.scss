@@ -26,6 +26,75 @@
 
 }
 
+.welcome-message{
+
+	margin-top: 50px;
+	color: white;
+	text-align: center;
+	h1{
+		font-size: 3em;
+	}
+	p{
+		font-size: 1.5em;
+	}
+
+}
+
+.login-wrapper{
+
+	background-image: url('../images/stadium.jpeg');
+	background-size: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+
+}
+
+.login-inner-wrapper{
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+	padding: 40px;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+
+
+}
+
+.login, .signup{
+
+	color: white;
+
+	background: rgba(63, 191, 191, 0.41);
+	background: rgba(187, 175, 138, 0.41);
+	background: hsla(25, 35%, 59%, 0.74);
+	width: 400px;
+	height: 300px;
+	padding: 40px;
+	border-radius: 15px;
+	input{
+		margin-bottom: 5px;
+	}
+	button{
+
+		margin-left: 0;
+
+	}
+	h2{
+		margin-bottom: 5px;
+		font-size: 2em;
+	}
+
+}
+
 button{
 
 	padding: 10px;

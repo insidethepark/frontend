@@ -178,19 +178,19 @@ export default class StartTrip extends Component{
 
 	}
 
-	updateLocation(){
+	// updateLocation(){
 
-		this.setState({
+	// 	this.setState({
 
-		    	mapProps: {
-			      center: {lat: 50.540, lng: -50.546},
-			      zoom: 8
-			    }
-			})
-		var mapDiv = document.getElementById('map');
-		var map = new google.maps.Map(mapDiv, this.state.mapProps);
+	// 	    	mapProps: {
+	// 		      center: {lat: 50.540, lng: -50.546},
+	// 		      zoom: 8
+	// 		    }
+	// 		})
+	// 	var mapDiv = document.getElementById('map');
+	// 	var map = new google.maps.Map(mapDiv, this.state.mapProps);
 
-	}
+	// }
 
 
 	addGameHandler(zip){
