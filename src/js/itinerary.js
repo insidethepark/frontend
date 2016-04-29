@@ -20,7 +20,7 @@ export default class Itinerary extends Component {
 
 		console.log('auth_token', Cookies.get('auth_token'));
 		if (Cookies.get('user_email', 'auth_token', 'id')) {
-		ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-04-28&datetime_local.lte=2016-04-28T23:59:01&type=mlb&per_page=15').then(data => {
+		ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-05-28&datetime_local.lte=2016-05-28T23:59:01&type=mlb&per_page=15').then(data => {
 			console.log(data.events);
 		this.setState({events: data.events});
 		this.drawMap();
@@ -246,17 +246,16 @@ export default class Itinerary extends Component {
 				<button onClick={this.logOutHandler}>Log Out</button>
 				<h2>Your Roadtrip</h2>
 				<h4>{events.length} days, {events.length} parks, 1 damn good time</h4>
-				<div className="body">
-					<div>
+				<div className="itenerary-body">
+					<div className="events-wrapper">
 					{events.map(::this.getEvent)}
 					</div>
 					<div id="map"></div>
-					<Link to="/start-trip">Start Over</Link>
+					<Link to="/start-trip"><button>Start Over</button></Link>
 				</div>
 			</div>
 			)
 		}
-
 }
 
 

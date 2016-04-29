@@ -8,6 +8,7 @@ import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import ReactDatePicker from 'react-date-picker';
 import Cookies from 'js-cookie';
 import SSF from 'react-simple-serial-form';
+import moment from 'moment';
 // require('react-date-picker/base.css');
 
 
@@ -65,35 +66,43 @@ export default class StartTrip extends Component{
 
 		this.setState({startDate: dateString});
 
-		ajax({
-			url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
-			type: 'POST',
-			data: {'local_datetime': dateString},
-			headers: {
-				'X-Auth-Token': Cookies.get('auth_token')
-			}
-		}).then(data => {
+		////////THIS IS THE REAL SHIT BELOW 
 
-			data.events.map(event => {
+		/////DO NOT DELETE
 
-			this.setState({citiesWithGames: data.events});
-
-		})});
-
-		// let URL = `https://api.seatgeek.com/2/events?datetime_local.gte=${dateString}&datetime_local.lte=${dateString}T23:59:01&type=mlb&per_page=15`;
-		let citiesWithGames = [];
-
-		// ajax(URL).then( data => {
+		// ajax({
+		// 	url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
+		// 	type: 'POST',
+		// 	data: {'local_datetime': dateString},
+		// 	headers: {
+		// 		'X-Auth-Token': Cookies.get('auth_token')
+		// 	}
+		// }).then(data => {
 
 		// 	data.events.map(event => {
 
-		// 	citiesWithGames.push(event.venue.city);
+		// 	this.setState({citiesWithGames: data.events});
 
-		// 	});
+		// })});
 
-		// 	this.setState({citiesWithGames});
+		////////DONT DELETE ABOVE
 
-		// })
+		let URL = `https://api.seatgeek.com/2/events?datetime_local.gte=${dateString}&datetime_local.lte=${dateString}T23:59:01&type=mlb&per_page=15`;
+		let citiesWithGames = [];
+
+		ajax(URL).then( data => {
+
+			console.log("data", data);
+
+			// data.events.map(event => {
+
+			// citiesWithGames.push(event.venue.city);
+
+			// });
+
+			this.setState({citiesWithGames: data.events});
+
+		})
 
 	}
 
@@ -153,7 +162,7 @@ export default class StartTrip extends Component{
 		    directionsService.route({
 		          origin: this.start_address.location,
 		          destination: this.end_address.location,
-		          waypoints: updatedWaypts || waypts,
+		          waypoints: waypts,
 		          optimizeWaypoints: true,
 		          travelMode: google.maps.TravelMode.DRIVING
 		        }, function(response, status) {
@@ -203,20 +212,25 @@ export default class StartTrip extends Component{
 		console.log("zip.zip", zip.zip);
 		console.log("date", local_datetime);
 
-		ajax({
-			url:'https://shielded-hollows-39012.herokuapp.com/nextgame',
-			type: 'POST',
-			data: {"local_datetime": local_datetime , "zip": zip },
-			headers: {
-				'X-Auth-Token': Cookies.get('auth_token')
-			}
-		}).then(data => {console.log("data", data)});
+
+		////////////UNCOMMENT TO TEST BACKEND DATA
+
+		// ajax({
+		// 	url:'https://shielded-hollows-39012.herokuapp.com/nextgame',
+		// 	type: 'POST',
+		// 	data: {"local_datetime": local_datetime , "zip": zip },
+		// 	headers: {
+		// 		'X-Auth-Token': Cookies.get('auth_token')
+		// 	}
+		// }).then(data => {console.log("data", data)});
+
+		//////////TURN ON THE STUFF ABOVE DO NOT DELETE
 
 		///may recieve new list of cities back, may have to make get request for them
 
 		
 
-		ajax(`http://ziptasticapi.com/${zip}`).then(cityData => {
+		ajax(`http://ziptasticapi.com/${zip.zip}`).then(cityData => {
 
 			let totalPitStops = this.state.totalPitStops + 1;
 
@@ -224,17 +238,27 @@ export default class StartTrip extends Component{
 
 			let route = this.state.waypts;
 
-			console.log(cityData);
+			console.log("citydata=>",cityData);
+
+			let json = JSON.parse(cityData);
+			console.log("citydata.city=>",json.city);
+
+			
+			
+			
+			
 
 			if (totalPitStops === 1){
 
-				this.start_address = {location: cityData.city, stopover: true};
+				this.start_address = {location: json.city, stopover: true};
+				console.log("this.start_address", this.start_address);
 
 			}
 
 			if (totalPitStops === 2){
 
-				this.end_address = {location: cityData.city, stopover: true};
+				this.end_address = {location: json.city, stopover: true};
+				console.log("this.end_address", this.end_address);
 
 				this.drawMap();
 
@@ -244,7 +268,7 @@ export default class StartTrip extends Component{
 
 				route.push(this.end_address);
 				this.setState({waypts: route});
-				this.end_address = {location: cityData.city, stopover: true};
+				this.end_address = {location: json.city, stopover: true};
 
 				console.log("waypts=>",this.state.waypts);
 
@@ -307,6 +331,8 @@ export default class StartTrip extends Component{
 
 		}
 
+		hashHistory.push('/itinerary');
+
 	}
 
 	dataHandler(data) {
@@ -324,36 +350,47 @@ export default class StartTrip extends Component{
 
 	render(){
 
-		let { citiesWithGames } = this.state;
+		let { citiesWithGames, startDate } = this.state;
+
+		let gameDate = function(){ return moment(startDate).format('dddd, MMMM Do YYYY') === "Invalid date" ? "Click calendar to see available games" :  moment(startDate).format('dddd, MMMM Do YYYY')}
 
 
 		return(
 
 			<div>
-
-				<div>
-					<button onClick={this.logOutHandler}>Log Out</button>
-					<h2>Select date below to see that day's games!</h2>
-					<ReactDatePicker onChange={::this.dateChangeHandler} hideFooter={true}/>
-
-					<div id='game-picker'></div>
-					<SSF onData={::this.dataHandler}>
-						<div>
-							
-								{citiesWithGames.map(event => <div key={event.venue.postal_code}><label><input name="zip" type="radio" value={event.venue.postal_code} key={Math.random()}></input> {event.title}</label></div>)}
-							
-						</div>
-						<div>
-							 <button onClick={() => this.action = 'add'}>Add another game</button>
-							 <button onClick={() => this.action = 'get'}>Get Itenerary</button>
-							 {/*<input type="submit" value="Add Another Game" name="action"/>
-							 <input type="submit" value="Get Itenerary" name="action"/>*/}
-						</div>
-					</SSF>
+				<button onClick={this.logOutHandler}>Log Out</button>
+				<div className="start-trip-wrapper">
+					
+					<div className="calendar">
+						<h2>Select date below to see that day's games!</h2>
+						<ReactDatePicker onChange={::this.dateChangeHandler} hideFooter={true}/>
+						<div id="map"></div>
+					</div>
+					<div className="games">
+						<div id="game-date">{gameDate()}</div>
+						<div style={{"color": "grey"}}>ATL >> Bos >> SF >> SEA >> Bos >> SF >> SEA >> Bos >> SF >> SEA </div>
+						<div id='game-picker'></div>
+						<SSF onData={::this.dataHandler}>
+							<div>
+								<button onClick={() => this.action = 'add'}>Add another game</button>
+							</div>
+							<div>
+								
+									{citiesWithGames.map(event => <div key={event.venue.postal_code} className="matchups"><label><input name="zip" type="radio" value={event.venue.postal_code} key={Math.random()}></input> {event.title}</label></div>)}
+								
+							</div>
+							<div>
+								 
+								 <button onClick={() => this.action = 'get'}>Finalize Itinerary</button>
+								 {/*<input type="submit" value="Add Another Game" name="action"/>
+								 <input type="submit" value="Get Itenerary" name="action"/>*/}
+							</div>
+						</SSF>
+					</div>
 				</div>				
 				
 				
-				<div id="map"></div>
+				
 
 			</div>
 			);
