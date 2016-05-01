@@ -44,18 +44,10 @@ window.initMap;
 render((
 
 	<Router history={hashHistory}>
-<<<<<<< HEAD
 		<Route path="/" component={Login}></Route>
     <Route path="/start-trip" component={StartTrip} onEnter={mustSignIn}></Route>
   	<Route path="/itinerary" component={Itinerary} onEnter={mustSignIn}></Route>
-=======
-		
-    <Route path="/" component={Login}></Route>
-    <Route path="/start-trip" component={StartTrip} onEnter={mustSignIn}></Route>
-		<Route path="/itinerary" component={Itinerary} onEnter={mustSignIn}></Route>
-
->>>>>>> 8141c87c13369688ea38c4a0415eb1710cf245e4
-  </Router>
+ </Router>
 
   ), document.querySelector('.app')); 
 

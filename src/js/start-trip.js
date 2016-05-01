@@ -357,31 +357,7 @@ export default class StartTrip extends Component{
 		return(
 			<div>
 				<button onClick={this.logOutHandler}>Log Out</button>
-<<<<<<< HEAD
-				<div>
-					<h2>Select date below to see that day's games!</h2>
-					<ReactDatePicker onChange={::this.dateChangeHandler} hideFooter={true}/>
-
-					<div id='game-picker'></div>
-					<SSF onData={::this.dataHandler}>
-						<div>
-							{citiesWithGames.map(event => <div key={event.venue.postal_code}><label><input name="zip" type="radio" value={event.venue.postal_code} key={Math.random()}></input> {event.title}</label></div>)}
-						</div>
-						<div>
-							 <button onClick={() => this.action = 'add'}>Add another game</button>
-						<div className="get-itinerary">
-							 <button onClick={() => this.action = 'get'}>Get Itenerary</button>
-						</div>
-							 {/*<input type="submit" value="Add Another Game" name="action"/>
-							 <input type="submit" value="Get Itenerary" name="action"/>*/}
-						</div>
-					</SSF>
-				</div>				
-				
-				<div id="map"></div>
-=======
 				<div className="start-trip-wrapper">
-					
 					<div className="calendar">
 						<h2>Select date below to see that day's games!</h2>
 						<ReactDatePicker onChange={::this.dateChangeHandler} hideFooter={true}/>
@@ -409,10 +385,6 @@ export default class StartTrip extends Component{
 						</SSF>
 					</div>
 				</div>				
-				
-				
-				
->>>>>>> 8141c87c13369688ea38c4a0415eb1710cf245e4
 
 			</div>
 			);
