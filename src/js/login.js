@@ -31,25 +31,17 @@ export default class Login extends Component{
 				
 		    	if (status == 200){
 
-		    		console.log("response.user =>",response.user);
-		    		console.log("response.user.id =>",response.user.id);
-
 					Cookies.set('user_email', response.user.email);
 					Cookies.set('auth_token', response.user.auth_token);
-					Cookies.set('id', response.user.id);
 					loggedInUser = Cookies.get();
-					// loggedInUser = Cookies.get('auth_token');
 					
 					console.log("loggedInUser",loggedInUser);
 
 					hashHistory.push('/start-trip');
 
-		}
+				}
 
-		
-
-	})}
-		else{
+			})}else{
 
 					alert("You need to enter both an email and a password to login");
 
