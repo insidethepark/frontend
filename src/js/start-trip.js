@@ -32,7 +32,7 @@ export default class StartTrip extends Component{
 
 	}
 	componentWillMount() {
-		if (Cookies.get('user_email', 'auth_token', 'id')) {
+		if (Cookies.get('user_email', 'auth_token')) {
 			return true;
 		} 	else {
 			hashHistory.replace('/');
@@ -326,32 +326,28 @@ export default class StartTrip extends Component{
 
 		let { citiesWithGames } = this.state;
 
-
 		return(
-
 			<div>
-
+				<button onClick={this.logOutHandler}>Log Out</button>
 				<div>
-					<button onClick={this.logOutHandler}>Log Out</button>
 					<h2>Select date below to see that day's games!</h2>
 					<ReactDatePicker onChange={::this.dateChangeHandler} hideFooter={true}/>
 
 					<div id='game-picker'></div>
 					<SSF onData={::this.dataHandler}>
 						<div>
-							
-								{citiesWithGames.map(event => <div key={event.venue.postal_code}><label><input name="zip" type="radio" value={event.venue.postal_code} key={Math.random()}></input> {event.title}</label></div>)}
-							
+							{citiesWithGames.map(event => <div key={event.venue.postal_code}><label><input name="zip" type="radio" value={event.venue.postal_code} key={Math.random()}></input> {event.title}</label></div>)}
 						</div>
 						<div>
 							 <button onClick={() => this.action = 'add'}>Add another game</button>
+						<div className="get-itinerary">
 							 <button onClick={() => this.action = 'get'}>Get Itenerary</button>
+						</div>
 							 {/*<input type="submit" value="Add Another Game" name="action"/>
 							 <input type="submit" value="Get Itenerary" name="action"/>*/}
 						</div>
 					</SSF>
 				</div>				
-				
 				
 				<div id="map"></div>
 
