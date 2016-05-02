@@ -30,14 +30,12 @@ export default class Itinerary extends Component {
 		}
 
 		ajax({
-			url:'https://shielded-hollows-39012.herokuapp.com/itinerary',
-			type: 'GET',
-			headers: {
-				'X-Auth-Token': Cookies.get('auth_token')
-			}
-		}).then(data => {console.log("data", data)});
-
-
+		  	url:'https://shielded-hollows-39012.herokuapp.com/itinerary',
+		  	type: 'POST',
+		  	headers: {
+		  		'X-Auth-Token': Cookies.get('auth_token')
+		  	}
+		  }).then(data => {console.log("data", data)});
 
 	}
 
@@ -206,7 +204,6 @@ export default class Itinerary extends Component {
 	 	let tickets = event.url;
 
 	 	// let venueImg = event.performers.filter( team => return team.home_team);
-	 	console.log("event performers",event.performers);
 
 	 	
 		let img;
@@ -251,7 +248,10 @@ export default class Itinerary extends Component {
 		console.log(events)
 		return (
 			<div className="itinerary-wrapper">
-				<button onClick={this.logOutHandler}>Log Out</button>
+				<header>
+					<button onClick={this.logOutHandler}>Log Out</button>
+					<Link to="/start-trip"><button>Start Over</button></Link>
+				</header>
 				<h2>Your Roadtrip</h2>
 				<h4>{events.length} days, {events.length} parks, 1 damn good time</h4>
 				<div className="itenerary-body">
@@ -259,7 +259,6 @@ export default class Itinerary extends Component {
 					{events.map(::this.getEvent)}
 					</div>
 					<div id="map"></div>
-					<Link to="/start-trip"><button>Start Over</button></Link>
 				</div>
 			</div>
 			)
