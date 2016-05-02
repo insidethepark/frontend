@@ -197,13 +197,23 @@ header {
 	background-color: #74a453;
 	box-shadow: 0 5px 5px -3px black;
 }
-header button {
-	background-color: #74a453;
-	border-color: white;
+ header i.fa {
+	cursor: pointer;
+	color: black;
+	font-size: 1.5em;
+	line-height: 64px;
+	margin-right: 25px;
+	&:hover {
+		color: white;
+	}
+
 
 
 }
+.icon-label {
+	font-family: 'Montserrat', sans-serif;
 
+}
 
 
 

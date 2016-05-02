@@ -412,7 +412,7 @@ export default class StartTrip extends Component{
 		return(
 			<div>
 				<header>
-					<button onClick={this.logOutHandler}>Log Out</button>
+					<i onClick={this.logOutHandler} className="fa fa-sign-out" aria-hidden="true"><span className='icon-label'> Log Out</span></i>
 				</header>
 				<div className="start-trip-wrapper">
 					<div className="calendar">
