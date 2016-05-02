@@ -25,7 +25,8 @@ export default class StartTrip extends Component{
 			currentTrip: [],
 			waypts: [],
 			totalPitStops: 0,
-			start_address: []
+			start_address: [],
+			mapStyle: {}
 
 		}
 
@@ -70,39 +71,39 @@ export default class StartTrip extends Component{
 
 		/////DO NOT DELETE
 
-		// ajax({
-		// 	url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
-		// 	type: 'POST',
-		// 	data: {'local_datetime': dateString},
-		// 	headers: {
-		// 		'X-Auth-Token': Cookies.get('auth_token')
-		// 	}
-		// }).then(data => {
+		ajax({
+			url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
+			type: 'POST',
+			data: {'local_datetime': dateString},
+			headers: {
+				'X-Auth-Token': Cookies.get('auth_token')
+			}
+		}).then(data => {
 
-		// 	data.events.map(event => {
-
-		// 	this.setState({citiesWithGames: data.events});
-
-		// })});
-
-		////////DONT DELETE ABOVE
-
-		let URL = `https://api.seatgeek.com/2/events?datetime_local.gte=${dateString}&datetime_local.lte=${dateString}T23:59:01&type=mlb&per_page=15`;
-		let citiesWithGames = [];
-
-		ajax(URL).then( data => {
-
-			console.log("data", data);
-
-			// data.events.map(event => {
-
-			// citiesWithGames.push(event.venue.city);
-
-			// });
+			data.events.map(event => {
 
 			this.setState({citiesWithGames: data.events});
 
-		})
+		})});
+
+		////////DONT DELETE ABOVE
+
+		// let URL = `https://api.seatgeek.com/2/events?datetime_local.gte=${dateString}&datetime_local.lte=${dateString}T23:59:01&type=mlb&per_page=15`;
+		// let citiesWithGames = [];
+
+		// ajax(URL).then( data => {
+
+		// 	console.log("data", data);
+
+		// 	// data.events.map(event => {
+
+		// 	// citiesWithGames.push(event.venue.city);
+
+		// 	// });
+
+		// 	this.setState({citiesWithGames: data.events});
+
+		// })
 
 	}
 
@@ -215,14 +216,14 @@ export default class StartTrip extends Component{
 
 		////////////UNCOMMENT TO TEST BACKEND DATA
 
-		// ajax({
-		// 	url:'https://shielded-hollows-39012.herokuapp.com/nextgame',
-		// 	type: 'POST',
-		// 	data: {"local_datetime": local_datetime , "zip": zip },
-		// 	headers: {
-		// 		'X-Auth-Token': Cookies.get('auth_token')
-		// 	}
-		// }).then(data => {console.log("data", data)});
+		ajax({
+			url:'https://shielded-hollows-39012.herokuapp.com/nextgame',
+			type: 'POST',
+			data: {"local_datetime": local_datetime , "zip": zip },
+			headers: {
+				'X-Auth-Token': Cookies.get('auth_token')
+			}
+		}).then(data => {console.log("data", data)});
 
 		//////////TURN ON THE STUFF ABOVE DO NOT DELETE
 
@@ -259,6 +260,7 @@ export default class StartTrip extends Component{
 
 				this.end_address = {location: json.city, stopover: true};
 				console.log("this.end_address", this.end_address);
+				this.setState({mapStyle: {'border': '4px double grey'}});
 
 				this.drawMap();
 
@@ -335,9 +337,33 @@ export default class StartTrip extends Component{
 
 	}
 
+	freeDayHandler(){
+
+		console.log('free day added');
+
+	}
+
 	dataHandler(data) {
 
-		this.action === 'add' ? this.addGameHandler(data): this.getIteneraryHandler(data);
+		console.log(this.action);
+
+		// this.action === 'add' ? this.addGameHandler(data): this.getIteneraryHandler(data);
+
+		// this.action === 'skip' ? this.freeDayHandler 
+
+		switch (this.action){
+
+			case 'add': 
+				this.addGameHandler(data);
+				break;
+			case 'get':
+				this.getIteneraryHandler(data);
+				break;
+			case 'skip':
+				this.freeDayHandler();
+				break;
+
+		}
 		this.action = null;
 	}
 
@@ -364,7 +390,7 @@ export default class StartTrip extends Component{
 					<div className="calendar">
 						<h2>Select date below to see that day's games!</h2>
 						<ReactDatePicker onChange={::this.dateChangeHandler} hideFooter={true}/>
-						<div id="map"></div>
+						<div id="map" style={this.state.mapStyle}></div>
 					</div>
 					<div className="games">
 						<div id="game-date">{gameDate()}</div>
@@ -373,6 +399,7 @@ export default class StartTrip extends Component{
 						<SSF onData={::this.dataHandler}>
 							<div>
 								<button onClick={() => this.action = 'add'}>Add another game</button>
+								<button onClick={() => this.action = 'skip'}>Add a free day</button>
 							</div>
 							<div>
 								
