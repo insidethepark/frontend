@@ -252,13 +252,15 @@ export default class Itinerary extends Component {
 					<button onClick={this.logOutHandler}>Log Out</button>
 					<Link to="/start-trip"><button>Start Over</button></Link>
 				</header>
-				<h2>Your Roadtrip</h2>
-				<h4>{events.length} days, {events.length} parks, 1 damn good time</h4>
-				<div className="itenerary-body">
-					<div className="events-wrapper">
-					{events.map(::this.getEvent)}
+				<div className="itinerary-main">
+					<h2>Your Roadtrip</h2>
+					<h4>{events.length} days, {events.length} parks, 1 damn good time</h4>
+					<div className="itenerary-body">
+						<div className="events-wrapper">
+						{events.map(::this.getEvent)}
+						</div>
+						<div id="map"></div>
 					</div>
-					<div id="map"></div>
 				</div>
 			</div>
 			)

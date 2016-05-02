@@ -257,7 +257,9 @@ export default class StartTrip extends Component{
 
 		
 
-		ajax(`http://ziptasticapi.com/${zip.zip}`).then(cityData => {
+		// ajax(`http://ziptasticapi.com/${zip.zip}`).then(cityData => {
+
+		ajax(`http://geocoder.ca/?postal=${zip.zip}&geoit=xml&json=1`).then(cityData => {
 
 			let totalPitStops = this.state.totalPitStops + 1;
 
@@ -266,9 +268,10 @@ export default class StartTrip extends Component{
 			let route = this.state.waypts;
 
 			console.log("citydata=>",cityData);
+			console.log("citydata=>",cityData.standard.city);
 
-			let json = JSON.parse(cityData);
-			console.log("citydata.city=>",json.city);
+			// let json = JSON.parse(cityData);
+			console.log("citydata.city=>",cityData.standard.city);
 
 			
 			
@@ -277,14 +280,14 @@ export default class StartTrip extends Component{
 
 			if (totalPitStops === 1){
 
-				this.start_address = {location: json.city, stopover: true};
+				this.start_address = {location: cityData.standard.city, stopover: true};
 				console.log("this.start_address", this.start_address);
 
 			}
 
 			if (totalPitStops === 2){
 
-				this.end_address = {location: json.city, stopover: true};
+				this.end_address = {location: cityData.standard.city, stopover: true};
 				console.log("this.end_address", this.end_address);
 				this.setState({mapStyle: {'border': '4px double grey'}});
 
@@ -296,7 +299,7 @@ export default class StartTrip extends Component{
 
 				route.push(this.end_address);
 				this.setState({waypts: route});
-				this.end_address = {location: json.city, stopover: true};
+				this.end_address = {location: cityData.standard.city, stopover: true};
 
 				console.log("waypts=>",this.state.waypts);
 
@@ -412,7 +415,7 @@ export default class StartTrip extends Component{
 				<div className="start-trip-wrapper">
 					<div className="calendar">
 						<h2>Select date below to see that day's games!</h2>
-						<ReactDatePicker style={{"border-radius": "5px"}} onChange={::this.dateChangeHandler} hideFooter={true}/>
+						<ReactDatePicker style={{"borderRadius": "5px"}} onChange={::this.dateChangeHandler} hideFooter={true}/>
 						<div id="map" style={this.state.mapStyle}></div>
 					</div>
 					<div className="games">
@@ -426,7 +429,7 @@ export default class StartTrip extends Component{
 							</div>
 							<div>
 								
-									{citiesWithGames.map(event => <div key={event.venue.postal_code} className="matchups"><label><input name="zip" type="radio" value={event.venue.postal_code} key={Math.random()}></input> {event.title}</label></div>)}
+									{citiesWithGames.map(event => <div key={event.venue.postal_code} className="matchups"><label><input name="zip" type="radio" value={event.venue.postal_code} key={Math.random()}></input> {event.title} {event.datetime_utc}</label></div>)}
 								
 							</div>
 							<div>
