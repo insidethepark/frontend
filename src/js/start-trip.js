@@ -412,7 +412,7 @@ export default class StartTrip extends Component{
 				<div className="start-trip-wrapper">
 					<div className="calendar">
 						<h2>Select date below to see that day's games!</h2>
-						<ReactDatePicker onChange={::this.dateChangeHandler} hideFooter={true}/>
+						<ReactDatePicker style={{"border-radius": "5px"}} onChange={::this.dateChangeHandler} hideFooter={true}/>
 						<div id="map" style={this.state.mapStyle}></div>
 					</div>
 					<div className="games">
