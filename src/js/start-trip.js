@@ -70,39 +70,39 @@ export default class StartTrip extends Component{
 
 		/////DO NOT DELETE
 
-		// ajax({
-		// 	url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
-		// 	type: 'POST',
-		// 	data: {'local_datetime': dateString},
-		// 	headers: {
-		// 		'X-Auth-Token': Cookies.get('auth_token')
-		// 	}
-		// }).then(data => {
+		 ajax({
+		 	url:'https://shielded-hollows-39012.herokuapp.com/firstgamedata',
+		 	type: 'POST',
+		 	data: {'local_datetime': dateString},
+		 	headers: {
+		 		'X-Auth-Token': Cookies.get('auth_token')
+		 	}
+		 }).then(data => {
 
-		// 	data.events.map(event => {
+		 	data.events.map(event => {
 
-		// 	this.setState({citiesWithGames: data.events});
+		 	this.setState({citiesWithGames: data.events});
 
-		// })});
+		 })});
 
 		////////DONT DELETE ABOVE
 
-		let URL = `https://api.seatgeek.com/2/events?datetime_local.gte=${dateString}&datetime_local.lte=${dateString}T23:59:01&type=mlb&per_page=15`;
-		let citiesWithGames = [];
+		// let URL = `https://api.seatgeek.com/2/events?datetime_local.gte=${dateString}&datetime_local.lte=${dateString}T23:59:01&type=mlb&per_page=15`;
+		// let citiesWithGames = [];
 
-		ajax(URL).then( data => {
+		// ajax(URL).then( data => {
 
-			console.log("data", data);
+		// 	console.log("data", data);
 
-			// data.events.map(event => {
+		// 	// data.events.map(event => {
 
-			// citiesWithGames.push(event.venue.city);
+		// 	// citiesWithGames.push(event.venue.city);
 
-			// });
+		// 	// });
 
-			this.setState({citiesWithGames: data.events});
+		// 	this.setState({citiesWithGames: data.events});
 
-		})
+		// })
 
 	}
 
@@ -169,16 +169,16 @@ export default class StartTrip extends Component{
 		          if (status === google.maps.DirectionsStatus.OK) {
 		            directionsDisplay.setDirections(response);
 		            var route = response.routes[0];
-		            var summaryPanel = document.getElementById('directions-panel');
-		            summaryPanel.innerHTML = '';
+		            //var summaryPanel = document.getElementById('directions-panel');
+		            //summaryPanel.innerHTML = '';
 		            // For each route, display summary information.
 		            for (var i = 0; i < route.legs.length; i++) {
 		              var routeSegment = i + 1;
-		              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-		                  '</b><br>';
-		              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-		              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-		              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+		             // summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+		                  //'</b><br>';
+		              //summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+		              //summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+		              //summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
 		            }
 		          } else {
 		            window.alert('Directions request failed due to ' + status);
@@ -215,14 +215,39 @@ export default class StartTrip extends Component{
 
 		////////////UNCOMMENT TO TEST BACKEND DATA
 
-		// ajax({
-		// 	url:'https://shielded-hollows-39012.herokuapp.com/nextgame',
-		// 	type: 'POST',
-		// 	data: {"local_datetime": local_datetime , "zip": zip },
-		// 	headers: {
-		// 		'X-Auth-Token': Cookies.get('auth_token')
-		// 	}
-		// }).then(data => {console.log("data", data)});
+		  ajax({
+		  	url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
+		  	type: 'POST',
+		  	data: {"local_datetime": local_datetime , "zip": zip.zip },
+		  	headers: {
+		  		'X-Auth-Token': Cookies.get('auth_token')
+		  	}
+		  }).then(data => {console.log("data", data)});
+
+		 ajax({
+		 	url:'https://shielded-hollows-39012.herokuapp.com/nextgamedata',
+		 	type: 'POST',
+		 	data: {"local_datetime": local_datetime , "zip": zip.zip },
+		 	headers: {
+		 		'X-Auth-Token': Cookies.get('auth_token')
+		 	}
+		 }).then(data => {
+		 	console.log("nextgamedata", data);
+
+		 		//  data.events.map(event => {
+
+		 		 
+				 // citiesWithGames.push(event.venue.city);
+
+				 // });
+
+		 	this.setState({citiesWithGames: data.events});
+
+		 
+
+
+
+		 });
 
 		//////////TURN ON THE STUFF ABOVE DO NOT DELETE
 
