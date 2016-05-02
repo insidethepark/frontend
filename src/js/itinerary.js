@@ -225,7 +225,8 @@ export default class Itinerary extends Component {
 	 				<div>Price Range: ${event.stats.lowest_price} to ${event.stats.highest_price}</div>
 	 				<div>Average price: ${event.stats.average_price}</div>
 	 				<div>Tickets Remaing: {event.stats.listing_count}</div>
-					<div><a href={tickets}><button>Tickets!!</button></a></div>
+					<div><a href={tickets}><button><i class="fa fa-ticket" aria-hidden="true"></i>
+ Tickets!!</button></a></div>
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
 	 			</div>
 			)
