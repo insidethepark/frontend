@@ -249,8 +249,8 @@ export default class Itinerary extends Component {
 		return (
 			<div className="itinerary-wrapper">
 				<header>
-					<button onClick={this.logOutHandler}>Log Out</button>
-					<Link to="/start-trip"><button>Start Over</button></Link>
+					<i onClick={this.logOutHandler} className="fa fa-sign-out" aria-hidden="true"><span className='icon-label'> Log Out</span></i>
+					<Link to="/start-trip"><i className="fa fa-home" aria-hidden="true"> <span className="icon-label">Start Over</span></i></Link>
 				</header>
 				<div className="itinerary-main">
 					<h2>Your Roadtrip</h2>
