@@ -24,6 +24,7 @@ export default class StartTrip extends Component{
 			mapProps: {},
 			currentTrip: [],
 			waypts: [],
+			route: [],
 			totalPitStops: 0,
 			start_address: [],
 			mapStyle: {}
@@ -204,32 +205,35 @@ export default class StartTrip extends Component{
 	// }
 
 
-	addGameHandler(zip){
+	addGameHandler(id){
 
 		////ajax post request to send city zip to backend
 
 		let local_datetime = this.state.startDate;
 
-		console.log("zip", zip);
-		console.log("zip.zip", zip.zip);
-		console.log("date", local_datetime);
+		console.log("id", id);
+		// console.log("zip.zip", zip.zip);
+		// console.log("date", local_datetime);
 
 
 		////////////UNCOMMENT TO TEST BACKEND DATA
 
+
 		  ajax({
 		  	url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
 		  	type: 'POST',
-		  	data: {"local_datetime": local_datetime , "zip": zip.zip },
+		  	data: {"local_datetime": local_datetime , "game_number": id },
 		  	headers: {
 		  		'X-Auth-Token': Cookies.get('auth_token')
 		  	}
 		  }).then(data => {console.log("data", data)});
 
+		  ///////Below, send them the city/state data. Will need to make an ajax call first
+
 		 ajax({
 		 	url:'https://shielded-hollows-39012.herokuapp.com/nextgamedata',
 		 	type: 'POST',
-		 	data: {"local_datetime": local_datetime , "zip": zip.zip },
+		 	data: {"local_datetime": local_datetime , "game_number": id },
 		 	headers: {
 		 		'X-Auth-Token': Cookies.get('auth_token')
 		 	}
@@ -259,35 +263,32 @@ export default class StartTrip extends Component{
 
 		// ajax(`http://ziptasticapi.com/${zip.zip}`).then(cityData => {
 
-		ajax(`http://geocoder.ca/?postal=${zip.zip}&geoit=xml&json=1`).then(cityData => {
+		ajax(`https://api.seatgeek.com/2/events?id=${id.id}`).then(data=>{
+
+			let address = data.events[0].venue.address + " " + data.events[0].venue.extended_address;
+			console.log("address=>", address);
+
 
 			let totalPitStops = this.state.totalPitStops + 1;
 
 			this.setState({totalPitStops});
 
-			let route = this.state.waypts;
+			let route = this.state.route;
+			route.push(data.events[0].venue.city);
+			this.setState({route});
+			console.log("route", route);
 
-			console.log("citydata=>",cityData);
-			console.log("citydata=>",cityData.standard.city);
-
-			// let json = JSON.parse(cityData);
-			console.log("citydata.city=>",cityData.standard.city);
-
-			
-			
-			
-			
 
 			if (totalPitStops === 1){
 
-				this.start_address = {location: cityData.standard.city, stopover: true};
+				this.start_address = {location: address, stopover: true};
 				console.log("this.start_address", this.start_address);
 
 			}
 
 			if (totalPitStops === 2){
 
-				this.end_address = {location: cityData.standard.city, stopover: true};
+				this.end_address = {location: address, stopover: true};
 				console.log("this.end_address", this.end_address);
 				this.setState({mapStyle: {'border': '4px double grey'}});
 
@@ -297,9 +298,11 @@ export default class StartTrip extends Component{
 
 			if(totalPitStops >= 3){
 
-				route.push(this.end_address);
-				this.setState({waypts: route});
-				this.end_address = {location: cityData.standard.city, stopover: true};
+				let waypts = this.state.waypts;
+
+				waypts.push(this.end_address);
+				this.setState({waypts});
+				this.end_address = {location: address, stopover: true};
 
 				console.log("waypts=>",this.state.waypts);
 
@@ -308,6 +311,33 @@ export default class StartTrip extends Component{
 			}
 
 		});
+
+		// });
+
+		// ajax(`http://geocoder.ca/?postal=${zip.zip}&geoit=xml&json=1`).then(cityData => {
+
+			
+
+			
+
+			// if (totalPitStops === 1){
+
+			// 	this.start_address = {location: cityData.standard.city, stopover: true};
+			// 	console.log("this.start_address", this.start_address);
+
+			// }
+
+			// if (totalPitStops === 2){
+
+			// 	this.end_address = {location: cityData.standard.city, stopover: true};
+			// 	console.log("this.end_address", this.end_address);
+			// 	this.setState({mapStyle: {'border': '4px double grey'}});
+
+			// 	this.drawMap();
+
+			// }
+
+			
 
 
 		
@@ -422,7 +452,7 @@ export default class StartTrip extends Component{
 					</div>
 					<div className="games">
 						<div id="game-date">{gameDate()}</div>
-						<div style={{"color": "grey"}}>ATL >> Bos >> SF >> SEA >> Bos >> SF >> SEA >> Bos >> SF >> SEA </div>
+						<div style={{"color": "grey"}}>{this.state.route.join(' >> ')}</div>
 						<div id='game-picker'></div>
 						<SSF onData={::this.dataHandler}>
 							<div>
@@ -431,7 +461,7 @@ export default class StartTrip extends Component{
 							</div>
 							<div>
 								
-									{citiesWithGames.map(event => <div key={event.venue.postal_code} className="matchups"><label><input name="zip" type="radio" value={event.venue.postal_code} key={Math.random()}></input> {event.title} {event.datetime_utc}</label></div>)}
+									{citiesWithGames.map(event => <div key={event.id} className="matchups"><label><input name="id" type="radio" value={event.id} key={event.id}></input> {event.title} {event.datetime_utc}</label></div>)}
 								
 							</div>
 							<div>
