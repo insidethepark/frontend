@@ -24,6 +24,57 @@
 .itinerary-main{
 
 	margin-top: 64px;
+	position: relative;
+
+}
+
+.fa-times-circle{
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	font-size: 1.8em;
+	color: white;
+}
+
+.modal-default{
+
+	display: none;
+
+}
+
+.modal{
+
+	display: block;
+	position: absolute;
+	left:0px;
+	right:0px;
+	top:0px;
+	width: 75%;
+	margin: 100px auto;
+	background: black;
+	position: fixed;
+	color: white;
+
+}
+
+.modal-wrapper{
+
+	position: absolute;
+	left:0px;
+	right:0px;
+	top:0px;
+	bottom:0px;
+	background: rgba(154, 146, 146, 0.50);
+	position: fixed;
+
+}
+
+.modal-content{
+
+	display: flex;
+	justify-content: space-around;
+	font-size: 1.5em;
+
 
 }
 
@@ -196,6 +247,7 @@ header {
 	left: 0;
 	background-color: #74a453;
 	box-shadow: 0 5px 5px -3px black;
+	z-index: 1000;
 }
  header i.fa {
 	cursor: pointer;

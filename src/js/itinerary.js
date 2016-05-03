@@ -199,6 +199,19 @@ export default class Itinerary extends Component {
 		}
 	}
 
+	modalHandler(){
+
+		let modalClass = document.querySelector('#modal');
+		let modalWrapperClass = document.querySelector('#modal-wrapper');
+
+		modalClass.classList.remove("modal-default");
+		modalWrapperClass.classList.remove("modal-default");
+
+		modalClass.classList.add("modal");
+		modalWrapperClass.classList.add("modal-wrapper");
+
+	}
+
 	 getEvent(event) {
 	 	let gametime = event.datetime_local;
 	 	let tickets = event.url;
@@ -225,9 +238,52 @@ export default class Itinerary extends Component {
 	 				<div>Price Range: ${event.stats.lowest_price} to ${event.stats.highest_price}</div>
 	 				<div>Average price: ${event.stats.average_price}</div>
 	 				<div>Tickets Remaing: {event.stats.listing_count}</div>
-					<div><a href={tickets}><button><i class="fa fa-ticket" aria-hidden="true"></i>
- Tickets!!</button></a></div>
+					<div><a href={tickets}><button><i className="fa fa-ticket" aria-hidden="true"></i> Tickets!!</button></a></div>
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
+	 				<div><i className="fa fa-plus" onClick={::this.modalHandler} aria-hidden="true"></i> See travel info (flights, car rentals, hotels)</div>
+		 			<div id="modal-wrapper" className="modal-default">	
+		 				<div id="modal" className="modal-default">
+
+		 					<i className="fa fa-times-circle" aria-hidden="true"></i>
+
+
+		 					<h1>Travel Info for {event.venue.city}</h1>
+		 					<div className="modal-content">
+			 					<div>
+			 						<h3>Hotels</h3>
+			 						<ul>
+				 						<li>hotel name</li>
+				 						<li>rating</li>
+				 						<li>URL</li>
+				 						<li>google map</li>
+				 						<li>distance from ballpark</li>
+			 						</ul>
+			 					</div>
+			 					<div>
+			 						<h3>Food</h3>
+			 						<ul>
+				 						<li>hotel name</li>
+				 						<li>rating</li>
+				 						<li>URL</li>
+				 						<li>google map</li>
+				 						<li>distance from ballpark</li>
+			 						</ul>
+			 					</div>
+			 					<div>
+			 						<h3>Attractions</h3>
+			 						<ul>
+				 						<li>hotel name</li>
+				 						<li>rating</li>
+				 						<li>URL</li>
+				 						<li>google map</li>
+				 						<li>distance from ballpark</li>
+			 						</ul>
+			 					</div>
+		 					</div>
+
+		 				</div>
+		 			</div>
+	 				<div><i className="fa fa-plus" aria-hidden="true"></i> See {event.venue.city} attractions</div>
 	 			</div>
 			)
 	}
