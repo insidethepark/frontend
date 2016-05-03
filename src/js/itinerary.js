@@ -42,7 +42,8 @@ export default class Itinerary extends Component {
 	drawMap(){
 
 
-			console.log("google in comp did mount", google);
+			// console.log("google in comp did mount", google);
+			console.log("google", google);
 			var directionsService = new google.maps.DirectionsService;
     		var directionsDisplay = new google.maps.DirectionsRenderer;
 		    var mapDiv = document.getElementById('map');
@@ -212,7 +213,79 @@ export default class Itinerary extends Component {
 
 	}
 
+	closeModal(){
+
+		let modalClass = document.querySelector('#modal');
+		let modalWrapperClass = document.querySelector('#modal-wrapper');
+		
+		modalClass.classList.remove("modal");
+		modalWrapperClass.classList.remove("modal-wrapper");
+		
+		modalClass.classList.add("modal-default");
+		modalWrapperClass.classList.add("modal-default");
+
+	}
+
 	 getEvent(event) {
+
+	 	let address = event.venue.address + " " + event.venue.extended_address;
+
+	 	console.log("address", address);
+
+
+	 	var map;
+	 	var geocoder;
+		var service;
+		var infowindow;
+
+		(function initialize() {
+		  var pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
+		  geocoder = new google.maps.Geocoder();
+
+		  map = new google.maps.Map(document.getElementById('mapTest'), {
+		      center: pyrmont,
+		      zoom: 15
+		    });
+
+		  var request = {
+		    location: pyrmont,
+		    radius: '500',
+		    query: 'restaurant'
+		  };
+
+		  service = new google.maps.places.PlacesService(map);
+		  service.textSearch(request, callback);
+		}());
+
+
+		function callback(results, status) {
+		  if (status == google.maps.places.PlacesServiceStatus.OK) {
+		    for (var i = 0; i < results.length; i++) {
+		    	console.log('callback ran');
+		    	console.log("results", results);
+		      // var place = results[i];
+		      // createMarker(results[i]);
+		    }
+		  }
+		}
+
+		function codeAddress() {
+		    var address = document.getElementById("address").value;
+		    geocoder.geocode( { 'address': address}, function(results, status) {
+		      if (status == google.maps.GeocoderStatus.OK) {
+
+		      	console.log("results to ");
+		        map.setCenter(results[0].geometry.location);
+		        var marker = new google.maps.Marker({
+		            map: map,
+		            position: results[0].geometry.location
+		        });
+		      } else {
+		        alert("Geocode was not successful for the following reason: " + status);
+		      }
+		    });
+		  }
+
 	 	let gametime = event.datetime_local;
 	 	let tickets = event.url;
 
@@ -228,6 +301,8 @@ export default class Itinerary extends Component {
 
 			img = event.performers[1].image;
 		}
+
+		//////google places API to get local hotels, attractions, and food data
 	 	
 
 	 	return ( 
@@ -241,10 +316,10 @@ export default class Itinerary extends Component {
 					<div><a href={tickets}><button><i className="fa fa-ticket" aria-hidden="true"></i>Tickets!!</button></a></div>
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
 	 				<div><i className="fa fa-plus" onClick={::this.modalHandler} aria-hidden="true"></i> See travel info (flights, car rentals, hotels)</div>
-		 			<div id="modal-wrapper" className="modal-default">	
+		 			<div id="modal-wrapper" className="modal-default" onClick={::this.closeModal}>	
 		 				<div id="modal" className="modal-default">
 
-		 					<i className="fa fa-times-circle" aria-hidden="true"></i>
+		 					<i className="fa fa-times-circle" aria-hidden="true" onClick={::this.closeModal}></i>
 
 
 		 					<h1>Travel Info for {event.venue.city}</h1>
@@ -316,6 +391,7 @@ export default class Itinerary extends Component {
 						<div className="events-wrapper">
 						{events.map(::this.getEvent)}
 						</div>
+						<div id="mapTest"></div>
 						<div id="map"></div>
 					</div>
 				</div>
