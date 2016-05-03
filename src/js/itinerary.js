@@ -238,12 +238,7 @@ export default class Itinerary extends Component {
 	 				<div>Price Range: ${event.stats.lowest_price} to ${event.stats.highest_price}</div>
 	 				<div>Average price: ${event.stats.average_price}</div>
 	 				<div>Tickets Remaing: {event.stats.listing_count}</div>
-<<<<<<< HEAD
-					<div><a href={tickets}><button><i className="fa fa-ticket" aria-hidden="true"></i>
- Tickets!!</button></a></div>
-=======
-					<div><a href={tickets}><button><i className="fa fa-ticket" aria-hidden="true"></i> Tickets!!</button></a></div>
->>>>>>> 4bd5710b73065e68433dd498674ec84dadefe077
+					<div><a href={tickets}><button><i className="fa fa-ticket" aria-hidden="true"></i>Tickets!!</button></a></div>
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
 	 				<div><i className="fa fa-plus" onClick={::this.modalHandler} aria-hidden="true"></i> See travel info (flights, car rentals, hotels)</div>
 		 			<div id="modal-wrapper" className="modal-default">	
