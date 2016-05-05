@@ -13,6 +13,12 @@
 	font-family: 'Montserrat', sans-serif;
 
 }
+.itinerary-wrapper {
+	background-color: #d6e6d6;
+	background-size: cover;
+	
+
+}
 
 .itenerary-body #map{
 
@@ -26,6 +32,7 @@
 
 	margin-top: 64px;
 	position: relative;
+	text-align: center;
 
 }
 
@@ -298,10 +305,12 @@ button{
 .itinerary-event{
 
 	margin: 40px 40px;
-	border-radius: 10px;
-	border: 1px solid black;
-	width: 400px;
-	padding: 15px;
+	background-color: #00265d;
+	border: solid #00265d;
+	border-width: 14px 13px 20px; 
+	box-shadow: 0 0 .5em black;
+	padding: 13px;
+	width: 398px;
 	img{
 
 		width: 100%;
@@ -309,6 +318,13 @@ button{
 
 	}
 
+}
+.itinerary-inner-event {
+	border-radius: 10px;
+	padding: 10px;
+	border:2px solid #00265d;
+	margin: 0;
+	background-color: white;
 }
 header {
 	position: fixed;

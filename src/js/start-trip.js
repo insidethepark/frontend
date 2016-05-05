@@ -48,7 +48,7 @@ export default class StartTrip extends Component{
 		console.log("startDate", startDate);
 
 		ajax({
-			url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
+			url:'https://shielded-hollows-39012.herokuapp.com/firstgamedata',
 			type: 'POST',
 			data: {'local_datetime': startDate},
 			headers: {
@@ -74,7 +74,7 @@ export default class StartTrip extends Component{
 
 
 		 ajax({
-		 	url:'https://shielded-hollows-39012.herokuapp.com/firstgamedata',
+		 	url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
 		 	type: 'POST',
 		 	data: {'local_datetime': dateString},
 		 	headers: {
@@ -220,18 +220,19 @@ export default class StartTrip extends Component{
 
 
 		  ajax({
-		  	url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
+		  	url:'https://shielded-hollows-39012.herokuapp.com/selectgame',
 		  	type: 'POST',
 		  	data: {"local_datetime": local_datetime , "game_number": id },
 		  	headers: {
 		  		'X-Auth-Token': Cookies.get('auth_token')
 		  	}
-		  }).then(data => {console.log("data", data)});
+		  }).then(data => {console.log("data", data);
+		 	this.setState({citiesWithGames: data.events})});
 
 		  ///////Below, send them the city/state data. Will need to make an ajax call first
 
 		 ajax({
-		 	url:'https://shielded-hollows-39012.herokuapp.com/nextgamedata',
+		 	url:'https://shielded-hollows-39012.herokuapp.com/nextgame',
 		 	type: 'POST',
 		 	data: {"local_datetime": local_datetime , "game_number": id },
 		 	headers: {
@@ -247,7 +248,6 @@ export default class StartTrip extends Component{
 
 				 // });
 
-		 	this.setState({citiesWithGames: data.events});
 
 		 
 
@@ -461,7 +461,7 @@ export default class StartTrip extends Component{
 							</div>
 							<div>
 								
-									{citiesWithGames.map(event => <div key={event.id} className="matchups"><label><input name="id" type="radio" value={event.id} key={event.id}></input> {event.title} </label></div>)}
+									{citiesWithGames.map(event => <div key={event.id} className="matchups"><label><input name="id" type="radio" value={event.id} key={event.id}></input> {event.title}{event.datetime_local} </label></div>)}
 								
 							</div>
 							<div className="get-itinerary">
