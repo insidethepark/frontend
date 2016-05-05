@@ -58,7 +58,7 @@ export default class StartTrip extends Component{
 
 			data.events.map(event => {
 
-			this.setState({citiesWithGames: data.events});
+			this.setState({citiesWithGames: data.seatgeek.events});
 
 		})});
 
@@ -81,10 +81,14 @@ export default class StartTrip extends Component{
 		 		'X-Auth-Token': Cookies.get('auth_token')
 		 	}
 		 }).then(data => {
+		 	Cookies.set('itinerary_id', data.itinerary);
 
-		 	data.events.map(event => {
+		 	console.log("data",data);
 
-		 	this.setState({citiesWithGames: data.events});
+		 	data.seatgeek.events.map(event => {
+
+
+		 	this.setState({citiesWithGames: data.seatgeek.events});
 
 		 })});
 
@@ -222,24 +226,24 @@ export default class StartTrip extends Component{
 		  ajax({
 		  	url:'https://shielded-hollows-39012.herokuapp.com/selectgame',
 		  	type: 'POST',
-		  	data: {"local_datetime": local_datetime , "game_number": id },
+		  	data: {"local_datetime": local_datetime, "itinerary_id": Cookies.get('itinerary_id'), "game_number": id.id },
 		  	headers: {
 		  		'X-Auth-Token': Cookies.get('auth_token')
-		  	}
+				  	}
 		  }).then(data => {console.log("data", data);
-		 	this.setState({citiesWithGames: data.events})});
 
 		  ///////Below, send them the city/state data. Will need to make an ajax call first
 
 		 ajax({
 		 	url:'https://shielded-hollows-39012.herokuapp.com/nextgame',
 		 	type: 'POST',
-		 	data: {"local_datetime": local_datetime , "game_number": id },
+		 	data: {"itinerary_id": Cookies.get ('itinerary_id')},
 		 	headers: {
 		 		'X-Auth-Token': Cookies.get('auth_token')
 		 	}
 		 }).then(data => {
 		 	console.log("nextgamedata", data);
+		 	this.setState({citiesWithGames: data.events})});
 
 		 		//  data.events.map(event => {
 

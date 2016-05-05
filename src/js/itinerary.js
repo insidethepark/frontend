@@ -387,8 +387,10 @@ export default class Itinerary extends Component {
 					<Link to="/start-trip"><i className="fa fa-home" aria-hidden="true"> <span className="icon-label">Start Over</span></i></Link>
 				</header>
 				<div className="itinerary-main">
+					<div className="itinerary-title">
 					<h2>Your Roadtrip</h2>
-					<h4>{events.length} days, {events.length} parks, 1 damn good time</h4>
+					</div>
+					<h3>{events.length} days, {events.length} parks, 1 damn good time...</h3>
 					<div className="itenerary-body">
 						<div className="events-wrapper">
 						{events.map(::this.getEvent)}
