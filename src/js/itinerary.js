@@ -6,96 +6,103 @@ import Cookies from 'js-cookie';
 import StartTrip from './start-trip';
 import moment from 'moment';
 
+import Modal from './modal';
+
 
 
 export default class Itinerary extends Component {
 	constructor (...args) {
 		super (...args);
-		this.state = { events: [] }
+		this.state = { 
+			events: [] ,
+			loading: true,
+			hotelLoading: true
+		}
 	}
 
 	
 
 	componentWillMount() {
 
-		console.log('auth_token', Cookies.get('auth_token'));
 		if (Cookies.get('user_email', 'auth_token', 'id')) {
-		ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-05-28&datetime_local.lte=2016-05-28T23:59:01&type=mlb&per_page=15').then(data => {
-			console.log(data.events);
+		ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-05-28&datetime_local.lte=2016-05-28T23:59:01&type=mlb&per_page=9').then(data => {
 		this.setState({events: data.events});
-		this.drawMap();
+		// this.drawMap();
 
 		})} else {
 			hashHistory.replace('/');
 		}
 
-		ajax({
-		  	url:'https://shielded-hollows-39012.herokuapp.com/itinerary',
-		  	type: 'POST',
-		  	headers: {
-		  		'X-Auth-Token': Cookies.get('auth_token')
-		  	}
-		  }).then(data => {console.log("data", data)});
+		// ajax({
+		//   	url:'https://shielded-hollows-39012.herokuapp.com/itinerary',
+		//   	type: 'POST',
+		//   	headers: {
+		//   		'X-Auth-Token': Cookies.get('auth_token')
+		//   	}
+		//   }).then(data => {console.log("data", data)});
+
+		
+	}
+
+	componentDidUpdate(){
+
+		this.drawMap();
 
 	}
 
 	drawMap(){
 
+		console.log("draw map ran");
+
+			let route = this.state.events;
+			console.log("route",route);
+			// let waypts = route.map(a => a.venue.extended_address);
+
+			// let addresses = route.map(a => {
+			// 	a.venue.address + " " + a.venue.extended_address;
+			// });
+			let addresses = route.map(a => a.venue.address+ " " + a.venue.extended_address);
+
+			console.log("addresses", addresses);
+			let waypts=[];
+
+
+			addresses.forEach( location => waypts.push({location, stopover:true}));
+
+			console.log("way",waypts);
+			let startAddress = waypts.shift();
+			console.log("startAddress",startAddress);
+			let endAddress = waypts.pop();
+			console.log("endAddress",endAddress);
 
 			// console.log("google in comp did mount", google);
 			console.log("google", google);
 			var directionsService = new google.maps.DirectionsService;
     		var directionsDisplay = new google.maps.DirectionsRenderer;
 		    var mapDiv = document.getElementById('map');
-		    // var map = new google.maps.Map(mapDiv, {
-		    //   center: {lat: 44.540, lng: -78.546},
-		    //   zoom: 8
-		    // });
+		    var map = new google.maps.Map(mapDiv, {
+		      center: {lat: 44.540, lng: -78.546},
+		      zoom: 8
+		    });
 
-		    this.setState({
+		    let mapProps = {
 
 		    	mapProps: {
 			      center: {lat: 44.540, lng: -78.546},
 			      zoom: 8
 			    }
-			})
+			}
 
-		    var map = new google.maps.Map(mapDiv, this.state.mapProps);
-		    console.log("map in component", map);
-			console.log("the ajax call ran");
+		    var map = new google.maps.Map(mapDiv, mapProps);
+		 
 
 			directionsDisplay.setMap(map);
 
-		    // var waypts = [{
-		    //           location: "Nashville",
-		    //           stopover: true
-		    //         }, {
-		    //           location: "Kansas City",
-		    //           stopover: true
-		    //         }, {
-		    //           location: "Denver",
-		    //           stopover: true
-		    //         }];
-
-		    var waypts = this.state.waypts;
-		    let updatedWaypts;
-
-
-		  //   if(waypts.length > 2 ){
-
-				// let tempWaypts = waypts.splice(0,1);
-				// updatedWaypts = tempWaypts.splice(waypts.length-1,1);
-
-		  //   }
-		    
-		    // console.log("updatedWaypts",updatedWaypts);
-
-		    //console.log("waypts in drawMap", waypts);
 
 		    directionsService.route({
-		          origin: this.start_address.location,
-		          destination: this.end_address.location,
-		          waypoints: updatedWaypts || waypts,
+		          origin: startAddress.location,
+		          destination: endAddress.location,
+		          waypoints: waypts,
 		          optimizeWaypoints: true,
 		          travelMode: google.maps.TravelMode.DRIVING
 		        }, function(response, status) {
@@ -120,85 +127,6 @@ export default class Itinerary extends Component {
 
 	}
 
-	updateLocation(){
-
-		this.setState({
-
-		    	mapProps: {
-			      center: {lat: 50.540, lng: -50.546},
-			      zoom: 8
-			    }
-			})
-		var mapDiv = document.getElementById('map');
-		var map = new google.maps.Map(mapDiv, this.state.mapProps);
-
-	}
-
-	// componentDidMount(){
-
-
-	// 	setTimeout(::this.drawMap, 5000);
-	// }
-
-	// componentDidMount(){
-
-	// 	  var mapDiv = document.getElementById('map2');
-	// 	    // var map = new google.maps.Map(mapDiv, {
-	// 	    //   center: {lat: 44.540, lng: -78.546},
-	// 	    //   zoom: 8
-	// 	    // });
-
-	// 	    this.setState({
-
-	// 	    	mapProps: {
-	// 		      center: {lat: 44.540, lng: -78.546},
-	// 		      zoom: 8
-	// 		    }
-	// 		})
-
-	// 	    var map = new google.maps.Map(mapDiv, this.state.mapProps);
-	// 	    console.log("map in component", map);
-	// 		console.log("the ajax call ran");
-
-
-	// }
-
-	addGameHandler(city){
-
-		let totalPitStops = this.state.totalPitStops + 1;
-		this.setState({totalPitStops});
-		console.log("updatedPitStopCount", totalPitStops);
-		let route = this.state.waypts;
-
-		if (totalPitStops === 1){
-
-			this.start_address = {location: city.city, stopover: true};
-
-		}
-
-		if (totalPitStops === 2){
-
-			this.end_address = {location: city.city, stopover: true}
-
-			this.drawMap();
-
-		}
-
-		if(totalPitStops >= 3){
-
-			route.push(this.end_address);
-			this.setState({waypts: route});
-			this.end_address = {location: city.city, stopover: true}
-
-			
-			
-
-			console.log("waypts=>",this.state.waypts);
-
-			this.drawMap();
-
-		}
-	}
 
 	modalHandler(){
 
@@ -226,65 +154,130 @@ export default class Itinerary extends Component {
 
 	}
 
+	getFood(){ 
+		return this.foodArray.map(food => <li>{food}</li>);
+		// return this.foodArray ? <li>it's loaded</li> : <li>Loading...</li>
+
+		// return setTimeout(function(){
+			
+		// 	let foods = this.foodArray ? <li>it's loaded</li> : <li>Loading...</li>
+		// 	return foods;
+		// }, 2000);	
+
+	}
+
+	getFoodLoading(){
+
+		return <li>loading worked</li>;
+
+	}
+
+	getHotels(name){ 
+		// return this.hotelArray.map(hotel => <li>{hotel}</li>);
+		return name;
+		// return this.foodArray ? <li>it's loaded</li> : <li>Loading...</li>
+
+		// return setTimeout(function(){
+			
+		// 	let foods = this.foodArray ? <li>it's loaded</li> : <li>Loading...</li>
+		// 	return foods;
+		// }, 2000);	
+
+	}
+
+	getHotelsLoading(){
+
+		return <li>loading worked</li>;
+
+	}
+
 	 getEvent(event) {
 
 	 	let address = event.venue.address + " " + event.venue.extended_address;
 
-	 	console.log("address", address);
-
-
 	 	var map;
-	 	var geocoder;
+	 	// var geocoder;
 		var service;
 		var infowindow;
 
-		(function initialize() {
-		  var pyrmont = new google.maps.LatLng(-33.8665433,151.1956316);
-		  geocoder = new google.maps.Geocoder();
+		function initialize() {
+		  var pyrmont = new google.maps.LatLng(event.venue.location.lat, event.venue.location.lon);
+		  let creditNode = document.querySelector('#mapTest');
+		  // geocoder = new google.maps.Geocoder();
 
-		  map = new google.maps.Map(document.getElementById('mapTest'), {
-		      center: pyrmont,
-		      zoom: 15
-		    });
+		  // map = new google.maps.Map(document.getElementById('mapTest'), {
+		  //     center: pyrmont,
+		  //     zoom: 15
+		  //   });
 
 		  var request = {
 		    location: pyrmont,
 		    radius: '500',
 		    query: 'restaurant'
 		  };
+		
+			// function Pitstop(hotel, food, attraction) {
+			// 	this.hotel= #
+			// 	this.food= #
+			// 	this.attraction= #
+			// }
 
-		  service = new google.maps.places.PlacesService(map);
-		  service.textSearch(request, callback);
-		}());
+		  service = new google.maps.places.PlacesService(creditNode);
+		  // service.textSearch(request, callback);
+		  service.textSearch(request, (results, status) => {
+		  		
+		  		if (status == google.maps.places.PlacesServiceStatus.OK) {
+					
+					
+					let foodArray =[];
+				    for (var i = 0; i < 5; i++) {
+				    	foodArray.push(results[i].name);
+
+				      // var place = results[i];
+				      // createMarker(results[i]);
+				    }
+				    this.foodArray = foodArray;
+				    this.setState({loading: false});
+				    // console.log(this.foodArray);
+				    
+				}
+
+		  });
+
+		  var request = {
+		    location: pyrmont,
+		    radius: '500',
+		    query: 'hotel'
+		  };
+
+		  service = new google.maps.places.PlacesService(creditNode);
+		  // service.textSearch(request, callback);
+		  service.textSearch(request, (results, status) => {
+		  	console.log("restaurant on itin", results);
+		  		
+		  		if (status == google.maps.places.PlacesServiceStatus.OK) {
+					
+					let hotelArray =[];
+				    for (var i = 0; i < 5; i++) {
+				    	hotelArray.push(results[i].name);
+
+				      // var place = results[i];
+				      // createMarker(results[i]);
+				    }
+				    this.hotelArray = hotelArray;
+				    this.setState({hotelLoading: false});
+				    // console.log(this.hotelArray);
+				    
+				}
+
+		  });
 
 
-		function callback(results, status) {
-		  if (status == google.maps.places.PlacesServiceStatus.OK) {
-		    for (var i = 0; i < results.length; i++) {
-		    	console.log('callback ran');
-		    	console.log("results", results);
-		      // var place = results[i];
-		      // createMarker(results[i]);
-		    }
-		  }
-		}
+		};
 
-		function codeAddress() {
-		    var address = document.getElementById("address").value;
-		    geocoder.geocode( { 'address': address}, function(results, status) {
-		      if (status == google.maps.GeocoderStatus.OK) {
+		let initWithThis = initialize.bind(this);
 
-		      	console.log("results to ");
-		        map.setCenter(results[0].geometry.location);
-		        var marker = new google.maps.Marker({
-		            map: map,
-		            position: results[0].geometry.location
-		        });
-		      } else {
-		        alert("Geocode was not successful for the following reason: " + status);
-		      }
-		    });
-		  }
+		// initWithThis();
 
 	 	let gametime = event.datetime_local;
 	 	let tickets = event.url;
@@ -303,7 +296,10 @@ export default class Itinerary extends Component {
 		}
 
 		//////google places API to get local hotels, attractions, and food data
-	 	
+
+		// getFood(){ return this.foodArray==="stuff" ? "<li>it's loaded</li>" : <li>Loading...</li>}
+	 	let { loading } = this.state;
+	 	let { hotelLoading } = this.state;
 
 	 	return ( 
 	 			<div key={event.title} className="itinerary-event">
@@ -315,50 +311,14 @@ export default class Itinerary extends Component {
 	 				<div>Tickets Remaing: {event.stats.listing_count}</div>
 					<div><a href={tickets}><button><i className="fa fa-ticket" aria-hidden="true"></i>Tickets!!</button></a></div>
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
-	 				<div><i className="fa fa-plus" onClick={::this.modalHandler} aria-hidden="true"></i> See travel info (flights, car rentals, hotels)</div>
-		 			<div id="modal-wrapper" className="modal-default" onClick={::this.closeModal}>	
-		 				<div id="modal" className="modal-default">
-
-		 					<i className="fa fa-times-circle" aria-hidden="true" onClick={::this.closeModal}></i>
-
-
-		 					<h1>Travel Info for {event.venue.city}</h1>
-		 					<div className="modal-content">
-			 					<div>
-			 						<h3>Hotels</h3>
-			 						<ul>
-				 						<li>hotel name</li>
-				 						<li>rating</li>
-				 						<li>URL</li>
-				 						<li>google map</li>
-				 						<li>distance from ballpark</li>
-			 						</ul>
-			 					</div>
-			 					<div>
-			 						<h3>Food</h3>
-			 						<ul>
-				 						<li>hotel name</li>
-				 						<li>rating</li>
-				 						<li>URL</li>
-				 						<li>google map</li>
-				 						<li>distance from ballpark</li>
-			 						</ul>
-			 					</div>
-			 					<div>
-			 						<h3>Attractions</h3>
-			 						<ul>
-				 						<li>hotel name</li>
-				 						<li>rating</li>
-				 						<li>URL</li>
-				 						<li>google map</li>
-				 						<li>distance from ballpark</li>
-			 						</ul>
-			 					</div>
-		 					</div>
-
-		 				</div>
-		 			</div>
-	 				<div><i className="fa fa-plus" aria-hidden="true"></i> See {event.venue.city} attractions</div>
+	 				
+					<h1>Explore {event.venue.city}</h1>
+ 					<div className="local-city-data">
+	 					
+	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+hotels+super+close+to+${event.venue.slug}`} target="_blank"><button>Hotels</button></a></div>
+	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+restaurants+close+to+${event.venue.slug}`} target="_blank"><button>Food</button></a></div>
+	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+attractions`} target="_blank"><button>Attractions</button></a></div>
+ 					</div>
 	 			</div>
 			)
 	}
@@ -372,12 +332,9 @@ export default class Itinerary extends Component {
 	}
 
 
-
-
 	render () {
 
 		let { events } = this.state;
-		console.log(events)
 		return (
 			<div className="itinerary-wrapper">
 				<header>
@@ -391,7 +348,6 @@ export default class Itinerary extends Component {
 						<div className="events-wrapper">
 						{events.map(::this.getEvent)}
 						</div>
-						<div id="mapTest"></div>
 						<div id="map"></div>
 					</div>
 				</div>
@@ -401,7 +357,38 @@ export default class Itinerary extends Component {
 }
 
 
+	//<div id="mapTest"></div>
 
+// <div className="modal-content">
+// 			 					<div>
+// 			 						<h3>Hotels</h3>
+// 			 						<ul>
+// 				 						<li>hotel name</li>
+// 				 						<li>rating</li>
+// 				 						<li>URL</li>
+// 				 						<li>google map</li>
+// 				 						<li>distance from ballpark</li>
+// 				 						{ hotelLoading ? ::this.getHotelsLoading(): ::this.getHotels(event.venue.city) }
+// 				 						<Modal location={{lat: event.venue.location.lat, lon:event.venue.location.lon}}></Modal>
+// 			 						</ul>
+// 			 					</div>
+// 			 					<div>
+// 			 						<h3>Food</h3>
+// 			 						<ul>
+// 				 						{ loading ? ::this.getFoodLoading(): ::this.getFood()}
+// 			 						</ul>
+// 			 					</div>
+// 			 					<div>
+// 			 						<h3>Attractions</h3>
+// 			 						<ul>
+// 				 						<li>hotel name</li>
+// 				 						<li>rating</li>
+// 				 						<li>URL</li>
+// 				 						<li>google map</li>
+// 				 						<li>distance from ballpark</li>
+// 			 						</ul>
+// 			 					</div>
+// 		 					</div>
 
 
 

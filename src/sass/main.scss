@@ -22,6 +22,17 @@
 
 }
 
+.local-city-data{
+
+	display: flex;
+	div{
+
+		margin-right: 5px;
+
+	}
+
+}
+
 .itinerary-main{
 
 	margin-top: 64px;
@@ -39,7 +50,7 @@
 
 .modal-default{
 
-	display: none;
+	display: hidden;
 
 }
 

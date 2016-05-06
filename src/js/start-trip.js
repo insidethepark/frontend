@@ -255,9 +255,9 @@ export default class StartTrip extends Component{
 
 		 });
 
-		//////////TURN ON THE STUFF ABOVE DO NOT DELETE
+		////////TURN ON THE STUFF ABOVE DO NOT DELETE
 
-		///may recieve new list of cities back, may have to make get request for them
+		// /may recieve new list of cities back, may have to make get request for them
 
 		
 
@@ -314,28 +314,28 @@ export default class StartTrip extends Component{
 
 		// });
 
-		// ajax(`http://geocoder.ca/?postal=${zip.zip}&geoit=xml&json=1`).then(cityData => {
+		ajax(`http://geocoder.ca/?postal=${zip.zip}&geoit=xml&json=1`).then(cityData => {
 
 			
 
 			
 
-			// if (totalPitStops === 1){
+			if (totalPitStops === 1){
 
-			// 	this.start_address = {location: cityData.standard.city, stopover: true};
-			// 	console.log("this.start_address", this.start_address);
+				this.start_address = {location: cityData.standard.city, stopover: true};
+				console.log("this.start_address", this.start_address);
 
-			// }
+			}
 
-			// if (totalPitStops === 2){
+			if (totalPitStops === 2){
 
-			// 	this.end_address = {location: cityData.standard.city, stopover: true};
-			// 	console.log("this.end_address", this.end_address);
-			// 	this.setState({mapStyle: {'border': '4px double grey'}});
+				this.end_address = {location: cityData.standard.city, stopover: true};
+				console.log("this.end_address", this.end_address);
+				this.setState({mapStyle: {'border': '4px double grey'}});
 
-			// 	this.drawMap();
+				this.drawMap();
 
-			// }
+			}});
 
 			
 
@@ -350,51 +350,51 @@ export default class StartTrip extends Component{
 		////update cities array in state
 
 	}
-	// testFunction() {
-	// 	ajax({
-	// 		url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
-	// 		type: 'POST',
-	// 		data: {'local_datetime': '2016-04-28'},
-	// 		headers: {
-	// 			'X-Auth-Token': Cookies.get('auth_token')
-	// 		}
-	// 	}).then(data => {
+	testFunction() {
+		ajax({
+			url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
+			type: 'POST',
+			data: {'local_datetime': '2016-04-28'},
+			headers: {
+				'X-Auth-Token': Cookies.get('auth_token')
+			}
+		}).then(data => {
 
-	// 		console.log(data);
-	// 		data.events.map(event => console.log(event.venue.city));
+			console.log(data);
+			data.events.map(event => console.log(event.venue.city));
 
-	// 		this.setState({citiesWithGames: data.events});
+			this.setState({citiesWithGames: data.events});
 
-	// 	});
-	// }
-
-	getIteneraryHandler(city){
-
-		console.log("city in getIteneraryHandler",city);
-
-		if (city.city){
-
-			/////post the zip to the backend
-
-			////hashHistory.push('/itinerary');
-
-			let route = this.state.waypts;
-
-			route.push(city.city);
-
-			this.setState({waypts: route});
-
-		}else{
-
-			////hashHistory.push('/itinerary');
-
-			console.log("waypts=>",this.state.waypts);
-
-		}
-
-		hashHistory.push('/itinerary');
-
+		});
 	}
+
+	// getIteneraryHandler(city){
+
+	// 	console.log("city in getIteneraryHandler",city);
+
+	// 	if (city.city){
+
+	// 		/////post the zip to the backend
+
+	// 		////hashHistory.push('/itinerary');
+
+	// 		let route = this.state.waypts;
+
+	// 		route.push(city.city);
+
+	// 		this.setState({waypts: route});
+
+	// 	}else{
+
+	// 		////hashHistory.push('/itinerary');
+
+	// 		console.log("waypts=>",this.state.waypts);
+
+	// 	}
+
+	// 	hashHistory.push('/itinerary');
+
+	// }
 
 	freeDayHandler(){
 
