@@ -42,6 +42,16 @@ export default class Itinerary extends Component {
 			hashHistory.replace('/');
 		}
 
+<<<<<<< HEAD
+=======
+		// ajax({
+		//   	url:'https://shielded-hollows-39012.herokuapp.com/itinerary',
+		//   	type: 'POST',
+		//   	headers: {
+		//   		'X-Auth-Token': Cookies.get('auth_token')
+		//   	}
+		//   }).then(data => {console.log("itinerary", data)});
+>>>>>>> 882f868254f7242e12c0cb07341ddcfe94b4f590
 
 		
 	}
