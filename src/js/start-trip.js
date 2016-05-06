@@ -243,7 +243,7 @@ export default class StartTrip extends Component{
 		 	}
 		 }).then(data => {
 		 	console.log("nextgamedata", data);
-		 	this.setState({citiesWithGames: data.events})});
+		 	this.setState({citiesWithGames: data.seatgeek.events})});
 
 		 		//  data.events.map(event => {
 
