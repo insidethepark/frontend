@@ -303,6 +303,7 @@ export default class Itinerary extends Component {
 
 	 	return ( 
 	 			<div key={event.title} className="itinerary-event">
+	 			<div className="itinerary-inner-event">
 	 				<h2>{moment(gametime).format('dddd, MMMM Do YYYY')} in {event.venue.city}</h2>
 	 				<img src={img}/>
 	 				<div>{event.title}</div>
@@ -319,6 +320,7 @@ export default class Itinerary extends Component {
 	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+restaurants+close+to+${event.venue.slug}`} target="_blank"><button>Food</button></a></div>
 	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+attractions`} target="_blank"><button>Attractions</button></a></div>
  					</div>
+	 			</div>
 	 			</div>
 			)
 	}
@@ -342,8 +344,10 @@ export default class Itinerary extends Component {
 					<Link to="/start-trip"><i className="fa fa-home" aria-hidden="true"> <span className="icon-label">Start Over</span></i></Link>
 				</header>
 				<div className="itinerary-main">
+					<div className="itinerary-title">
 					<h2>Your Roadtrip</h2>
-					<h4>{events.length} days, {events.length} parks, 1 damn good time</h4>
+					</div>
+					<h3>{events.length} days, {events.length} parks, 1 damn good time...</h3>
 					<div className="itenerary-body">
 						<div className="events-wrapper">
 						{events.map(::this.getEvent)}

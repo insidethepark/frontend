@@ -13,6 +13,12 @@
 	font-family: 'Montserrat', sans-serif;
 
 }
+.itinerary-wrapper {
+	background-color: #d6e6d6;
+	background-size: cover;
+	
+
+}
 
 .itenerary-body #map{
 
@@ -37,7 +43,11 @@
 
 	margin-top: 64px;
 	position: relative;
+	text-align: center;
 
+}
+.itinerary-title {
+	font-size: 60px;
 }
 
 .fa-times-circle{
@@ -180,6 +190,23 @@ button{
 	font-size: 1.1em;
 	border: 2px solid black;
 	border-radius: 5px;
+	background: #c50b30;
+	color: white;
+	margin: 5px 0px;
+	&:hover{
+
+		background: white;
+		color: black;
+		
+
+	}
+
+}
+.login button {
+	padding: 10px;
+	font-size: 1.1em;
+	border: 2px solid black;
+	border-radius: 5px;
 	background: black;
 	color: white;
 	margin: 5px 0px;
@@ -192,14 +219,34 @@ button{
 	}
 
 }
+.signup button {
+		padding: 10px;
+	font-size: 1.1em;
+	border: 2px solid black;
+	border-radius: 5px;
+	background: black;
+	color: white;
+	margin: 5px 0px;
+	&:hover{
 
+		background: white;
+		color: black;
+		
 
+	}
+}
 ////////////////START TRIP PAGE
+
+#game-date {
+	font-size: 18px;
+}
 
 .matchups{
 
 	font-size: 1.2em;
 	margin: 10px 0px;
+	color: white;
+	text-shadow: 1px 1px 1px black;
 
 }
 
@@ -209,7 +256,12 @@ button{
 	display: flex;
 	justify-content: space-around;
 	margin-top: 64px;
-
+	padding-top: 21px;
+	background-image: url('http://assets.bwbx.io/images/i7HXRYEUtfqQ/v1/1200x-1.jpg');
+	background-size: cover;
+}
+.calendar h2 {
+	padding-bottom: 10px;
 }
 
 .dp-header{
@@ -219,8 +271,9 @@ button{
 }
 
 .dp-body{
-
+	box-shadow: 0 5px 5px -3px black;
 	font-size: 1.4em;
+
 	// .dp-day{
 
 	// 	padding-top: 20px;
@@ -235,6 +288,25 @@ button{
 	padding-bottom: 20px;
 
 }
+.game-choices {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+.get-itinerary {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	button {
+		color: white;
+		background-color: #00265d;
+		&:hover {
+			background: white;
+			color: #00265d;
+		}
+	}
+
+}
 
 .events-wrapper{
 
@@ -247,10 +319,12 @@ button{
 .itinerary-event{
 
 	margin: 40px 40px;
-	border-radius: 10px;
-	border: 1px solid black;
-	width: 400px;
-	padding: 15px;
+	background-color: #00265d;
+	border: solid #00265d;
+	border-width: 14px 13px 20px; 
+	box-shadow: 0 0 .5em black;
+	padding: 13px;
+	width: 398px;
 	img{
 
 		width: 100%;
@@ -258,6 +332,13 @@ button{
 
 	}
 
+}
+.itinerary-inner-event {
+	border-radius: 10px;
+	padding: 10px;
+	border:2px solid #00265d;
+	margin: 0;
+	background-color: white;
 }
 header {
 	position: fixed;
@@ -270,6 +351,7 @@ header {
 	z-index: 1000;
 }
  header i.fa {
+ 	float: right;
 	cursor: pointer;
 	color: black;
 	font-size: 1.5em;

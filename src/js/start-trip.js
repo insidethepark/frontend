@@ -48,7 +48,7 @@ export default class StartTrip extends Component{
 		console.log("startDate", startDate);
 
 		ajax({
-			url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
+			url:'https://shielded-hollows-39012.herokuapp.com/firstgamedata',
 			type: 'POST',
 			data: {'local_datetime': startDate},
 			headers: {
@@ -58,7 +58,7 @@ export default class StartTrip extends Component{
 
 			data.events.map(event => {
 
-			this.setState({citiesWithGames: data.events});
+			this.setState({citiesWithGames: data.seatgeek.events});
 
 		})});
 
@@ -74,17 +74,21 @@ export default class StartTrip extends Component{
 
 
 		 ajax({
-		 	url:'https://shielded-hollows-39012.herokuapp.com/firstgamedata',
+		 	url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
 		 	type: 'POST',
 		 	data: {'local_datetime': dateString},
 		 	headers: {
 		 		'X-Auth-Token': Cookies.get('auth_token')
 		 	}
 		 }).then(data => {
+		 	Cookies.set('itinerary_id', data.itinerary);
 
-		 	data.events.map(event => {
+		 	console.log("data",data);
 
-		 	this.setState({citiesWithGames: data.events});
+		 	data.seatgeek.events.map(event => {
+
+
+		 	this.setState({citiesWithGames: data.seatgeek.events});
 
 		 })});
 
@@ -217,28 +221,29 @@ export default class StartTrip extends Component{
 
 
 		////////////UNCOMMENT TO TEST BACKEND DATA
-
+		console.log('local_datetime', local_datetime);
 
 		  ajax({
-		  	url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
+		  	url:'https://shielded-hollows-39012.herokuapp.com/selectgame',
 		  	type: 'POST',
-		  	data: {"local_datetime": local_datetime , "game_number": id },
+		  	data: {"local_datetime": local_datetime, "itinerary_id": Cookies.get('itinerary_id'), "game_number": id.id },
 		  	headers: {
 		  		'X-Auth-Token': Cookies.get('auth_token')
-		  	}
-		  }).then(data => {console.log("data", data)});
+				  	}
+		  }).then(data => {console.log("data", data);
 
 		  ///////Below, send them the city/state data. Will need to make an ajax call first
 
 		 ajax({
-		 	url:'https://shielded-hollows-39012.herokuapp.com/nextgamedata',
+		 	url:'https://shielded-hollows-39012.herokuapp.com/nextgame',
 		 	type: 'POST',
-		 	data: {"local_datetime": local_datetime , "game_number": id },
+		 	data: {"itinerary_id": Cookies.get ('itinerary_id')},
 		 	headers: {
 		 		'X-Auth-Token': Cookies.get('auth_token')
 		 	}
 		 }).then(data => {
 		 	console.log("nextgamedata", data);
+		 	this.setState({citiesWithGames: data.seatgeek.events, startDate: data.local_datetime})});
 
 		 		//  data.events.map(event => {
 
@@ -247,7 +252,6 @@ export default class StartTrip extends Component{
 
 				 // });
 
-		 	this.setState({citiesWithGames: data.events});
 
 		 
 
@@ -447,25 +451,24 @@ export default class StartTrip extends Component{
 				<div className="start-trip-wrapper">
 					<div className="calendar">
 						<h2>Select date below to see that day's games!</h2>
-						<ReactDatePicker style={{"borderRadius": "5px"}} onChange={::this.dateChangeHandler} hideFooter={true}/>
+						<ReactDatePicker style={{"borderRadius": "5px", "boxShadow": "2px 2px 2px black"}} onChange={::this.dateChangeHandler} hideFooter={true}/>
 						<div id="map" style={this.state.mapStyle}></div>
 					</div>
 					<div className="games">
 						<div id="game-date">{gameDate()}</div>
-						<div style={{"color": "grey"}}>{this.state.route.join(' >> ')}</div>
+						<div style={{"color": "#c7d4e5"}}>{this.state.route.join(' >> ')}</div>
 						<div id='game-picker'></div>
 						<SSF onData={::this.dataHandler}>
-							<div>
+							<div className="game-choices">
 								<button onClick={() => this.action = 'add'}>Add another game</button>
 								<button onClick={() => this.action = 'skip'}>Add a free day</button>
 							</div>
 							<div>
 								
-									{citiesWithGames.map(event => <div key={event.id} className="matchups"><label><input name="id" type="radio" value={event.id} key={event.id}></input> {event.title} {event.datetime_utc}</label></div>)}
+									{citiesWithGames.map(event => <div key={event.id} className="matchups"><label><input name="id" type="radio" value={event.id} key={event.id}></input> {event.title}{event.datetime_local} </label></div>)}
 								
 							</div>
-							<div>
-								 
+							<div className="get-itinerary">
 								 <button onClick={() => this.action = 'get'}>Finalize Itinerary</button>
 								 {/*<input type="submit" value="Add Another Game" name="action"/>
 								 <input type="submit" value="Get Itenerary" name="action"/>*/}
