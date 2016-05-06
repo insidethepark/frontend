@@ -39,7 +39,7 @@ export default class Itinerary extends Component {
 		//   	headers: {
 		//   		'X-Auth-Token': Cookies.get('auth_token')
 		//   	}
-		//   }).then(data => {console.log("data", data)});
+		//   }).then(data => {console.log("itinerary", data)});
 
 		
 	}

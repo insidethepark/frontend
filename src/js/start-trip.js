@@ -211,7 +211,9 @@ export default class StartTrip extends Component{
 
 	addGameHandler(id){
 
-		////ajax post request to send city zip to backend
+		document.querySelector('.calendar').classList.add('calendar-hidden');
+		document.querySelector('#show-calendar').classList.remove('show-calendar');
+
 
 		let local_datetime = this.state.startDate;
 
@@ -296,6 +298,8 @@ export default class StartTrip extends Component{
 				console.log("this.end_address", this.end_address);
 				this.setState({mapStyle: {'border': '4px double grey'}});
 
+				document.querySelector('#map').classList.remove('hide-map');
+
 				this.drawMap();
 
 			}
@@ -318,28 +322,26 @@ export default class StartTrip extends Component{
 
 		// });
 
-		ajax(`http://geocoder.ca/?postal=${zip.zip}&geoit=xml&json=1`).then(cityData => {
+		// ajax(`http://geocoder.ca/?postal=${zip.zip}&geoit=xml&json=1`).then(cityData => {
 
-			
 
-			
+		// 	if (totalPitStops === 1){
 
-			if (totalPitStops === 1){
+		// 		this.start_address = {location: cityData.standard.city, stopover: true};
+		// 		console.log("this.start_address", this.start_address);
+				
 
-				this.start_address = {location: cityData.standard.city, stopover: true};
-				console.log("this.start_address", this.start_address);
+		// 	}
 
-			}
+		// 	if (totalPitStops === 2){
 
-			if (totalPitStops === 2){
+		// 		this.end_address = {location: cityData.standard.city, stopover: true};
+		// 		console.log("this.end_address", this.end_address);
+		// 		this.setState({mapStyle: {'border': '4px double grey'}});
 
-				this.end_address = {location: cityData.standard.city, stopover: true};
-				console.log("this.end_address", this.end_address);
-				this.setState({mapStyle: {'border': '4px double grey'}});
+		// 		this.drawMap();
 
-				this.drawMap();
-
-			}});
+		// 	}});
 
 			
 
@@ -436,6 +438,19 @@ export default class StartTrip extends Component{
 		hashHistory.push('/');
 	}
 
+	showCalendarHandler(){
+
+		document.querySelector('.calendar').classList.remove('calendar-hidden');
+		document.querySelector('#show-calendar').classList.add('show-calendar');
+		document.querySelector('#map').classList.add('hide-map');
+
+		this.setState({route: [], totalPitStops:0, waypts:[]});
+
+		this.start_address = null;
+		this.end_address = null;
+
+	}
+
 
 	render(){
 
@@ -449,14 +464,19 @@ export default class StartTrip extends Component{
 					<i onClick={this.logOutHandler} className="fa fa-sign-out" aria-hidden="true"><span className='icon-label'> Log Out</span></i>
 				</header>
 				<div className="start-trip-wrapper">
-					<div className="calendar">
-						<h2>Select date below to see that day's games!</h2>
-						<ReactDatePicker style={{"borderRadius": "5px", "boxShadow": "2px 2px 2px black"}} onChange={::this.dateChangeHandler} hideFooter={true}/>
+					<div className="calendar-map-wrapper">
+						<div className="calendar">
+							<h2>Select date below to see that day's games!</h2>
+							<ReactDatePicker style={{"borderRadius": "5px", "boxShadow": "2px 2px 2px black"}} onChange={::this.dateChangeHandler} hideFooter={true}/>
+							
+						</div>
+						<button id="show-calendar" className="show-calendar" onClick={::this.showCalendarHandler}>Show Calendar</button>
+						<div style={{"color": "#c7d4e5"}}>{this.state.route.join(' >> ')}</div>
 						<div id="map" style={this.state.mapStyle}></div>
 					</div>
 					<div className="games">
 						<div id="game-date">{gameDate()}</div>
-						<div style={{"color": "#c7d4e5"}}>{this.state.route.join(' >> ')}</div>
+						
 						<div id='game-picker'></div>
 						<SSF onData={::this.dataHandler}>
 							<div className="game-choices">
