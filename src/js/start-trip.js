@@ -420,7 +420,8 @@ export default class StartTrip extends Component{
 				this.addGameHandler(data);
 				break;
 			case 'get':
-				this.getIteneraryHandler(data);
+				//this.getIteneraryHandler(data);
+				hashHistory.push('/itinerary');
 				break;
 			case 'skip':
 				this.freeDayHandler();

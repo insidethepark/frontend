@@ -27,19 +27,21 @@ export default class Itinerary extends Component {
 		if (Cookies.get('user_email', 'auth_token', 'id')) {
 		ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-05-28&datetime_local.lte=2016-05-28T23:59:01&type=mlb&per_page=9').then(data => {
 		this.setState({events: data.events});
+
 		// this.drawMap();
+		ajax({
+		  	url:'https://shielded-hollows-39012.herokuapp.com/itinerary',
+		  	type: 'POST',
+		  	data: {"itinerary_id": Cookies.get('itinerary_id')},
+		  	headers: {
+		  		'X-Auth-Token': Cookies.get('auth_token')
+		  	}
+		  }).then(data => {console.log("data", data)});
 
 		})} else {
 			hashHistory.replace('/');
 		}
 
-		// ajax({
-		//   	url:'https://shielded-hollows-39012.herokuapp.com/itinerary',
-		//   	type: 'POST',
-		//   	headers: {
-		//   		'X-Auth-Token': Cookies.get('auth_token')
-		//   	}
-		//   }).then(data => {console.log("data", data)});
 
 		
 	}
