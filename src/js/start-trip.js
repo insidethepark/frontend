@@ -221,7 +221,7 @@ export default class StartTrip extends Component{
 
 
 		////////////UNCOMMENT TO TEST BACKEND DATA
-
+		console.log('local_datetime', local_datetime);
 
 		  ajax({
 		  	url:'https://shielded-hollows-39012.herokuapp.com/selectgame',
@@ -243,7 +243,7 @@ export default class StartTrip extends Component{
 		 	}
 		 }).then(data => {
 		 	console.log("nextgamedata", data);
-		 	this.setState({citiesWithGames: data.seatgeek.events})});
+		 	this.setState({citiesWithGames: data.seatgeek.events, startDate: data.local_datetime})});
 
 		 		//  data.events.map(event => {
 
