@@ -18,7 +18,8 @@ export default class Itinerary extends Component {
 			events: [] ,
 			loading: true,
 			hotelLoading: true,
-			distanceTraveled: 0
+			distanceTraveled: 0,
+			finalCheckoutDay: ""
 		}
 	}
 
@@ -40,9 +41,19 @@ export default class Itinerary extends Component {
 		  		'X-Auth-Token': Cookies.get('auth_token')
 		  	}
 		  }).then(data => {
+
+			// let date = data.pitstop_dates[data.pitstop_dates.length-1];
+			// let tomorrow = moment(date).add(1, 'day');
+
+			// let tomorrowFormat = tomorrow._d;
+
+			// let finalCheckoutDay = moment(tomorrowFormat).format('YYYY-MM-DD');
+			// console.log("finalco", finalCheckoutDay);
+
 		  	this.setState({events: data.seatgeek.events, pitstop_dates: data.pitstop_dates});
 		  	console.log("data", data);
 
+		  	
 
 		  });
 
@@ -211,6 +222,8 @@ export default class Itinerary extends Component {
 
 	 getEvent(event, index) {
 
+	 	console.log("this", this);
+
 	 	let itinerary = this.state.events;
 	 	let pitstop_dates = this.state.pitstop_dates;
 
@@ -227,17 +240,41 @@ export default class Itinerary extends Component {
 
 	 		if (index !== itinerary.length-1){
 
-	 			return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${airportCodes[itinerary[index+1].venue.city]}/${pitstop_dates[index]}`;
+	 			return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${airportCodes[itinerary[index+1].venue.city]}/${pitstop_dates[0][index]}`;
 
 		 	}else{
 
-		 		return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${pitstop_dates[index]}`;
+		 		return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${pitstop_dates[0][index]}`;
 
 		 	}
 
 	 	}
 
-	 	
+	 	function getHotelURL(finalco){
+
+	 	// 	console.log("pitstops", pitstop_dates);
+
+			// let date = pitstop_dates[pitstop_dates.length-1];
+
+			// let tomorrow = moment(date).add(1, 'day');
+
+			// let tomorrowFormat = tomorrow._d;
+
+			// let finalCheckoutDay = moment(tomorrowFormat).format('YYYY-MM-DD');
+			// console.log("finalco", finalCheckoutDay);
+
+	 		if (index !== itinerary.length-1){
+
+	 			return `https://www.skyscanner.com/hotels?q=${itinerary[index].venue.city}%2C+${itinerary[index].venue.state}&sd=${pitstop_dates[0][index]}&ed=${pitstop_dates[0][index+1]}`;
+
+		 	}else{
+
+		 		return `https://www.skyscanner.com/hotels?q=${itinerary[index].venue.city}%2C+${itinerary[index].venue.state}&sd=${pitstop_dates[0][index]}&ed=${pitstop_dates[1]}`;
+		 		// https://www.skyscanner.com/hotels?q=${itinerary[index].venue.city},%2C+${itinerary[index].venue.state}&sd=${pitstop_dates[0][index]}&ed=${pitstop_dates[0][index+1]}
+		 	}
+
+
+	 	}
 
 	 	let address = event.venue.address + " " + event.venue.extended_address;
 
@@ -368,7 +405,8 @@ export default class Itinerary extends Component {
  					<h1>Flights and Hotels</h1>
  					<div className="local-city-data">
 	 					
-	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+hotels+super+close+to+${event.venue.slug}`} target="_blank"><button>Hotels</button></a></div>
+	 					<div><a href={getHotelURL()} target="_blank"><button>Hotels</button></a></div>
+
  						<div><a href={getFlightURL()} target="_blank"><button>Flights to next city</button></a></div>
  					</div>
  				</div>
