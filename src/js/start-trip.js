@@ -116,8 +116,6 @@ export default class StartTrip extends Component{
 
 	drawMap(){
 
-
-			console.log("google in comp did mount", google);
 			var directionsService = new google.maps.DirectionsService;
     		var directionsDisplay = new google.maps.DirectionsRenderer;
 		    var mapDiv = document.getElementById('map');

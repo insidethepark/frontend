@@ -37,7 +37,12 @@ export default class Itinerary extends Component {
 		  	headers: {
 		  		'X-Auth-Token': Cookies.get('auth_token')
 		  	}
-		  }).then(data => {this.setState({events: data.events})});
+		  }).then(data => {
+		  	this.setState({events: data.events});
+		  	console.log("data", data);
+
+
+		  });
 
 		} else {
 			hashHistory.replace('/');
@@ -110,17 +115,17 @@ export default class Itinerary extends Component {
 		          if (status === google.maps.DirectionsStatus.OK) {
 		            directionsDisplay.setDirections(response);
 		            var route = response.routes[0];
-		            var summaryPanel = document.getElementById('directions-panel');
-		            summaryPanel.innerHTML = '';
+		            // var summaryPanel = document.getElementById('directions-panel');
+		            // summaryPanel.innerHTML = '';
 		            // For each route, display summary information.
-		            for (var i = 0; i < route.legs.length; i++) {
-		              var routeSegment = i + 1;
-		              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-		                  '</b><br>';
-		              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-		              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-		              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-		            }
+		            // for (var i = 0; i < route.legs.length; i++) {
+		            //   var routeSegment = i + 1;
+		            //   summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+		            //       '</b><br>';
+		            //   summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+		            //   summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+		            //   summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+		            // }
 		          } else {
 		            window.alert('Directions request failed due to ' + status);
 		          }
@@ -196,13 +201,28 @@ export default class Itinerary extends Component {
 
 	 	let itinerary = this.state.events;
 
-	 	console.log("itinerary[New York]", airportCodes[`Saint Petersburg`]);
+	 	// console.log("itinerary[New York]", airportCodes[`Saint Petersburg`]);
 
-	 	// if (index !== itinerary.length-1){
+	 	if (index !== itinerary.length-1){
 
-			// console.log("itinerary[0]", airportCodes[[index].venue.city] + " " + airportCodes[itinerary[index+1].venue.city]);
+	 		console.log("city", itinerary[index].venue.city + " " + itinerary[index+1].venue.city);
+			console.log("itinerary[0]", airportCodes[itinerary[index].venue.city] + " " + airportCodes[itinerary[index+1].venue.city]);
 
-	 	// }
+	 	}
+
+	 	function getFlightURL(){
+
+	 		if (index !== itinerary.length-1){
+
+	 			return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${airportCodes[itinerary[index+1].venue.city]}/`;
+
+		 	}else{
+
+		 		return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/`;
+
+		 	}
+
+	 	}
 
 	 	
 
@@ -329,11 +349,16 @@ export default class Itinerary extends Component {
 					<h1>Explore {event.venue.city}</h1>
  					<div className="local-city-data">
 	 					
-	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+hotels+super+close+to+${event.venue.slug}`} target="_blank"><button>Hotels</button></a></div>
 	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+restaurants+close+to+${event.venue.slug}`} target="_blank"><button>Food</button></a></div>
 	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+attractions`} target="_blank"><button>Attractions</button></a></div>
  					</div>
-	 			</div>
+ 					<h1>Flights and Hotels</h1>
+ 					<div className="local-city-data">
+	 					
+	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+hotels+super+close+to+${event.venue.slug}`} target="_blank"><button>Hotels</button></a></div>
+ 						<div><a href={getFlightURL()} target="_blank"><button>Flights to next city</button></a></div>
+ 					</div>
+ 				</div>
 	 			</div>
 			)
 	}
