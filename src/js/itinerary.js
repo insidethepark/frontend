@@ -37,7 +37,7 @@ export default class Itinerary extends Component {
 		  	headers: {
 		  		'X-Auth-Token': Cookies.get('auth_token')
 		  	}
-		  }).then(data => {console.log("data", data)});
+		  }).then(data => {this.setState({events: data.events})});
 
 		})} else {
 			hashHistory.replace('/');
@@ -57,6 +57,7 @@ export default class Itinerary extends Component {
 
 
 			let route = this.state.events;
+
 			// let waypts = route.map(a => a.venue.extended_address);
 
 			// let addresses = route.map(a => {
@@ -69,10 +70,14 @@ export default class Itinerary extends Component {
 
 			addresses.forEach( location => waypts.push({location, stopover:true}));
 
+			
 			let startAddress = waypts.shift();
+			
 			let endAddress = waypts.pop();
+			
 
 			// console.log("google in comp did mount", google);
+			
 			var directionsService = new google.maps.DirectionsService;
     		var directionsDisplay = new google.maps.DirectionsRenderer;
 		    var mapDiv = document.getElementById('map');
