@@ -487,7 +487,7 @@ export default class StartTrip extends Component{
 								<button onClick={() => this.action = 'add'}>Add another game</button>
 								<button onClick={() => this.action = 'skip'}>Add a free day</button>
 							</div>
-							<div>
+							<div className="matchup-list">
 								
 									{citiesWithGames.map(event => <div key={event.id} className="matchups"><label><input name="id" type="radio" value={event.id} key={event.id}></input> {event.title} </label></div>)}
 								
