@@ -7,6 +7,7 @@ import StartTrip from './start-trip';
 import moment from 'moment';
 
 import Modal from './modal';
+import airportCodes from './airport-codes';
 
 
 
@@ -56,7 +57,7 @@ export default class Itinerary extends Component {
 
 
 			let route = this.state.events;
-			
+
 			// let waypts = route.map(a => a.venue.extended_address);
 
 			// let addresses = route.map(a => {
@@ -64,7 +65,6 @@ export default class Itinerary extends Component {
 			// });
 			let addresses = route.map(a => a.venue.address+ " " + a.venue.extended_address);
 
-			
 			let waypts=[];
 
 
@@ -192,7 +192,19 @@ export default class Itinerary extends Component {
 
 	}
 
-	 getEvent(event) {
+	 getEvent(event, index) {
+
+	 	let itinerary = this.state.events;
+
+	 	console.log("itinerary[New York]", airportCodes[`Saint Petersburg`]);
+
+	 	// if (index !== itinerary.length-1){
+
+			// console.log("itinerary[0]", airportCodes[[index].venue.city] + " " + airportCodes[itinerary[index+1].venue.city]);
+
+	 	// }
+
+	 	
 
 	 	let address = event.venue.address + " " + event.venue.extended_address;
 
