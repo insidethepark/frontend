@@ -87,11 +87,7 @@ export default class Login extends Component{
 
 					hashHistory.push('/start-trip');
 
-
-
-		}
-
-		
+				}
 
 		})}
 		else{
@@ -99,7 +95,6 @@ export default class Login extends Component{
 					alert("You need to enter both an email and a password to login");
 
 				}
-
 
 	}
 
@@ -113,29 +108,29 @@ export default class Login extends Component{
 					<p>Create the baseball roadtrip you've always dreamed about.</p>
 				</div>
 				<div className="login-inner-wrapper">
-				<div className="login">
-					<SSF onData={::this.loginHandler}>
-						<h2>Login</h2>
+					<div className="login">
+						<SSF onData={::this.loginHandler}>
+							<h2>Login</h2>
 
-						<div><input type="email" name="email" placeholder="Email"></input></div>
-						<div><input type="password" name="password" placeholder="Password"></input></div>
-						<button>Login</button>
+							<div><input type="email" name="email" placeholder="Email"></input></div>
+							<div><input type="password" name="password" placeholder="Password"></input></div>
+							<button>Login</button>
 
-					</SSF>
-				</div>
+						</SSF>
+					</div>
 
-				<div className="signup">
-					<SSF onData={::this.signupHandler}>
-						<h2>Sign up</h2>
+					<div className="signup">
+						<SSF onData={::this.signupHandler}>
+							<h2>Sign up</h2>
 
-						<div><input type="text" name="first" placeholder="First name"></input></div>
-						<div><input type="text" name="last" placeholder="Last name"></input></div>
-						<div><input type="email" name="email" placeholder="Email"></input></div>
-						<div><input type="password" name="password" placeholder="Password"></input></div>
-						<button>Sign up</button>
+							<div><input type="text" name="first" placeholder="First name"></input></div>
+							<div><input type="text" name="last" placeholder="Last name"></input></div>
+							<div><input type="email" name="email" placeholder="Email"></input></div>
+							<div><input type="password" name="password" placeholder="Password"></input></div>
+							<button>Sign up</button>
 
-					</SSF>
-				</div>
+						</SSF>
+					</div>
 				</div>
 
 

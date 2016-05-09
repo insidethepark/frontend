@@ -358,8 +358,7 @@ export default class Itinerary extends Component {
 	 				<div>Tickets Remaing: {event.stats.listing_count}</div>
 					<div><a href={tickets} target="_blank"><button><i className="fa fa-ticket" aria-hidden="true"></i>Tickets!!</button></a></div>
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
-	 				
-					<h1>Explore {event.venue.city}</h1>
+					<div className="itinerary-divider"><h1>Explore {event.venue.city}</h1></div>
  					<div className="local-city-data">
 	 					
 	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+restaurants+close+to+${event.venue.slug}`} target="_blank"><button>Food</button></a></div>
