@@ -5,6 +5,11 @@
 @import 'font-awesome/scss/font-awesome';
 @import 'react-date-picker/index';
 
+
+html, body {
+	height: 100%;
+}
+
 *{
 
 	margin: 0px;
@@ -261,17 +266,24 @@ button{
 .matchups{
 
 	font-size: 1.2em;
-	margin: 10px 0px;
+	filter: opacity=1;
+	background: hsla(98, 10%, 6%, 0.42);
+	border-radius: 3px;
+	padding: 5px;
 	color: white;
 	text-shadow: 1px 1px 1px black;
 
 }
 .matchup-list {
-	background-color: #0d1717;
-	opacity: 35%;
-	border-radius: 10px;
+	//background-color: #0d1717;
+	//opacity: 0.37;
+	//padding: 5px;
 }
 
+// .start-trip-super-wrapper{
+// 	width:100%;
+// 	height:100%;
+// }
 
 .start-trip-wrapper{
 
@@ -279,9 +291,13 @@ button{
 	justify-content: space-around;
 	margin-top: 64px;
 	padding-top: 21px;
-	background-image: url('http://assets.bwbx.io/images/i7HXRYEUtfqQ/v1/1200x-1.jpg');
+	background: url('http://assets.bwbx.io/images/i7HXRYEUtfqQ/v1/1200x-1.jpg') no-repeat center center fixed;
 	background-size: cover;
-
+	min-height:100vh;
+	
+}
+.calender-map-wrapper {
+	padding-bottom: 30px;
 }
 .calendar-map-wrapper h2 {
 	padding-bottom: 10px;
@@ -321,9 +337,11 @@ button{
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	padding-bottom: 8px;
 }
 .get-itinerary {
 	display: flex;
+	padding-top: 8px;
 	flex-wrap: wrap;
 	justify-content: center;
 	button {
