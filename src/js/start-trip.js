@@ -45,7 +45,6 @@ export default class StartTrip extends Component{
 	renderNewGames(){
 
 		let { startDate } = this.state;
-		console.log("startDate", startDate);
 
 		ajax({
 			url:'https://shielded-hollows-39012.herokuapp.com/firstgamedata',
@@ -82,8 +81,6 @@ export default class StartTrip extends Component{
 		 	}
 		 }).then(data => {
 		 	Cookies.set('itinerary_id', data.itinerary);
-
-		 	console.log("data",data);
 
 		 	data.seatgeek.events.map(event => {
 
@@ -133,8 +130,7 @@ export default class StartTrip extends Component{
 			})
 
 		    var map = new google.maps.Map(mapDiv, this.state.mapProps);
-		    console.log("map in component", map);
-			console.log("the ajax call ran");
+
 
 			directionsDisplay.setMap(map);
 
@@ -161,8 +157,6 @@ export default class StartTrip extends Component{
 		  //   }
 		    
 		    // console.log("updatedWaypts",updatedWaypts);
-
-		    console.log("waypts in drawMap", waypts);
 
 		    directionsService.route({
 		          origin: this.start_address.location,
@@ -215,13 +209,9 @@ export default class StartTrip extends Component{
 
 		let local_datetime = this.state.startDate;
 
-		console.log("id", id);
-		// console.log("zip.zip", zip.zip);
-		// console.log("date", local_datetime);
 
 
 		////////////UNCOMMENT TO TEST BACKEND DATA
-		console.log('local_datetime', local_datetime);
 
 		  ajax({
 		  	url:'https://shielded-hollows-39012.herokuapp.com/selectgame',
@@ -230,7 +220,7 @@ export default class StartTrip extends Component{
 		  	headers: {
 		  		'X-Auth-Token': Cookies.get('auth_token')
 				  	}
-		  }).then(data => {console.log("data", data);
+		  }).then(data => {
 
 		  ///////Below, send them the city/state data. Will need to make an ajax call first
 
@@ -242,7 +232,6 @@ export default class StartTrip extends Component{
 		 		'X-Auth-Token': Cookies.get('auth_token')
 		 	}
 		 }).then(data => {
-		 	console.log("nextgamedata", data);
 		 	this.setState({citiesWithGames: data.seatgeek.events, startDate: data.local_datetime})});
 
 		 		//  data.events.map(event => {
@@ -270,7 +259,6 @@ export default class StartTrip extends Component{
 		ajax(`https://api.seatgeek.com/2/events?id=${id.id}`).then(data=>{
 
 			let address = data.events[0].venue.address + " " + data.events[0].venue.extended_address;
-			console.log("address=>", address);
 
 
 			let totalPitStops = this.state.totalPitStops + 1;
@@ -280,14 +268,12 @@ export default class StartTrip extends Component{
 			let route = this.state.route;
 			route.push(data.events[0].venue.city);
 			this.setState({route});
-			console.log("route", route);
 
 
 			if (totalPitStops === 1){
 
 				this.start_address = {location: address, stopover: true};
 				this.end_address = {location: address, stopover: true};
-				console.log("this.start_address", this.start_address);
 
 				this.drawMap();
 
@@ -296,7 +282,6 @@ export default class StartTrip extends Component{
 			if (totalPitStops === 2){
 
 				this.end_address = {location: address, stopover: true};
-				console.log("this.end_address", this.end_address);
 				this.setState({mapStyle: {'border': '4px double grey'}});
 
 				document.querySelector('#map').classList.remove('hide-map');
@@ -312,8 +297,6 @@ export default class StartTrip extends Component{
 				waypts.push(this.end_address);
 				this.setState({waypts});
 				this.end_address = {location: address, stopover: true};
-
-				console.log("waypts=>",this.state.waypts);
 
 				this.drawMap();
 
@@ -367,7 +350,7 @@ export default class StartTrip extends Component{
 			}
 		}).then(data => {
 
-			console.log(data);
+			console.log("test function data",data);
 			data.events.map(event => console.log(event.venue.city));
 
 			this.setState({citiesWithGames: data.events});
@@ -411,8 +394,6 @@ export default class StartTrip extends Component{
 
 	dataHandler(data) {
 
-		console.log(this.action);
-
 		// this.action === 'add' ? this.addGameHandler(data): this.getIteneraryHandler(data);
 
 		// this.action === 'skip' ? this.freeDayHandler 
@@ -436,7 +417,6 @@ export default class StartTrip extends Component{
 
 	logOutHandler() {
 		Cookies.remove('user_email', 'auth_token', 'id');
-		console.log('auth_token', Cookies.get('auth_token'));
 		hashHistory.push('/');
 	}
 

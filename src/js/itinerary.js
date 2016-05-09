@@ -17,7 +17,8 @@ export default class Itinerary extends Component {
 		this.state = { 
 			events: [] ,
 			loading: true,
-			hotelLoading: true
+			hotelLoading: true,
+			distanceTraveled: 0
 		}
 	}
 
@@ -29,7 +30,8 @@ export default class Itinerary extends Component {
 		// ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-05-28&datetime_local.lte=2016-05-28T23:59:01&type=mlb&per_page=9').then(data => {
 		// this.setState({events: data.events});
 
-		// this.drawMap();
+		console.log("itin ID",Cookies.get('itinerary_id'));
+
 		ajax({
 		  	url:'https://shielded-hollows-39012.herokuapp.com/itinerary',
 		  	type: 'POST',
@@ -38,7 +40,7 @@ export default class Itinerary extends Component {
 		  		'X-Auth-Token': Cookies.get('auth_token')
 		  	}
 		  }).then(data => {
-		  	this.setState({events: data.events});
+		  	this.setState({events: data.seatgeek.events, pitstop_dates: data.pitstop_dates});
 		  	console.log("data", data);
 
 
@@ -54,7 +56,7 @@ export default class Itinerary extends Component {
 
 	componentDidUpdate(){
 
-		this.drawMap();
+		::this.drawMap();
 
 	}
 
@@ -115,17 +117,27 @@ export default class Itinerary extends Component {
 		          if (status === google.maps.DirectionsStatus.OK) {
 		            directionsDisplay.setDirections(response);
 		            var route = response.routes[0];
-		            // var summaryPanel = document.getElementById('directions-panel');
-		            // summaryPanel.innerHTML = '';
+		            var summaryPanel = document.getElementById('directions-panel');
+		            summaryPanel.innerHTML = '';
 		            // For each route, display summary information.
-		            // for (var i = 0; i < route.legs.length; i++) {
-		            //   var routeSegment = i + 1;
-		            //   summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-		            //       '</b><br>';
-		            //   summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-		            //   summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-		            //   summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-		            // }
+		            for (var i = 0; i < route.legs.length; i++) {
+		              var routeSegment = i + 1;
+		              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+		                  '</b><br>';
+		              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+		              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+		              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+
+		              // let distanceTraveled = this.state.distanceTraveled;
+		              // distanceTraveled += route.legs[i].distance;
+
+		              // this.setState({distanceTraveled});
+
+		              // this.distanceTraveled = this.distanceTraveled + route.legs[i].distance;
+		            }
+
+		            // console.log("distanceTraveled", distanceTraveled);
+
 		          } else {
 		            window.alert('Directions request failed due to ' + status);
 		          }
@@ -200,6 +212,7 @@ export default class Itinerary extends Component {
 	 getEvent(event, index) {
 
 	 	let itinerary = this.state.events;
+	 	let pitstop_dates = this.state.pitstop_dates;
 
 	 	// console.log("itinerary[New York]", airportCodes[`Saint Petersburg`]);
 
@@ -214,11 +227,11 @@ export default class Itinerary extends Component {
 
 	 		if (index !== itinerary.length-1){
 
-	 			return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${airportCodes[itinerary[index+1].venue.city]}/`;
+	 			return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${airportCodes[itinerary[index+1].venue.city]}/${pitstop_dates[index]}`;
 
 		 	}else{
 
-		 		return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/`;
+		 		return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${pitstop_dates[index]}`;
 
 		 	}
 
@@ -343,7 +356,7 @@ export default class Itinerary extends Component {
 	 				<div>Price Range: ${event.stats.lowest_price} to ${event.stats.highest_price}</div>
 	 				<div>Average price: ${event.stats.average_price}</div>
 	 				<div>Tickets Remaing: {event.stats.listing_count}</div>
-					<div><a href={tickets}><button><i className="fa fa-ticket" aria-hidden="true"></i>Tickets!!</button></a></div>
+					<div><a href={tickets} target="_blank"><button><i className="fa fa-ticket" aria-hidden="true"></i>Tickets!!</button></a></div>
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
 	 				
 					<h1>Explore {event.venue.city}</h1>
@@ -391,6 +404,7 @@ export default class Itinerary extends Component {
 						{events.map(::this.getEvent)}
 						</div>
 						<div id="map"></div>
+						<div id="directions-panel"></div>
 					</div>
 				</div>
 			</div>
