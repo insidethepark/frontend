@@ -25,8 +25,8 @@ export default class Itinerary extends Component {
 	componentWillMount() {
 
 		if (Cookies.get('user_email', 'auth_token', 'id')) {
-		ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-05-28&datetime_local.lte=2016-05-28T23:59:01&type=mlb&per_page=9').then(data => {
-		this.setState({events: data.events});
+		// ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-05-28&datetime_local.lte=2016-05-28T23:59:01&type=mlb&per_page=9').then(data => {
+		// this.setState({events: data.events});
 
 		// this.drawMap();
 		ajax({
@@ -36,9 +36,9 @@ export default class Itinerary extends Component {
 		  	headers: {
 		  		'X-Auth-Token': Cookies.get('auth_token')
 		  	}
-		  }).then(data => {console.log("datafrombackend", data)});
+		  }).then(data => {this.setState({events: data.events})});
 
-		})} else {
+		} else {
 			hashHistory.replace('/');
 		}
 
