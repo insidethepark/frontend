@@ -486,7 +486,7 @@ export default class StartTrip extends Component{
 							</div>
 							<div>
 								
-									{citiesWithGames.map(event => <div key={event.id} className="matchups"><label><input name="id" type="radio" value={event.id} key={event.id}></input> {event.title}{event.datetime_local} </label></div>)}
+									{citiesWithGames.map(event => <div key={event.id} className="matchups"><label><input name="id" type="radio" value={event.id} key={event.id}></input> {event.title} </label></div>)}
 								
 							</div>
 							<div className="get-itinerary">
