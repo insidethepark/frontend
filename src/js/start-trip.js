@@ -288,7 +288,10 @@ export default class StartTrip extends Component{
 			if (totalPitStops === 1){
 
 				this.start_address = {location: address, stopover: true};
+				this.end_address = {location: address, stopover: true};
 				console.log("this.start_address", this.start_address);
+
+				this.drawMap();
 
 			}
 
