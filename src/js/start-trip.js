@@ -35,6 +35,7 @@ export default class StartTrip extends Component{
 
 	}
 	componentWillMount() {
+
 		if (Cookies.get('user_email', 'auth_token')) {
 			return true;
 		} 	else {
@@ -64,6 +65,9 @@ export default class StartTrip extends Component{
 	}
 
 	dateChangeHandler(dateString) {
+
+		document.querySelector('.games').classList.remove('hide');
+
 
 		this.setState({startDate: dateString});
 
@@ -358,33 +362,37 @@ export default class StartTrip extends Component{
 		});
 	}
 
-	// getIteneraryHandler(city){
+	getIteneraryHandler(id){
 
-	// 	console.log("city in getIteneraryHandler",city);
+		console.log(id);
 
-	// 	if (city.city){
 
-	// 		/////post the zip to the backend
+		if(id.id){
 
-	// 		////hashHistory.push('/itinerary');
+			console.log("if ran");
 
-	// 		let route = this.state.waypts;
+			let local_datetime = this.state.startDate;
 
-	// 		route.push(city.city);
+			ajax({
+			  	url:'https://shielded-hollows-39012.herokuapp.com/selectgame',
+			  	type: 'POST',
+			  	data: {"local_datetime": local_datetime, "itinerary_id": Cookies.get('itinerary_id'), "game_number": id.id },
+			  	headers: {
+			  		'X-Auth-Token': Cookies.get('auth_token')
+					  	}
+			  }).then(() => { hashHistory.push('/itinerary')});
 
-	// 		this.setState({waypts: route});
+		}else{
 
-	// 	}else{
+			console.log("else ran");
 
-	// 		////hashHistory.push('/itinerary');
+			hashHistory.push('/itinerary');
 
-	// 		console.log("waypts=>",this.state.waypts);
+		}
 
-	// 	}
+		
 
-	// 	hashHistory.push('/itinerary');
-
-	// }
+	}
 
 	freeDayHandler(){
 
@@ -404,8 +412,8 @@ export default class StartTrip extends Component{
 				this.addGameHandler(data);
 				break;
 			case 'get':
-				//this.getIteneraryHandler(data);
-				hashHistory.push('/itinerary');
+				::this.getIteneraryHandler(data);
+				// hashHistory.push('/itinerary');
 				break;
 			case 'skip':
 				this.freeDayHandler();
@@ -456,7 +464,7 @@ export default class StartTrip extends Component{
 						<div style={{"color": "#c7d4e5"}}>{this.state.route.join(' >> ')}</div>
 						<div id="map" style={this.state.mapStyle}></div>
 					</div>
-					<div className="games">
+					<div className="games hide">
 						<div id="game-date">{gameDate()}</div>
 						
 						<div id='game-picker'></div>

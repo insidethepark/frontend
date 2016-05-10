@@ -127,17 +127,17 @@ export default class Itinerary extends Component {
 		        }, function(response, status) {
 		          if (status === google.maps.DirectionsStatus.OK) {
 		            directionsDisplay.setDirections(response);
-		            var route = response.routes[0];
-		            var summaryPanel = document.getElementById('directions-panel');
-		            summaryPanel.innerHTML = '';
-		            // For each route, display summary information.
-		            for (var i = 0; i < route.legs.length; i++) {
-		              var routeSegment = i + 1;
-		              summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-		                  '</b><br>';
-		              summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-		              summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-		              summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+		            // var route = response.routes[0];
+		            // var summaryPanel = document.getElementById('directions-panel');
+		            // summaryPanel.innerHTML = '';
+		            // // For each route, display summary information.
+		            // for (var i = 0; i < route.legs.length; i++) {
+		            //   var routeSegment = i + 1;
+		            //   summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+		            //       '</b><br>';
+		            //   summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+		            //   summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+		            //   summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
 
 		              // let distanceTraveled = this.state.distanceTraveled;
 		              // distanceTraveled += route.legs[i].distance;
@@ -145,7 +145,7 @@ export default class Itinerary extends Component {
 		              // this.setState({distanceTraveled});
 
 		              // this.distanceTraveled = this.distanceTraveled + route.legs[i].distance;
-		            }
+		            // }
 
 		            // console.log("distanceTraveled", distanceTraveled);
 
@@ -240,11 +240,11 @@ export default class Itinerary extends Component {
 
 	 		if (index !== itinerary.length-1){
 
-	 			return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${airportCodes[itinerary[index+1].venue.city]}/${pitstop_dates[0][index]}`;
+	 			return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${airportCodes[itinerary[index+1].venue.city]}/${pitstop_dates[0][index + 1]}`;
 
 		 	}else{
 
-		 		return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${pitstop_dates[0][index]}`;
+		 		return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${pitstop_dates[1]}`;
 
 		 	}
 
@@ -441,7 +441,6 @@ export default class Itinerary extends Component {
 						{events.map(::this.getEvent)}
 						</div>
 						<div id="map"></div>
-						<div id="directions-panel"></div>
 					</div>
 				</div>
 			</div>
