@@ -221,27 +221,33 @@ export default class Itinerary extends Component {
 		        }, function(response, status) {
 		          if (status === google.maps.DirectionsStatus.OK) {
 		            directionsDisplay.setDirections(response);
-		            // var route = response.routes[0];
+		            var route = response.routes[0];
 		            // var summaryPanel = document.getElementById('directions-panel');
 		            // summaryPanel.innerHTML = '';
-		            // // For each route, display summary information.
-		            // for (var i = 0; i < route.legs.length; i++) {
-		            //   var routeSegment = i + 1;
-		            //   summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-		            //       '</b><br>';
-		            //   summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-		            //   summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-		            //   summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+		            // For each route, display summary information.
+		            let distanceTraveled = 0;
+		            for (var i = 0; i < route.legs.length; i++) {
+		              var routeSegment = i + 1;
+		              // summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+		              //     '</b><br>';
+		              // summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+		              // summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+		              // summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
 
 		              // let distanceTraveled = this.state.distanceTraveled;
-		              // distanceTraveled += route.legs[i].distance;
+
+		              console.log("route.legs[i].distance",route.legs[i].distance.value);
+
+		              distanceTraveled += route.legs[i].distance.value;
 
 		              // this.setState({distanceTraveled});
 
 		              // this.distanceTraveled = this.distanceTraveled + route.legs[i].distance;
-		            // }
+		            }
 
-		            // console.log("distanceTraveled", distanceTraveled);
+		            console.log("distanceTraveled", Math.round(distanceTraveled*0.0006021371));
+
+		            document.querySelector('#miles').innerHTML = Math.round(distanceTraveled*0.0006021371);
 
 		          } else {
 		            window.alert('Directions request failed due to ' + status);
@@ -532,12 +538,14 @@ export default class Itinerary extends Component {
 				<div className="itinerary-main">
 					<div className="itinerary-title">
 					<h2>Your Roadtrip</h2>
+
 					</div>
-					<h3>{events.length} days, {events.length} parks, 1 damn good time...</h3>
+					<h2>Baseball. Roadtrip. <span id="america">America</span>.</h2>
 					<div className="itenerary-body">
 						<div className="events-wrapper">
 						{events.map(::this.getEvent)}
 						</div>
+						<div className="trip-summary"><h2>{events.length} parks. <span id="miles"></span> miles. 1 damn good time.</h2></div>
 						<div id="map"></div>
 					</div>
 				</div>
