@@ -226,6 +226,8 @@ export default class StartTrip extends Component{
 				  	}
 		  }).then(data => {
 
+		  	this.setState({citiesWithGames: [{id:1, title: "Loading..."}]});
+
 		  ///////Below, send them the city/state data. Will need to make an ajax call first
 
 		 ajax({
