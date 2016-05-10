@@ -334,19 +334,13 @@ export default class Itinerary extends Component {
 
 	 		if (index !== itinerary.length-1){
 
-<<<<<<< HEAD
+
 	 			return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${airportCodes[itinerary[index+1].venue.city]}/${pitstop_dates[0][index+1]}`;
 
 		 	}else{
 
-		 		return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${pitstop_dates[1][index]}`;
-=======
-	 			return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${airportCodes[itinerary[index+1].venue.city]}/${pitstop_dates[0][index + 1]}`;
-
-		 	}else{
-
 		 		return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${pitstop_dates[1]}`;
->>>>>>> e87423f059d5543fd4eb6885d360322a9a0e59ac
+
 
 		 	}
 
