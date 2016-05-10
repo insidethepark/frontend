@@ -101,18 +101,112 @@ export default class Itinerary extends Component {
 		    var mapDiv = document.getElementById('map');
 		    var map = new google.maps.Map(mapDiv, {
 		      center: {lat: 44.540, lng: -78.546},
-		      zoom: 8
+		      zoom: 8,
+		      styles: [
+	{
+        "featureType": "administrative",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "lightness": 33
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#f2e5d4"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#c5dac6"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.park",
+        "elementType": "labels",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "lightness": 20
+            }
+        ]
+    },
+    {
+        "featureType": "road",
+        "elementType": "all",
+        "stylers": [
+            {
+                "lightness": 20
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#c5c6c6"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#e4d7c6"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#fbfaf7"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "on"
+            },
+            {
+                "color": "#acbcc9"
+            }
+        ]
+    }
+]
 		    });
 
 		    let mapProps = {
 
 		    	mapProps: {
 			      center: {lat: 44.540, lng: -78.546},
-			      zoom: 8
+			      zoom: 8,
+			      
+	
 			    }
 			}
 
-		    var map = new google.maps.Map(mapDiv, mapProps);
+		    //var map = new google.maps.Map(mapDiv, mapProps);
 		 
 
 			directionsDisplay.setMap(map);
@@ -240,11 +334,11 @@ export default class Itinerary extends Component {
 
 	 		if (index !== itinerary.length-1){
 
-	 			return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${airportCodes[itinerary[index+1].venue.city]}/${pitstop_dates[0][index]}`;
+	 			return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${airportCodes[itinerary[index+1].venue.city]}/${pitstop_dates[0][index+1]}`;
 
 		 	}else{
 
-		 		return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${pitstop_dates[0][index]}`;
+		 		return `https://www.skyscanner.com/transport/flights/${airportCodes[itinerary[index].venue.city]}/${pitstop_dates[1][index]}`;
 
 		 	}
 
