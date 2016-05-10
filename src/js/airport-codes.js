@@ -19,6 +19,7 @@ export default {
 	"Cincinnati": "CVG",
 	"Washington": "DCA",
 	"New York": "LGA",
+	"Flushing": "LGA",
 	"San Francisco": "SFO",
 	"Chicago": "ORD",
 	"Detroit": "DTW",
