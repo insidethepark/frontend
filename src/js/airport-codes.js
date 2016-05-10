@@ -5,7 +5,7 @@ export default {
 	"Oakland": "OAK",
 	"Denver": "DEN",
 	"Bronx": "JFK",
-	"Toronto": "YBZ",
+	"Toronto": "YYZ",
 	"Arlington": "DFW",
 	"Phoenix": "PHX",
 	"Baltimore": "BWI",

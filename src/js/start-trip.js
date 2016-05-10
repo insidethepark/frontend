@@ -368,6 +368,8 @@ export default class StartTrip extends Component{
 			route.push(data.events[0].venue.city);
 			this.setState({route});
 
+			/////add if this.start_address = null to the if check once geolocation is active
+
 
 			if (totalPitStops === 1){
 

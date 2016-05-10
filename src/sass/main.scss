@@ -42,8 +42,9 @@
 .local-city-data{
 
 	display: flex;
+	justify-content: space-around;
 
-	div{
+	a{
 
 		margin-right: 5px;
 
@@ -130,7 +131,7 @@
 	min-width: 500px;
 	height: 400px;
 	border-radius: 5px;
-	margin: 10px 0px;
+	margin-top: 10px;
 	pointer-events: none;
 
 
@@ -392,6 +393,11 @@ button{
 		margin: 5px 0px;
 
 	}
+	// h1{
+
+	// 	text-align: left;
+
+	// }
 
 }
 .itinerary-inner-event {

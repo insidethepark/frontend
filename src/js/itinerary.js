@@ -493,16 +493,18 @@ export default class Itinerary extends Component {
 	 				<div>{moment(gametime).format('dddd, MMMM Do YYYY')}</div>
 					<div className="itinerary-divider"><h1>Explore {event.venue.city}</h1></div>
  					<div className="local-city-data">
-	 					
-	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+restaurants+close+to+${event.venue.slug}`} target="_blank"><button>Food</button></a></div>
-	 					<div><a href={`https://www.google.com/maps/search/${event.venue.city}+attractions`} target="_blank"><button>Attractions</button></a></div>
+	 					<div>
+		 					<a href={`https://www.google.com/maps/search/${event.venue.city}+restaurants+close+to+${event.venue.slug}`} target="_blank"><button>Food</button></a>
+		 					<a href={`https://www.google.com/maps/search/${event.venue.city}+attractions`} target="_blank"><button>Attractions</button></a>
+	 					</div>
  					</div>
- 					<h1>Flights and Hotels</h1>
+ 					<h1>Flights and Hotels</h1>	
  					<div className="local-city-data">
-	 					
-	 					<div><a href={getHotelURL()} target="_blank"><button>Hotels</button></a></div>
+	 					<div>
+	 						<a href={getHotelURL()} target="_blank"><button>Hotels</button></a>
 
- 						<div><a href={getFlightURL()} target="_blank"><button>Flights to next city</button></a></div>
+ 							<a href={getFlightURL()} target="_blank"><button>Flights to next city</button></a>
+ 						</div>
  					</div>
  				</div>
 	 			</div>
