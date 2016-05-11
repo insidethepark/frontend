@@ -259,7 +259,7 @@ export default class StartTrip extends Component{
 		          origin: this.start_address.location,
 		          destination: this.end_address.location,
 		          waypoints: waypts,
-		          optimizeWaypoints: true,
+		          optimizeWaypoints: false,
 		          travelMode: google.maps.TravelMode.DRIVING
 		        }, function(response, status) {
 		          if (status === google.maps.DirectionsStatus.OK) {
