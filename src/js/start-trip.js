@@ -568,17 +568,16 @@ export default class StartTrip extends Component{
 						<SSF onData={::this.dataHandler}>
 							<div className="game-choices">
 								<button onClick={() => this.action = 'add'}>Add another game</button>
-								<button onClick={() => this.action = 'skip'}>Add a free day</button>
+							<div className="get-itinerary">
+								 <button onClick={() => this.action = 'get'}>Finalize Itinerary</button>
+								 {/*<input type="submit" value="Add Another Game" name="action"/>
+								 <input type="submit" value="Get Itenerary" name="action"/>*/}
+							</div>
 							</div>
 							<div className="matchup-list">
 								
 									{citiesWithGames.map(event => <div key={event.id} className="matchups"><label><input name="id" type="radio" value={event.id} key={event.id}></input> {event.title} </label></div>)}
 								
-							</div>
-							<div className="get-itinerary">
-								 <button onClick={() => this.action = 'get'}>Finalize Itinerary</button>
-								 {/*<input type="submit" value="Add Another Game" name="action"/>
-								 <input type="submit" value="Get Itenerary" name="action"/>*/}
 							</div>
 						</SSF>
 					</div>
@@ -590,4 +589,4 @@ export default class StartTrip extends Component{
 	}
 }
 
-// startDate={moment()}
+//<button onClick={() => this.action = 'skip'}>Add a free day</button>
