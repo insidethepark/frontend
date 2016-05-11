@@ -216,7 +216,7 @@ export default class Itinerary extends Component {
 		          origin: startAddress.location,
 		          destination: endAddress.location,
 		          waypoints: waypts,
-		          optimizeWaypoints: true,
+		          optimizeWaypoints: false,
 		          travelMode: google.maps.TravelMode.DRIVING
 		        }, function(response, status) {
 		          if (status === google.maps.DirectionsStatus.OK) {
