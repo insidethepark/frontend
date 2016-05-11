@@ -378,6 +378,23 @@ export default class Itinerary extends Component {
 
 	 	}
 
+	 	function getRentalCarURL(){
+
+	 		if (index !== itinerary.length-1){
+
+
+				return `https://www.skyscanner.com/car-rental?pick_up=${airportCodes[itinerary[index].venue.city]}&drop_off=${airportCodes[itinerary[index].venue.city]}&pick_up_date=${pitstop_dates[0][index]}&drop_off_date=${pitstop_dates[0][index+1]}`;
+
+
+	 		}else{
+
+	 			return `https://www.skyscanner.com/car-rental?pick_up=${airportCodes[itinerary[index].venue.city]}&drop_off=${airportCodes[itinerary[index].venue.city]}&pick_up_date=${pitstop_dates[0][index]}&drop_off_date=${pitstop_dates[1]}`;
+
+	 		}
+
+	 		
+	 	}
+
 	 	let address = event.venue.address + " " + event.venue.extended_address;
 
 	 	var map;
@@ -504,12 +521,14 @@ export default class Itinerary extends Component {
 		 					<a href={`https://www.google.com/maps/search/${event.venue.city}+attractions`} target="_blank"><button>Attractions</button></a>
 	 					</div>
  					</div>
- 					<h1>Flights and Hotels</h1>	
+ 					<h1>Travel and Lodging</h1>	
  					<div className="local-city-data">
 	 					<div>
 	 						<a href={getHotelURL()} target="_blank"><button>Hotels</button></a>
 
  							<a href={getFlightURL()} target="_blank"><button>Flights to next city</button></a>
+
+ 							<a href={getRentalCarURL()} target="_blank"><button>Rent a car</button></a>
  						</div>
  					</div>
  				</div>
