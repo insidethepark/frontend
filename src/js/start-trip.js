@@ -373,8 +373,13 @@ export default class StartTrip extends Component{
 
 			if (totalPitStops === 1){
 
+				console.log("i ran");
+
 				this.start_address = {location: address, stopover: true};
+
+				console.log(this.start_address);
 				this.end_address = {location: address, stopover: true};
+				console.log(this.end_address);
 
 				this.drawMap();
 
@@ -557,7 +562,7 @@ export default class StartTrip extends Component{
 							<ReactDatePicker style={{"borderRadius": "5px", "boxShadow": "2px 2px 2px black"}} onChange={::this.dateChangeHandler} hideFooter={true}/>
 							
 						</div>
-						<button id="show-calendar" className="show-calendar" onClick={::this.showCalendarHandler}>Show Calendar</button>
+						<button id="show-calendar" className="show-calendar" onClick={::this.showCalendarHandler}>Reset</button>
 						<div style={{"color": "#c7d4e5"}}>{this.state.route.join(' >> ')}</div>
 						<div id="map" style={this.state.mapStyle}></div>
 					</div>
