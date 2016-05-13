@@ -425,7 +425,7 @@ export default class Itinerary extends Component {
 	 	let { hotelLoading } = this.state;
 
 	 	return ( 
-	 			<div key={event.title} className="itinerary-event">
+	 			<div key={event.title + event.datetime_local} className="itinerary-event">
 	 			<div className="itinerary-inner-event">
 	 				<h2>{moment(gametime).format('dddd, MMMM Do YYYY')} in {event.venue.city}</h2>
 	 				<img src={img}/>
@@ -472,7 +472,7 @@ export default class Itinerary extends Component {
 		return (
 			<div className="itinerary-wrapper">
 				<header>
-					<h1 id="title">Inside the Park</h1>
+					<Link to="/start-trip"><h1 id="title">Inside the Park</h1></Link>
 					<i onClick={this.logOutHandler} className="fa fa-sign-out" aria-hidden="true"><span className='icon-label'> Log Out</span></i>
 					<Link to="/start-trip"><i className="fa fa-home" aria-hidden="true"> <span className="icon-label">Start Over</span></i></Link>
 				</header>
@@ -486,7 +486,7 @@ export default class Itinerary extends Component {
 						<div className="events-wrapper">
 						{events.map(::this.getEvent)}
 						</div>
-						<div className="trip-summary"><h2>{events.length} parks. <span id="miles"></span> miles. 1 damn good time.</h2></div>
+						<div className="trip-summary"><h2>{events.length} games. <span id="miles"></span> miles. 1 damn good time.</h2></div>
 						<div id="map"></div>
 					</div>
 				</div>

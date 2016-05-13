@@ -6,7 +6,6 @@ import StartTrip from './start-trip';
 import Login from './login';
 import Itinerary from './itinerary';
 import Cookies from 'js-cookie';
-// import Border from './materialize';
 
 
 ///google maps
@@ -28,15 +27,6 @@ import Cookies from 'js-cookie';
       hashHistory.replace('/start-trip');
     }
   }
-
-function initMap() {
-        var mapDiv = document.getElementById('map');
-        var map = new google.maps.Map(mapDiv, {
-          center: {lat: 44.540, lng: -78.546},
-          zoom: 8
-        });
-      }
-window.initMap;
 
 
 render((
