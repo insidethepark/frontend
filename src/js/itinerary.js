@@ -28,6 +28,8 @@ export default class Itinerary extends Component {
 	componentWillMount() {
 
 		if (Cookies.get('user_email', 'auth_token', 'id')) {
+
+		////code below uses the seatgeek API to access the games
 		// ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-05-28&datetime_local.lte=2016-05-28T23:59:01&type=mlb&per_page=9').then(data => {
 		// this.setState({events: data.events});
 
@@ -42,6 +44,9 @@ export default class Itinerary extends Component {
 		  	}
 		  }).then(data => {
 
+
+		  	////code below uses Moment.js to iterate the date by one day. We now use the backend to accomplish this.
+
 			// let date = data.pitstop_dates[data.pitstop_dates.length-1];
 			// let tomorrow = moment(date).add(1, 'day');
 
@@ -51,8 +56,6 @@ export default class Itinerary extends Component {
 			// console.log("finalco", finalCheckoutDay);
 
 		  	this.setState({events: data.seatgeek.events, pitstop_dates: data.pitstop_dates});
-		  	console.log("data", data);
-
 		  	
 
 		  });
@@ -76,11 +79,6 @@ export default class Itinerary extends Component {
 
 			let route = this.state.events;
 
-			// let waypts = route.map(a => a.venue.extended_address);
-
-			// let addresses = route.map(a => {
-			// 	a.venue.address + " " + a.venue.extended_address;
-			// });
 			let addresses = route.map(a => a.venue.address+ " " + a.venue.extended_address);
 
 			let waypts=[];
@@ -93,8 +91,6 @@ export default class Itinerary extends Component {
 			
 			let endAddress = waypts.pop();
 			
-
-			// console.log("google in comp did mount", google);
 			
 			var directionsService = new google.maps.DirectionsService;
     		var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -204,12 +200,10 @@ export default class Itinerary extends Component {
 			      
 	
 			    }
-			}
-
-		    //var map = new google.maps.Map(mapDiv, mapProps);
-		 
+			}		 
 
 			directionsDisplay.setMap(map);
+
 
 
 		    directionsService.route({
@@ -283,42 +277,6 @@ export default class Itinerary extends Component {
 
 	}
 
-	getFood(){ 
-		return this.foodArray.map(food => <li>{food}</li>);
-		// return this.foodArray ? <li>it's loaded</li> : <li>Loading...</li>
-
-		// return setTimeout(function(){
-			
-		// 	let foods = this.foodArray ? <li>it's loaded</li> : <li>Loading...</li>
-		// 	return foods;
-		// }, 2000);	
-
-	}
-
-	getFoodLoading(){
-
-		return <li>loading worked</li>;
-
-	}
-
-	getHotels(name){ 
-		// return this.hotelArray.map(hotel => <li>{hotel}</li>);
-		return name;
-		// return this.foodArray ? <li>it's loaded</li> : <li>Loading...</li>
-
-		// return setTimeout(function(){
-			
-		// 	let foods = this.foodArray ? <li>it's loaded</li> : <li>Loading...</li>
-		// 	return foods;
-		// }, 2000);	
-
-	}
-
-	getHotelsLoading(){
-
-		return <li>loading worked</li>;
-
-	}
 
 	 getEvent(event, index) {
 
@@ -551,6 +509,7 @@ export default class Itinerary extends Component {
 		return (
 			<div className="itinerary-wrapper">
 				<header>
+					<h1 id="title">Inside the Park</h1>
 					<i onClick={this.logOutHandler} className="fa fa-sign-out" aria-hidden="true"><span className='icon-label'> Log Out</span></i>
 					<Link to="/start-trip"><i className="fa fa-home" aria-hidden="true"> <span className="icon-label">Start Over</span></i></Link>
 				</header>
@@ -572,40 +531,3 @@ export default class Itinerary extends Component {
 			)
 		}
 }
-
-
-	//<div id="mapTest"></div>
-
-// <div className="modal-content">
-// 			 					<div>
-// 			 						<h3>Hotels</h3>
-// 			 						<ul>
-// 				 						<li>hotel name</li>
-// 				 						<li>rating</li>
-// 				 						<li>URL</li>
-// 				 						<li>google map</li>
-// 				 						<li>distance from ballpark</li>
-// 				 						{ hotelLoading ? ::this.getHotelsLoading(): ::this.getHotels(event.venue.city) }
-// 				 						<Modal location={{lat: event.venue.location.lat, lon:event.venue.location.lon}}></Modal>
-// 			 						</ul>
-// 			 					</div>
-// 			 					<div>
-// 			 						<h3>Food</h3>
-// 			 						<ul>
-// 				 						{ loading ? ::this.getFoodLoading(): ::this.getFood()}
-// 			 						</ul>
-// 			 					</div>
-// 			 					<div>
-// 			 						<h3>Attractions</h3>
-// 			 						<ul>
-// 				 						<li>hotel name</li>
-// 				 						<li>rating</li>
-// 				 						<li>URL</li>
-// 				 						<li>google map</li>
-// 				 						<li>distance from ballpark</li>
-// 			 						</ul>
-// 			 					</div>
-// 		 					</div>
-
-
-

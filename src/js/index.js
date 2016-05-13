@@ -39,8 +39,6 @@ function initMap() {
 window.initMap;
 
 
-// Nav bar (under Route path="/"...):
-//     <IndexRoute component={Login}/>
 render((
 
 	<Router history={hashHistory}>

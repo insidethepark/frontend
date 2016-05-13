@@ -553,6 +553,7 @@ export default class StartTrip extends Component{
 		return(
 			<div>
 				<header>
+					<h1 id="title">Inside the Park</h1>
 					<i onClick={this.logOutHandler} className="fa fa-sign-out" aria-hidden="true"><span className='icon-label'> Log Out</span></i>
 				</header>
 				<div className="start-trip-wrapper">
