@@ -43,37 +43,12 @@ export default class StartTrip extends Component{
 		}
 	}
 
-	renderNewGames(){
-
-		let { startDate } = this.state;
-
-		ajax({
-			url:'https://shielded-hollows-39012.herokuapp.com/firstgamedata',
-			type: 'POST',
-			data: {'local_datetime': startDate},
-			headers: {
-				'X-Auth-Token': Cookies.get('auth_token')
-			}
-		}).then(data => {
-
-			data.events.map(event => {
-
-			this.setState({citiesWithGames: data.seatgeek.events});
-
-		})});
-
-	}
-
 	dateChangeHandler(dateString) {
 
 		document.querySelector('.games').classList.remove('hide');
 
 
 		this.setState({startDate: dateString});
-
-		////////THIS IS THE REAL SHIT BELOW 
-
-		/////DO NOT DELETE
 
 
 		 ajax({
@@ -93,7 +68,6 @@ export default class StartTrip extends Component{
 
 		 })});
 
-		////////DONT DELETE ABOVE
 
 	}
 
@@ -352,32 +326,12 @@ export default class StartTrip extends Component{
 
 
 	}
-	testFunction() {
-		ajax({
-			url:'https://shielded-hollows-39012.herokuapp.com/firstgame',
-			type: 'POST',
-			data: {'local_datetime': '2016-04-28'},
-			headers: {
-				'X-Auth-Token': Cookies.get('auth_token')
-			}
-		}).then(data => {
-
-			console.log("test function data",data);
-			data.events.map(event => console.log(event.venue.city));
-
-			this.setState({citiesWithGames: data.events});
-
-		});
-	}
+	
 
 	getIteneraryHandler(id){
 
-		console.log(id);
-
-
+		///if a city has been clicked, add it to the trip, otherwise render the trip as is
 		if(id.id){
-
-			console.log("if ran");
 
 			let local_datetime = this.state.startDate;
 
@@ -409,10 +363,6 @@ export default class StartTrip extends Component{
 	}
 
 	dataHandler(data) {
-
-		// this.action === 'add' ? this.addGameHandler(data): this.getIteneraryHandler(data);
-
-		// this.action === 'skip' ? this.freeDayHandler 
 
 		switch (this.action){
 
