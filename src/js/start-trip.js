@@ -9,7 +9,7 @@ import ReactDatePicker from 'react-date-picker';
 import Cookies from 'js-cookie';
 import SSF from 'react-simple-serial-form';
 import moment from 'moment';
-// require('react-date-picker/base.css');
+
 
 
 export default class StartTrip extends Component{
@@ -95,23 +95,6 @@ export default class StartTrip extends Component{
 
 		////////DONT DELETE ABOVE
 
-		// let URL = `https://api.seatgeek.com/2/events?datetime_local.gte=${dateString}&datetime_local.lte=${dateString}T23:59:01&type=mlb&per_page=15`;
-		// let citiesWithGames = [];
-
-		// ajax(URL).then( data => {
-
-		// 	console.log("data", data);
-
-		// 	// data.events.map(event => {
-
-		// 	// citiesWithGames.push(event.venue.city);
-
-		// 	// });
-
-		// 	this.setState({citiesWithGames: data.events});
-
-		// })
-
 	}
 
 
@@ -120,10 +103,7 @@ export default class StartTrip extends Component{
 			var directionsService = new google.maps.DirectionsService;
     		var directionsDisplay = new google.maps.DirectionsRenderer;
 		    var mapDiv = document.getElementById('map');
-		    // var map = new google.maps.Map(mapDiv, {
-		    //   center: {lat: 44.540, lng: -78.546},
-		    //   zoom: 8
-		    // });
+		   
 
 		    this.setState({
 
@@ -231,29 +211,10 @@ export default class StartTrip extends Component{
 
 			directionsDisplay.setMap(map);
 
-		    // var waypts = [{
-		    //           location: "Nashville",
-		    //           stopover: true
-		    //         }, {
-		    //           location: "Kansas City",
-		    //           stopover: true
-		    //         }, {
-		    //           location: "Denver",
-		    //           stopover: true
-		    //         }];
 
 		    var waypts = this.state.waypts;
 		    let updatedWaypts;
 
-
-		  //   if(waypts.length > 2 ){
-
-				// let tempWaypts = waypts.splice(0,1);
-				// updatedWaypts = tempWaypts.splice(waypts.length-1,1);
-
-		  //   }
-		    
-		    // console.log("updatedWaypts",updatedWaypts);
 
 		    directionsService.route({
 		          origin: this.start_address.location,
@@ -270,11 +231,6 @@ export default class StartTrip extends Component{
 		            // For each route, display summary information.
 		            for (var i = 0; i < route.legs.length; i++) {
 		              var routeSegment = i + 1;
-		             // summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-		                  //'</b><br>';
-		              //summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-		              //summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-		              //summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
 		            }
 		          } else {
 		            window.alert('Directions request failed due to ' + status);
@@ -283,20 +239,7 @@ export default class StartTrip extends Component{
 
 	}
 
-	// updateLocation(){
-
-	// 	this.setState({
-
-	// 	    	mapProps: {
-	// 		      center: {lat: 50.540, lng: -50.546},
-	// 		      zoom: 8
-	// 		    }
-	// 		})
-	// 	var mapDiv = document.getElementById('map');
-	// 	var map = new google.maps.Map(mapDiv, this.state.mapProps);
-
-	// }
-
+	
 
 	addGameHandler(id){
 
@@ -349,11 +292,7 @@ export default class StartTrip extends Component{
 
 		////////TURN ON THE STUFF ABOVE DO NOT DELETE
 
-		// /may recieve new list of cities back, may have to make get request for them
-
 		
-
-		// ajax(`http://ziptasticapi.com/${zip.zip}`).then(cityData => {
 
 		ajax(`https://api.seatgeek.com/2/events?id=${id.id}`).then(data=>{
 
@@ -368,7 +307,7 @@ export default class StartTrip extends Component{
 			route.push(data.events[0].venue.city);
 			this.setState({route});
 
-			/////add if this.start_address = null to the if check once geolocation is active
+			
 
 
 			if (totalPitStops === 1){
@@ -409,41 +348,8 @@ export default class StartTrip extends Component{
 			}
 
 		});
-
-		// });
-
-		// ajax(`http://geocoder.ca/?postal=${zip.zip}&geoit=xml&json=1`).then(cityData => {
-
-
-		// 	if (totalPitStops === 1){
-
-		// 		this.start_address = {location: cityData.standard.city, stopover: true};
-		// 		console.log("this.start_address", this.start_address);
 				
 
-		// 	}
-
-		// 	if (totalPitStops === 2){
-
-		// 		this.end_address = {location: cityData.standard.city, stopover: true};
-		// 		console.log("this.end_address", this.end_address);
-		// 		this.setState({mapStyle: {'border': '4px double grey'}});
-
-		// 		this.drawMap();
-
-		// 	}});
-
-			
-
-
-		
-		
-
-		////post current city selection
-
-		////get request for next day's games
-
-		////update cities array in state
 
 	}
 	testFunction() {
@@ -553,6 +459,7 @@ export default class StartTrip extends Component{
 		return(
 			<div>
 				<header>
+					<Link to="/start-trip"><img src="https://files.slack.com/files-tmb/T066DB5HT-F18N9DGUU-b4eab1a12b/inside_logo_360.png"/></Link>
 					<i onClick={this.logOutHandler} className="fa fa-sign-out" aria-hidden="true"><span className='icon-label'> Log Out</span></i>
 				</header>
 				<div className="start-trip-wrapper">
@@ -594,4 +501,3 @@ export default class StartTrip extends Component{
 	}
 }
 
-//<button onClick={() => this.action = 'skip'}>Add a free day</button>
