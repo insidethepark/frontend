@@ -202,7 +202,7 @@ export default class Itinerary extends Component {
 	
 			    }
 			}		 
-			}
+			
 		 
 
 			directionsDisplay.setMap(map);
@@ -494,7 +494,7 @@ export default class Itinerary extends Component {
 			)
 		}
 }
-	}
+	
 
 
 
