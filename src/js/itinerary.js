@@ -33,6 +33,7 @@ export default class Itinerary extends Component {
 		// ajax('https://api.seatgeek.com/2/events?datetime_local.gte=2016-05-28&datetime_local.lte=2016-05-28T23:59:01&type=mlb&per_page=9').then(data => {
 		// this.setState({events: data.events});
 
+
 		console.log("itin ID",Cookies.get('itinerary_id'));
 
 		ajax({
@@ -201,6 +202,8 @@ export default class Itinerary extends Component {
 	
 			    }
 			}		 
+			}
+		 
 
 			directionsDisplay.setMap(map);
 
@@ -216,27 +219,13 @@ export default class Itinerary extends Component {
 		          if (status === google.maps.DirectionsStatus.OK) {
 		            directionsDisplay.setDirections(response);
 		            var route = response.routes[0];
-		            // var summaryPanel = document.getElementById('directions-panel');
-		            // summaryPanel.innerHTML = '';
-		            // For each route, display summary information.
 		            let distanceTraveled = 0;
 		            for (var i = 0; i < route.legs.length; i++) {
 		              var routeSegment = i + 1;
-		              // summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
-		              //     '</b><br>';
-		              // summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
-		              // summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
-		              // summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-
-		              // let distanceTraveled = this.state.distanceTraveled;
 
 		              console.log("route.legs[i].distance",route.legs[i].distance.value);
 
 		              distanceTraveled += route.legs[i].distance.value;
-
-		              // this.setState({distanceTraveled});
-
-		              // this.distanceTraveled = this.distanceTraveled + route.legs[i].distance;
 		            }
 
 		            console.log("distanceTraveled", Math.round(distanceTraveled*0.0006021371));
@@ -285,8 +274,6 @@ export default class Itinerary extends Component {
 	 	let itinerary = this.state.events;
 	 	let pitstop_dates = this.state.pitstop_dates;
 
-	 	// console.log("itinerary[New York]", airportCodes[`Saint Petersburg`]);
-
 	 	if (index !== itinerary.length-1){
 
 	 		console.log("city", itinerary[index].venue.city + " " + itinerary[index+1].venue.city);
@@ -311,17 +298,6 @@ export default class Itinerary extends Component {
 	 	}
 
 	 	function getHotelURL(finalco){
-
-	 	// 	console.log("pitstops", pitstop_dates);
-
-			// let date = pitstop_dates[pitstop_dates.length-1];
-
-			// let tomorrow = moment(date).add(1, 'day');
-
-			// let tomorrowFormat = tomorrow._d;
-
-			// let finalCheckoutDay = moment(tomorrowFormat).format('YYYY-MM-DD');
-			// console.log("finalco", finalCheckoutDay);
 
 	 		if (index !== itinerary.length-1){
 
@@ -376,12 +352,6 @@ export default class Itinerary extends Component {
 		    query: 'restaurant'
 		  };
 		
-			// function Pitstop(hotel, food, attraction) {
-			// 	this.hotel= #
-			// 	this.food= #
-			// 	this.attraction= #
-			// }
-
 		  service = new google.maps.places.PlacesService(creditNode);
 		  // service.textSearch(request, callback);
 		  service.textSearch(request, (results, status) => {
@@ -437,12 +407,8 @@ export default class Itinerary extends Component {
 
 		let initWithThis = initialize.bind(this);
 
-		// initWithThis();
-
 	 	let gametime = event.datetime_local;
 	 	let tickets = event.url;
-
-	 	// let venueImg = event.performers.filter( team => return team.home_team);
 
 	 	
 		let img;
@@ -455,9 +421,6 @@ export default class Itinerary extends Component {
 			img = event.performers[1].image;
 		}
 
-		//////google places API to get local hotels, attractions, and food data
-
-		// getFood(){ return this.foodArray==="stuff" ? "<li>it's loaded</li>" : <li>Loading...</li>}
 	 	let { loading } = this.state;
 	 	let { hotelLoading } = this.state;
 
@@ -531,3 +494,8 @@ export default class Itinerary extends Component {
 			)
 		}
 }
+	}
+
+
+
+
