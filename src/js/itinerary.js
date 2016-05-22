@@ -46,7 +46,7 @@ export default class Itinerary extends Component {
 		  }).then(data => {
 
 
-		  	////code below uses Moment.js to iterate the date by one day. We now use the backend to accomplish this.
+		  	////code commented below uses Moment.js to iterate the date by one day. We now use the backend to accomplish this.
 
 			// let date = data.pitstop_dates[data.pitstop_dates.length-1];
 			// let tomorrow = moment(date).add(1, 'day');

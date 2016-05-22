@@ -429,9 +429,9 @@ export default class StartTrip extends Component{
 						<div id='game-picker'></div>
 						<SSF onData={::this.dataHandler}>
 							<div className="game-choices">
-								<button onClick={() => this.action = 'add'}>Add another game</button>
+								<button onClick={() => this.action = 'add'}>Add selected game to trip</button>
 							<div className="get-itinerary">
-								 <button onClick={() => this.action = 'get'}>Finalize Itinerary</button>
+								 <button onClick={() => this.action = 'get'}>Finalize Trip</button>
 								 {/*<input type="submit" value="Add Another Game" name="action"/>
 								 <input type="submit" value="Get Itenerary" name="action"/>*/}
 							</div>
